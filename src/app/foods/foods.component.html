@@ -1,3 +1,10 @@
-<pre>
-{{ response | async | json }}
-</pre>
+<!-- <pre>
+{{ response$ | async | json }}
+</pre> -->
+
+<div *ngIf="response$ | async as res">
+    <ul>
+        <li *ngFor="let food of res.data">{{food.name}}</li>
+    </ul>
+    {{res.length | json}}
+</div>

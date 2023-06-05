@@ -1,23 +1,39 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-interface Food {
+type FoodArray = Food[];
+type NutriScore = "A" | "B" | "C" | "D" | "E"; 
+
+enum EnNutriScore {
+  A = "A",
+  B = "B", 
+  C = "C"
+  // A,
+  // B,
+  // C
+}
+
+const nutriScore: EnNutriScore = EnNutriScore.A;
+
+interface Entity {
+  id: string;
+}
+
+interface Food extends Entity {
   name: string,
-  id: string,
+  // id: string,
   caloriesPer100g: number,
   weight: number,
-  nutriScore: string,
+  nutriScore: NutriScore,
   tags: string,
   photo: string
 } 
 
 interface Response {
-  // ??? --> dlaczego to działa:
-  // data: [],
-  data: Food[],
-  lenght: number
+  data: FoodArray,
+  length: number
 }
 
 @Component({
@@ -26,27 +42,20 @@ interface Response {
   styleUrls: ['./foods.component.scss']
 })
 export class FoodsComponent implements OnInit {
-  // ??? --> dlaczego nie możemy tego od razu inicjalizować?
-  // foods: Food[] = [];
-  
-  // ??? --> dlaczego pole publiczne to nie jest dobra metoda, a lepsze jest asyncPipe?
-  // foods: Response;
-  response: Observable<Response>; // to pole danych jest strumieniem danych typu
 
-  constructor(private httpClient: HttpClient) {}
-  
+  response$: Observable<Response>; 
+
+  httpClient = inject(HttpClient);
+ 
   ngOnInit(): void {
-    this.response = this.httpClient.get<Response>(
+    this.response$ = this.httpClient.get<Response>(
       'http://localhost:8080/api/foods/'
     );
 
-    // ??? --> dlaczego nie może być tak?
     // this.httpClient.get<Response>(
     //   'http://localhost:8080/api/foods/'
     // ).subscribe((data) => {
-    //   this.response = data;
+    //   this.foods = data;
     // })
-
-
   }
 }
