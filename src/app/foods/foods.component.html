@@ -1,10 +1,29 @@
-<pre>
+<!-- <pre>
 {{ response$ | async | json }}
-</pre>
+</pre> -->
 
-<div *ngIf="response$ | async as res">
+<!-- <div *ngIf="response$ | async as res">
     <ul>
         <li *ngFor="let food of res.data">{{food.name}}</li>
     </ul>
     {{res.length | json}}
-</div>
+</div> -->
+
+<table *ngIf="response$ | async as res" mat-table [dataSource]="res.data">
+    <ng-container matColumnDef="caloriesPer100g">
+        <th mat-header-cell *matHeaderCellDef> Kalorie na 100g </th>
+        <td mat-cell *matCellDef="let el"> {{el.caloriesPer100g}} </td>
+    </ng-container>
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let el"> {{el.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let el"> {{el.name}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
+
+

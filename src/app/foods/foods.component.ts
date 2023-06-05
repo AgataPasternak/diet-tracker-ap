@@ -23,7 +23,6 @@ interface Entity {
 
 interface Food extends Entity {
   name: string,
-  // id: string,
   caloriesPer100g: number,
   weight: number,
   nutriScore: NutriScore,
@@ -36,6 +35,8 @@ interface Response {
   length: number
 }
 
+
+
 @Component({
   selector: 'app-foods',
   templateUrl: './foods.component.html',
@@ -43,6 +44,7 @@ interface Response {
 })
 export class FoodsComponent implements OnInit {
 
+  columnsToDisplay = ['id', 'name', 'caloriesPer100g'];
   response$: Observable<Response>; 
 
   httpClient = inject(HttpClient);

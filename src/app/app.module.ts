@@ -5,8 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import {MatChipsModule} from '@angular/material/chips';
-
+import {MatTableModule} from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +24,7 @@ import { FoodsComponent } from './foods/foods.component';
     MatButtonModule, 
     MatDividerModule, 
     MatIconModule,
-    MatChipsModule
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
