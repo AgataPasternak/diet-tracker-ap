@@ -1,58 +1,23 @@
 
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-
-type FoodArray = Food[];
-type NutriScore = "A" | "B" | "C" | "D" | "E"; 
-
-enum EnNutriScore {
-  A = "A",
-  B = "B", 
-  C = "C"
-  // A,
-  // B,
-  // C
-}
-
-const nutriScore: EnNutriScore = EnNutriScore.A;
-
-interface Entity {
-  id: string;
-}
-
-interface Food extends Entity {
-  name: string,
-  caloriesPer100g: number,
-  weight: number,
-  nutriScore: NutriScore,
-  tags: string,
-  photo: string
-} 
-
-interface Response {
-  data: FoodArray,
-  length: number
-}
-
-
+import { FoodsService } from './foods.service';
+import { Response } from './foods.model';
 
 @Component({
   selector: 'app-foods',
   templateUrl: './foods.component.html',
   styleUrls: ['./foods.component.scss']
 })
-export class FoodsComponent implements OnInit {
 
+export class FoodsComponent implements OnInit {
+  // ??? --> dlaczego columnsToDisplay nie musi widzieć object Response
   columnsToDisplay = ['id', 'name', 'caloriesPer100g'];
   response$: Observable<Response>; 
-
-  httpClient = inject(HttpClient);
- 
+  private foodService = inject(FoodsService);
+  
   ngOnInit(): void {
-    this.response$ = this.httpClient.get<Response>(
-      'http://localhost:8080/api/foods/'
-    );
+    this.response$ = this.foodService.getFoods();
 
     // this.httpClient.get<Response>(
     //   'http://localhost:8080/api/foods/'
