@@ -1,8 +1,8 @@
 
 import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FoodsService } from './foods.service';
 import { Response } from './foods.model';
+import { FoodsState } from './foods.state';
 
 @Component({
   selector: 'app-foods',
@@ -13,11 +13,15 @@ import { Response } from './foods.model';
 export class FoodsComponent implements OnInit {
   // ??? --> dlaczego columnsToDisplay nie musi widzieć object Response
   columnsToDisplay = ['id', 'name', 'caloriesPer100g'];
-  response$: Observable<Response>; 
-  private foodService = inject(FoodsService);
+
+  private state = inject(FoodsState);
+  response$: Observable<Response> = this.state.foods$; 
+  
   
   ngOnInit(): void {
-    this.response$ = this.foodService.getFoods();
+    this.state.getFoods();
+    // ??? ==> dlaczego nie da się tak
+    // this.response$ = this.foodState.getFoods().foods$;
 
     // this.httpClient.get<Response>(
     //   'http://localhost:8080/api/foods/'

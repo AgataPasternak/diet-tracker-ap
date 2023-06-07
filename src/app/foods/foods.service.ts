@@ -8,11 +8,10 @@ import { Response } from './foods.model';
 })
 
 export class FoodsService {
+  private readonly API_FOODS = 'http://localhost:8080/api/foods/';
   httpClient = inject(HttpClient);
 
   getFoods(): Observable<Response> {
-    return this.httpClient.get<Response>(
-      'http://localhost:8080/api/foods/'
-    );
+    return this.httpClient.get<Response>(this.API_FOODS);
   }
 }
