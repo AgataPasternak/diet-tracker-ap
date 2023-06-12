@@ -10,6 +10,15 @@
 </div> -->
 
 <table *ngIf="response$ | async as res" mat-table [dataSource]="res.data">
+    <ng-container matColumnDef="actionsColumn">
+        <th mat-header-cell *matHeaderCellDef> Akcje </th>
+        <td mat-cell *matCellDef="let el"> 
+            {{el.id}}
+            <button mat-stroked-button color="warn" (click)="onDeleteFood(el.id)">
+           Remove
+           </button>
+        </td>
+    </ng-container>
     <ng-container matColumnDef="caloriesPer100g">
         <th mat-header-cell *matHeaderCellDef> Kalorie na 100g </th>
         <td mat-cell *matCellDef="let el"> {{el.caloriesPer100g}} </td>

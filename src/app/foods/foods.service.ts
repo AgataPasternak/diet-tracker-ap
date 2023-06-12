@@ -14,4 +14,8 @@ export class FoodsService {
   getFoods(): Observable<Response> {
     return this.httpClient.get<Response>(this.API_FOODS);
   }
+
+  deleteFoods(id: string) {
+    this.httpClient.delete(this.API_FOODS + id).subscribe();
+  }
 }

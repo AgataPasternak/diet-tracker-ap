@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, take } from 'rxjs';
 import { Response } from './foods.model';
@@ -13,7 +12,6 @@ export class FoodsState {
     private foodsSource$ = new Subject<Response>;
     foods$ = this.foodsSource$.asObservable();
 
-    private readonly API_FOODS = 'http://localhost:8080/api/foods/';
     private foodService = inject(FoodsService);
 
     getFoods(): void {
@@ -23,5 +21,10 @@ export class FoodsState {
             .subscribe((data) => {
             this.foodsSource$.next(data);
         });
+    }
+
+    deleteFoods(id: string): void {
+        this.foodService
+            .deleteFoods(id);
     }
 }
