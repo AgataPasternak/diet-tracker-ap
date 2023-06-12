@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, take } from 'rxjs';
-import { Response } from './foods.model';
+import { Foods, Response } from './foods.model';
 import { FoodsService } from './foods.service';
 
 @Injectable({
@@ -26,5 +26,14 @@ export class FoodsState {
     deleteFoods(id: string): void {
         this.foodService
             .deleteFoods(id);
+    }
+
+    postFoods(food: Foods): void {
+        this.foodService
+        .postFood(food)
+        .pipe(take(1))
+        .subscribe(() => {
+            this.getFoods();
+        })
     }
 }

@@ -1,6 +1,6 @@
 
 export class Foods {
-    constructor(public name: string, public id: Entity, public caloriesPer100g: number, public weight: number, public nutriScore: NutriScore, public tags: string, public photo: string) {}
+    constructor(public name: string, public id: string, public caloriesPer100g: string, public weight: number, public nutriScore: string, public tags: string, public photo: string) {}
 }
 
 export class NutriScore {
