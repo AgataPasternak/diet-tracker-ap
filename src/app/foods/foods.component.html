@@ -1,4 +1,4 @@
-<pre>
+<!-- <pre>
 {{ response$ | async | json }}
 </pre>
 
@@ -7,4 +7,28 @@
         <li *ngFor="let food of res.data">{{food.name}}</li>
     </ul>
     {{res.length | json}}
+</div> -->
+
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput search (keyup)="applyFilter($event)">
+</mat-form-field>
+<div>
+    <table mat-table matSort [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
+            <td mat-cell *matCellDef="let row">{{row.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Waga</th>
+            <td mat-cell *matCellDef="let row">{{row.weight}}</td>
+        </ng-container>
+        <ng-container matColumnDef="nutriScore">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nutri Score</th>
+            <td mat-cell *matCellDef="let row">{{row.nutriScore}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumn"></tr>
+    </table>
 </div>
