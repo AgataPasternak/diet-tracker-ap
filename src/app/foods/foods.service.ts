@@ -16,8 +16,8 @@ export class FoodsService {
     return this.httpClient.get<Response>(this.API_FOODS);
   }
 
-  deleteFoods(id: string) {
-    this.httpClient.delete(this.API_FOODS + id).subscribe();
+  deleteFoods(id: string): Observable<void> { // back-end nie intersuje jakiego typu dane zwracamy
+    return this.httpClient.delete<void>(this.API_FOODS + id);
   }
 
   postFood(food: Foods): Observable<Foods> {
