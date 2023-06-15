@@ -15,7 +15,6 @@ export class FoodsComponent implements OnInit {
   // ??? --> dlaczego columnsToDisplay nie musi widzieć object Response
   columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'actionsColumn'];
 
-
   private state = inject(FoodsState);
   private fb = inject(FormBuilder);
 
@@ -31,12 +30,11 @@ export class FoodsComponent implements OnInit {
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
-
-  // foodForm: FormGroup;
+  deleteInProgress$ = this.state.deleteInProgress$;
+  postInLoading$ = this.state.postInLoading$;
 
   ngOnInit(): void {
     this.state.getFoods();
-    // ??? ==> dlaczego nie da się tak
     // this.response$ = this.foodState.getFoods().foods$;
 
     // this.httpClient.get<Response>(

@@ -2,13 +2,32 @@
     margin: 24px;
 }
 
+.loading {
+    margin: 24px 0;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
 .foodForm {
+    width: 40%;
+    position: relative;
+
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+    }
+
     mat-form-field {
         display: block;
-        width: 40%;
+
     }
 
     button {
-        width: 40%;
+        width: 100%;
     }
 }
