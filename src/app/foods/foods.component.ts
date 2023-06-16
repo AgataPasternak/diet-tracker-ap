@@ -13,7 +13,7 @@ import { FoodsState } from './foods.state';
 
 export class FoodsComponent implements OnInit {
   // ??? --> dlaczego columnsToDisplay nie musi widzieć object Response
-  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'actionsColumn'];
+  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'actionsColumn'];
 
   private state = inject(FoodsState);
   private fb = inject(FormBuilder);
