@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, Subject, delay, take } from 'rxjs';
-import { Foods, Response } from './foods.model';
+import { Food, Response } from './foods.model';
 import { FoodsService } from './foods.service';
 
 @Injectable({
@@ -26,17 +27,38 @@ export class FoodsState {
         return this.postLoading$.asObservable();
     }
 
+    private error$ = new BehaviorSubject<Error>(null);
+    get errorMessage$(): Observable<Error> {
+        return this.error$.asObservable();
+    }
+
     private foodService = inject(FoodsService);
+    private snack = inject(MatSnackBar);
+
+    private openSnackBar(message: string, action: string) {
+        this.snack.open(message, action);
+    }
 
     getFoods(): void {
         this.loadingSource$.next(true);
         this.foodService
             .getFoods()
             .pipe(take(1), delay(1000))
-            .subscribe((data) => {
-                this.foodsSource$.next(data);
-                this.loadingSource$.next(false);
-            });
+            .subscribe({
+                next: (data) => {
+                    this.foodsSource$.next(data);
+                    this.loadingSource$.next(false);
+                },
+                error: (error) => {
+                    this.error$.next(error);
+                    this.openSnackBar(error.name, 'Close');
+                },
+                complete: () => {
+                    // define on request complete logic
+                    // 'complete' is not the same as 'finalize'!!
+                    // this logic will not be executed if error is fired
+                }
+            })
     }
 
     deleteFoods(id: string): void {
@@ -50,7 +72,7 @@ export class FoodsState {
             })
     }
 
-    postFood(food: Foods): void { // obsługa błędów (any albo null)
+    postFood(food: Food): void { // obsługa błędów (any albo null)
         this.postLoading$.next(true);
         this.foodService
             .postFood(food)
@@ -61,4 +83,4 @@ export class FoodsState {
             })
     }
 }
-type Error = any | null; // tu Subject , dwa pola prv i publi, metody get i set - analogicznie do tego co było 
+type Error = any | null; 

@@ -3,7 +3,7 @@ interface Entity {
 }
 type NutriScore = "A" | "B" | "C" | "D" | "E";
 
-export interface Foods extends Entity {
+export interface Food extends Entity {
     name: string;
     id: string;
     caloriesPer100g: string;
@@ -14,6 +14,6 @@ export interface Foods extends Entity {
 }
 
 export interface Response {
-    data: Foods[];
+    data: Food[];
     length: number;
 }

@@ -9,6 +9,7 @@
     {{res.length | json}}
 </div> -->
 
+
 <div class="wrapp">
 
     <div class="mat-typography">
@@ -54,6 +55,14 @@
 
     <div *ngIf="loading$ | async" class="loading">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <div *ngIf="errorMessage$ | async as err">
+        <mat-card>
+            <mat-card-content>
+                <p>Wystąpił błąd: {{err.name}}</p>
+            </mat-card-content>
+        </mat-card>
     </div>
 
     <div *ngIf="deleteInProgress$ | async" class="spinner">

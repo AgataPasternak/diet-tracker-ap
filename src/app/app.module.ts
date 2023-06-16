@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +17,7 @@ import { AppComponent } from './app.component';
 import { FoodsComponent } from './foods/foods.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,17 +30,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
+    MatCardModule,
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
     MatTableModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule,
   ],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
   ],
   bootstrap: [AppComponent]
 })

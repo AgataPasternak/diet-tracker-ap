@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Foods, Response } from './foods.model';
+import { Food, Response } from './foods.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class FoodsService {
     return this.httpClient.delete<void>(this.API_FOODS + id);
   }
 
-  postFood(food: Foods): Observable<Foods> {
-    return this.httpClient.post<Foods>(this.API_FOODS, food);
+  postFood(food: Food): Observable<Food> {
+    return this.httpClient.post<Food>(this.API_FOODS, food);
 
   }
 }

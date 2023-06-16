@@ -1,9 +1,10 @@
 
 import { Component, OnInit, inject } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { Foods } from './foods.model';
+
+import { Food } from './foods.model';
 import { FoodsState } from './foods.state';
+;
 
 @Component({
   selector: 'app-foods',
@@ -32,32 +33,22 @@ export class FoodsComponent implements OnInit {
   loading$ = this.state.loading$;
   deleteInProgress$ = this.state.deleteInProgress$;
   postInLoading$ = this.state.postInLoading$;
+  errorMessage$ = this.state.errorMessage$;
 
   ngOnInit(): void {
     this.state.getFoods();
-    // this.response$ = this.foodState.getFoods().foods$;
 
     // this.httpClient.get<Response>(
     //   'http://localhost:8080/api/foods/'
     // ).subscribe((data) => {
     //   this.foods = data;
     // })
-
-    // this.foodForm = new FormGroup({
-    //     'name': new FormControl('Cottage cheese'),
-    //     'id': new FormControl('1'),
-    //     'caloriesPer100g': new FormControl('32'),
-    //     'weight': new FormControl('100'),
-    //     'nutriScore': new FormControl('A'),
-    //     'tags': new FormControl('1')
-    // });
   }
   onDeleteFood(id: string) {
     this.state.deleteFoods(id);
   }
 
   onSubmit() {
-    // const food: Foods = this.mapFormToFood()
-    this.state.postFood(this.foodForm.value as Foods);
+    this.state.postFood(this.foodForm.value as Food);
   }
 }
