@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Food, Response } from './foods.model';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { Food, Response } from './foods.model';
 })
 
 export class FoodsService {
-  private readonly API_FOODS = 'http://localhost:8080/api/foods/';
+  private readonly API_FOODS = environment.apiUrl;
   httpClient = inject(HttpClient);
 
   // ??? ==> Dlaczego getFoods jest 
