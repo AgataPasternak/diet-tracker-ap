@@ -23,6 +23,10 @@ export class FoodsService {
 
   postFood(food: Food): Observable<Food> {
     return this.httpClient.post<Food>(this.API_FOODS, food);
-
   }
+
+  searchFood(filterValue: string): Observable<Response> {
+    return this.httpClient.get<Response>(this.API_FOODS + 'search/?name=' + filterValue);
+  }
+
 }

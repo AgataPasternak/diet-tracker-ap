@@ -11,12 +11,11 @@
 
 
 <div class="wrapp">
-
     <div class="mat-typography">
-        <h1>Dodaj produkt</h1>
+        <h2>Dodaj produkt</h2>
     </div>
 
-    <div [formGroup]="foodForm" class="foodForm">
+    <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
             <mat-spinner></mat-spinner>
         </div>
@@ -51,6 +50,19 @@
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="onSubmit()">Dodaj</button>
+    </div>
+
+    <br><br>
+
+    <div class="mat-typography">
+        <h2>Szukaj produktu</h2>
+    </div>
+    <div [formGroup]="searchForm" class="form searchForm">
+        <mat-form-field>
+            <mat-label>Szukaj produktu</mat-label>
+            <input matInput #input placeholder="Wpisz wyraz lub jego fragment" formControlName="search"
+                (keyup)="searchValue($event)">
+        </mat-form-field>
     </div>
 
     <div *ngIf="loading$ | async" class="loading">

@@ -29,6 +29,10 @@ export class FoodsComponent implements OnInit {
     photo: ['']
   })
 
+  searchForm = this.fb.group({
+    search: ['']
+  })
+
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
   deleteInProgress$ = this.state.deleteInProgress$;
@@ -50,5 +54,12 @@ export class FoodsComponent implements OnInit {
 
   onSubmit() {
     this.state.postFood(this.foodForm.value as Food);
+  }
+  searchValue(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.state.searchFood(filterValue);
+    if (filterValue === '') {
+      this.state.getFoods();
+    }
   }
 }

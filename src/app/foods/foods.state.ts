@@ -82,5 +82,13 @@ export class FoodsState {
                 this.postLoading$.next(false);
             })
     }
+
+    searchFood(filterValue: string): void {
+        this.foodService
+            .searchFood(filterValue)
+            .subscribe((data) => {
+                this.foodsSource$.next(data);
+            })
+    }
 }
 type Error = any | null; 
