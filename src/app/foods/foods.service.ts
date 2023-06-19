@@ -9,7 +9,7 @@ import { Food, Response } from './foods.model';
 })
 
 export class FoodsService {
-  private readonly API_FOODS = environment.apiUrl;
+  private readonly API_FOODS = environment.apiUrl + 'foods/';
   httpClient = inject(HttpClient);
 
   // ??? ==> Dlaczego getFoods jest 
