@@ -29,6 +29,8 @@ export class FoodsComponent implements OnInit {
     photo: ['']
   })
 
+  get name() { return this.foodForm.get('name'); }
+
   searchForm = this.fb.group({
     search: ['']
   })

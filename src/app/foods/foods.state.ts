@@ -27,7 +27,7 @@ export class FoodsState {
         return this.postLoading$.asObservable();
     }
 
-    private error$ = new BehaviorSubject<Error>(null);
+    private error$ = new BehaviorSubject<Error>(null); // interceptory do obsługi błędów
     get errorMessage$(): Observable<Error> {
         return this.error$.asObservable();
     }
@@ -43,15 +43,15 @@ export class FoodsState {
         this.loadingSource$.next(true);
         this.foodService
             .getFoods()
-            .pipe(take(1), delay(1000))
+            .pipe(take(1), delay(100))
             .subscribe({
                 next: (data) => {
                     this.foodsSource$.next(data);
-                    this.loadingSource$.next(false);
+                    this.loadingSource$.next(false); // reset errora this.error$.next(null);
                 },
                 error: (error) => {
                     this.error$.next(error);
-                    this.openSnackBar(error.name, 'Close');
+                    this.openSnackBar(error.name, 'Close'); // wyłączyć loader
                 },
                 complete: () => {
                     // define on request complete logic
@@ -61,11 +61,11 @@ export class FoodsState {
             })
     }
 
-    deleteFoods(id: string): void {
+    deleteFoods(id: string): void { // dodac obsługe błędów (any albo null)
         this.deleteProgress$.next(true);
         this.foodService
             .deleteFoods(id)
-            .pipe(delay(3000))
+            .pipe(delay(100))
             .subscribe(() => {
                 this.getFoods();
                 this.deleteProgress$.next(false);
@@ -76,7 +76,7 @@ export class FoodsState {
         this.postLoading$.next(true);
         this.foodService
             .postFood(food)
-            .pipe(take(1), delay(3000))
+            .pipe(take(1), delay(100))
             .subscribe(() => {
                 this.getFoods();
                 this.postLoading$.next(false);

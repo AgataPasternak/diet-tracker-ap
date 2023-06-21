@@ -21,8 +21,8 @@
         </div>
         <mat-form-field hintLabel="Max. 20 znaków">
             <mat-label>Nazwa</mat-label>
-            <input matInput #input maxlength="20" placeholder="np. jabłko" formControlName="name">
-            <mat-hint align="end">{{input.value.length}}/20</mat-hint>
+            <input matInput maxlength="20" placeholder="np. jabłko" formControlName="name">
+            <mat-hint align="end">{{name!.value!.length}}/20</mat-hint>
         </mat-form-field>
         <br>
         <mat-form-field>
