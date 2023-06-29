@@ -1,7 +1,7 @@
 interface Entity {
     id: string;
 }
-type NutriScore = "A" | "B" | "C" | "D" | "E";
+export type NutriScore = "A" | "B" | "C" | "D" | "E";
 
 export interface Food extends Entity {
     name: string;

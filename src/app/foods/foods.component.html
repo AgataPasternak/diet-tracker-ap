@@ -9,12 +9,14 @@
     {{res.length | json}}
 </div> -->
 
-
 <div class="wrapp">
     <div class="mat-typography">
         <h2>Dodaj produkt</h2>
     </div>
-
+    <!-- <pre>
+        {{ foodForm.value | json }}
+    </pre> -->
+    <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
             <mat-spinner></mat-spinner>
@@ -23,6 +25,7 @@
             <mat-label>Nazwa</mat-label>
             <input matInput maxlength="20" placeholder="np. jabłko" formControlName="name">
             <mat-hint align="end">{{name!.value!.length}}/20</mat-hint>
+            <!-- tu mat error -->
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -91,7 +94,7 @@
         </ng-container>
         <ng-container matColumnDef="nutriScore">
             <th mat-header-cell *matHeaderCellDef> Nutri Score </th>
-            <td mat-cell *matCellDef="let el"> {{el.nutriScore}} </td>
+            <td mat-cell *matCellDef="let el"> <app-nutri-score [nutriScore]="el.nutriScore"></app-nutri-score></td>
         </ng-container>
         <ng-container matColumnDef="caloriesPer100g">
             <th mat-header-cell *matHeaderCellDef> Kalorie na 100g </th>

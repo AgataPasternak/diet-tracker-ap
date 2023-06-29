@@ -20,6 +20,7 @@ export class FoodsComponent implements OnInit {
   private fb = inject(FormBuilder);
 
   foodForm = this.fb.group({
+    // name: ['', [Validators.required, Validators.minLength(20)]],
     name: [''],
     id: [''],
     caloriesPer100g: [''],
