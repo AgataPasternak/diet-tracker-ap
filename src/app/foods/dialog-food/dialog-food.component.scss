@@ -9,3 +9,34 @@
     right: 10px;
     top: 10px;
 }
+
+.wrapp {
+    margin: 24px;
+}
+
+.loading {
+    margin: 24px 0;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+}
+
+.form {
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+    }
+
+    mat-form-field {
+        display: block;
+
+    }
+
+    button {
+        width: 100%;
+    }
+}

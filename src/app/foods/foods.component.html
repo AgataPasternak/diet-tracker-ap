@@ -10,55 +10,14 @@
 </div> -->
 
 <div class="wrapp">
-    <button mat-raised-button color="primary" (click)="openDialog()">Dodaj produkt</button>
-    <div class="mat-typography">
-        <h2>Dodaj produkt</h2>
-    </div>
+    <button mat-raised-button color="primary" (click)="addFoodDialog()">Dodaj produkt</button>
+
     <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
-    <div [formGroup]="foodForm" class="form foodForm">
-        <div *ngIf="postInLoading$ | async" class="spinner">
-            <mat-spinner></mat-spinner>
-        </div>
-        <mat-form-field hintLabel="Max. 20 znaków">
-            <mat-label>Nazwa</mat-label>
-            <input matInput maxlength="20" placeholder="np. jabłko" formControlName="name">
-            <mat-hint align="end">{{name!.value!.length}}/20</mat-hint>
-            <!-- tu mat error -->
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>ID</mat-label>
-            <input matInput placeholder="np. 123" formControlName="id">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Waga</mat-label>
-            <input matInput placeholder="np. 100" formControlName="weight">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Kalorie na 100g</mat-label>
-            <input matInput placeholder="np. 32" formControlName="caloriesPer100g">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Nutri Score</mat-label>
-            <input matInput placeholder="np. A" formControlName="nutriScore">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Tagi</mat-label>
-            <input matInput placeholder="np. tag" formControlName="tags">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Zdjęcie</mat-label>
-            <input matInput placeholder="np. http://link.jpg" formControlName="photo">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="onSubmit()">Dodaj</button>
-    </div>
 
     <br><br>
 
-    <div class="mat-typography">
-        <h2>Szukaj produktu</h2>
-    </div>
-    <div [formGroup]="searchForm" class="form searchForm">
+    <!-- <div [formGroup]="searchForm" class="form searchForm"> -->
+    <div class="form searchForm">
         <mat-form-field>
             <mat-label>Szukaj produktu</mat-label>
             <input matInput #input placeholder="Wpisz wyraz lub jego fragment" formControlName="search"
@@ -85,8 +44,15 @@
         <ng-container matColumnDef="actionsColumn">
             <th mat-header-cell *matHeaderCellDef> Akcje </th>
             <td mat-cell *matCellDef="let el">
-                <button mat-stroked-button color="warn" (click)="onDeleteFood(el.id)">
-                    Remove
+                <button mat-icon-button color="warn" aria-label="Remove" title="Usuń" (click)="onDeleteFood(el.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" aria-label="Preview" title="Pogląd"
+                    (click)="onPreviewFood(el.id)">
+                    <mat-icon>remove_red_eye</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" aria-label="Edit" title="Edytuj" (click)="onEditFood(el.id)">
+                    <mat-icon>edit</mat-icon>
                 </button>
             </td>
         </ng-container>

@@ -76,7 +76,7 @@ export class FoodsState {
         this.postLoading$.next(true);
         this.foodService
             .postFood(food)
-            .pipe(take(1), delay(100))
+            .pipe(take(1), delay(1000))
             .subscribe(() => {
                 this.getFoods();
                 this.postLoading$.next(false);

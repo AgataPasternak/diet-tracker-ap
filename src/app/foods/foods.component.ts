@@ -1,10 +1,9 @@
 
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogFoodComponent } from './dialog-food/dialog-food.component';
-import { Food } from './foods.model';
+
 import { FoodsState } from './foods.state';
 
 
@@ -19,25 +18,7 @@ export class FoodsComponent implements OnInit {
   columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'actionsColumn'];
 
   private state = inject(FoodsState);
-  private fb = inject(FormBuilder);
   public dialog = inject(MatDialog);
-
-  foodForm = this.fb.group({
-    // name: ['', [Validators.required, Validators.minLength(20)]],
-    name: [''],
-    id: [''],
-    caloriesPer100g: [''],
-    weight: undefined,
-    nutriScore: [''],
-    tags: [''],
-    photo: ['']
-  })
-
-  get name() { return this.foodForm.get('name'); }
-
-  searchForm = this.fb.group({
-    search: ['']
-  })
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
@@ -58,9 +39,7 @@ export class FoodsComponent implements OnInit {
     this.state.deleteFoods(id);
   }
 
-  onSubmit() {
-    this.state.postFood(this.foodForm.value as Food);
-  }
+
   searchValue(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.state.searchFood(filterValue);
@@ -68,9 +47,28 @@ export class FoodsComponent implements OnInit {
       this.state.getFoods();
     }
   }
-  openDialog() {
-    this.dialog.open(DialogFoodComponent, {
-      width: '70%'
+  addFoodDialog() {
+    this.openDialog('Dodaj produkt', true);
+  }
+  onPreviewFood(id: string) {
+    this.openDialog('Podgląd produktu', false);
+  }
+  onEditFood(id: string) {
+    this.openDialog('Edytuj produkt', true);
+  }
+  openDialog(title: any, showAccions: boolean) {
+    var _dialog = this.dialog.open(DialogFoodComponent, {
+      width: '40%',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
+      data: {
+        title: title,
+        showAccions: showAccions
+      }
     });
+    _dialog.afterClosed().subscribe(result => {
+      console.log(result);
+    }
+    );
   }
 }
