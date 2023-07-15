@@ -10,12 +10,10 @@
 </div> -->
 
 <div class="wrapp">
+    <button mat-raised-button color="primary" (click)="openDialog()">Dodaj produkt</button>
     <div class="mat-typography">
         <h2>Dodaj produkt</h2>
     </div>
-    <!-- <pre>
-        {{ foodForm.value | json }}
-    </pre> -->
     <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">

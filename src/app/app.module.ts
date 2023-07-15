@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { FoodsComponent } from './foods/foods.component';
 import { SharedModule } from './shared/shared.module';
 import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
+import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FoodsComponent,
-    NutriScoreComponent
+    NutriScoreComponent,
+    DialogFoodComponent
   ],
   imports: [
     AppRoutingModule,

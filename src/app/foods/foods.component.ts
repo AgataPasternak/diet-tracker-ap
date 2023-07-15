@@ -2,9 +2,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
+import { MatDialog } from '@angular/material/dialog';
+import { DialogFoodComponent } from './dialog-food/dialog-food.component';
 import { Food } from './foods.model';
 import { FoodsState } from './foods.state';
-;
+
 
 @Component({
   selector: 'app-foods',
@@ -18,6 +20,7 @@ export class FoodsComponent implements OnInit {
 
   private state = inject(FoodsState);
   private fb = inject(FormBuilder);
+  public dialog = inject(MatDialog);
 
   foodForm = this.fb.group({
     // name: ['', [Validators.required, Validators.minLength(20)]],
@@ -64,5 +67,10 @@ export class FoodsComponent implements OnInit {
     if (filterValue === '') {
       this.state.getFoods();
     }
+  }
+  openDialog() {
+    this.dialog.open(DialogFoodComponent, {
+      width: '70%'
+    });
   }
 }
