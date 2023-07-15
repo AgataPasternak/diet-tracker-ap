@@ -35,17 +35,20 @@ export class DialogFoodComponent implements OnInit {
 
   get name() { return this.foodForm.get('name'); }
 
-  searchForm = this.fb.group({
-    search: ['']
-  })
+  // searchForm = this.fb.group({
+  //   search: ['']
+  // })
 
   onSubmit() {
     this.state.postFood(this.foodForm.value as Food);
     this.closeDialog();
   }
 
+
+
   closeDialog() {
     this.ref.close();
   }
+
 
 }

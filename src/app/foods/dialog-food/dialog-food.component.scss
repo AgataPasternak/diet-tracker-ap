@@ -40,3 +40,7 @@
         width: 100%;
     }
 }
+
+input[readonly] {
+    cursor: not-allowed;
+}

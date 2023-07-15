@@ -51,23 +51,25 @@ export class FoodsComponent implements OnInit {
     this.openDialog('Dodaj produkt', true);
   }
   onPreviewFood(id: string) {
-    this.openDialog('Podgląd produktu', false);
+    this.openDialog('Podgląd produktu', false, id, true);
   }
   onEditFood(id: string) {
-    this.openDialog('Edytuj produkt', true);
+    this.openDialog('Edytuj produkt', true, id);
   }
-  openDialog(title: any, showAccions: boolean) {
+  openDialog(title: any, showAccions: boolean, id?: string, readonly?: boolean) {
     var _dialog = this.dialog.open(DialogFoodComponent, {
       width: '40%',
       enterAnimationDuration: 300,
       exitAnimationDuration: 300,
       data: {
         title: title,
-        showAccions: showAccions
+        showAccions: showAccions,
+        id: id,
+        readonly: readonly
       }
     });
     _dialog.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
     }
     );
   }

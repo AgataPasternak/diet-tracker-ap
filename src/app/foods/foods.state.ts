@@ -90,5 +90,7 @@ export class FoodsState {
                 this.foodsSource$.next(data);
             })
     }
+
+
 }
 type Error = any | null; 

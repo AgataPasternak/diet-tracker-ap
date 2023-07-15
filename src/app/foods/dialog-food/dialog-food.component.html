@@ -12,34 +12,35 @@
         </div>
         <mat-form-field hintLabel="Max. 20 znaków">
             <mat-label>Nazwa</mat-label>
-            <input matInput maxlength="20" placeholder="np. jabłko" formControlName="name">
+            <input matInput maxlength="20" placeholder="np. jabłko" formControlName="name"
+                [readonly]="inputData.readonly">
             <mat-hint align="end">{{name!.value!.length}}/20</mat-hint>
             <!-- tu mat error -->
         </mat-form-field>
         <br>
         <mat-form-field>
             <mat-label>ID</mat-label>
-            <input matInput placeholder="np. 123" formControlName="id">
+            <input matInput placeholder="np. 123" formControlName="id" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Waga</mat-label>
-            <input matInput placeholder="np. 100" formControlName="weight">
+            <input matInput placeholder="np. 100" formControlName="weight" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Kalorie na 100g</mat-label>
-            <input matInput placeholder="np. 32" formControlName="caloriesPer100g">
+            <input matInput placeholder="np. 32" formControlName="caloriesPer100g" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nutri Score</mat-label>
-            <input matInput placeholder="np. A" formControlName="nutriScore">
+            <input matInput placeholder="np. A" formControlName="nutriScore" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tagi</mat-label>
-            <input matInput placeholder="np. tag" formControlName="tags">
+            <input matInput placeholder="np. tag" formControlName="tags" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Zdjęcie</mat-label>
-            <input matInput placeholder="np. http://link.jpg" formControlName="photo">
+            <input matInput placeholder="np. http://link.jpg" formControlName="photo" [readonly]="inputData.readonly">
         </mat-form-field>
     </div>
 </mat-dialog-content>
