@@ -20,7 +20,7 @@
         <br>
         <mat-form-field>
             <mat-label>ID</mat-label>
-            <input matInput placeholder="np. 123" formControlName="id" [readonly]="inputData.readonly">
+            <input matInput placeholder="np. 123" formControlName="id" [readonly]="true">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Waga</mat-label>
@@ -45,5 +45,12 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="inputData.showAccions">
-    <button mat-raised-button color="primary" (click)="onSubmit()">Zapisz</button>
+
+    <div *ngIf="inputData.editMode; then updateFood else addFood"></div>
+    <ng-template #addFood>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Zapisz</button>
+    </ng-template>
+    <ng-template #updateFood>
+        <button mat-raised-button color="primary" (click)="onUpdate()">Zapisz zmiany</button>
+    </ng-template>
 </mat-dialog-actions>

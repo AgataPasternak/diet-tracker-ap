@@ -33,4 +33,7 @@ export class FoodsService {
     return this.httpClient.get<Response>(this.API_FOODS + 'search/?name=' + filterValue);
   }
 
+  updateFood(food: Food): Observable<Food> {
+    return this.httpClient.put<Food>(this.API_FOODS + food.id, food);
+  }
 }

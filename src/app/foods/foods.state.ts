@@ -99,5 +99,12 @@ export class FoodsState {
             this.foodSource$.next(data);
         })
     }
+
+    updateFood(food: Food): void {
+        this.foodService.updateFood(food).subscribe(() => {
+            // ??? jak to działa
+            this.getFoods();
+        })
+    }
 }
 type Error = any | null; 

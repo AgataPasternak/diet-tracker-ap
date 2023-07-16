@@ -54,9 +54,9 @@ export class FoodsComponent implements OnInit {
     this.openDialog('Podgląd produktu', false, id, true);
   }
   onEditFood(id: string) {
-    this.openDialog('Edytuj produkt', true, id);
+    this.openDialog('Edytuj produkt', true, id, false, true);
   }
-  openDialog(title: any, showAccions: boolean, id?: string, readonly?: boolean) {
+  openDialog(title: any, showAccions: boolean, id?: string, readonly?: boolean, editMode?: boolean) {
     var _dialog = this.dialog.open(DialogFoodComponent, {
       width: '40%',
       enterAnimationDuration: 300,
@@ -65,7 +65,8 @@ export class FoodsComponent implements OnInit {
         title: title,
         showAccions: showAccions,
         id: id,
-        readonly: readonly
+        readonly: readonly,
+        editMode: editMode
       }
     });
     _dialog.afterClosed().subscribe(result => {
