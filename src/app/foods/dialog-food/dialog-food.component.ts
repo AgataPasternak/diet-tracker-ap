@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Food } from '../foods.model';
 import { FoodsState } from '../foods.state';
@@ -30,14 +30,13 @@ export class DialogFoodComponent implements OnInit {
   }
 
   foodForm = this.fb.group({
-    // name: ['', [Validators.required, Validators.minLength(20)]],
-    name: [''],
-    id: [''],
-    caloriesPer100g: [''],
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+    id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     weight: undefined,
-    nutriScore: [''],
-    tags: [''],
-    photo: ['']
+    nutriScore: ['', [Validators.required, Validators.pattern('^[A-E]$'), Validators.minLength(1), Validators.maxLength(1)]],
+    tags: ['', [Validators.required]],
+    photo: ['', [Validators.required]]
   })
 
   get name() { return this.foodForm.get('name'); }
@@ -48,7 +47,9 @@ export class DialogFoodComponent implements OnInit {
 
   onSubmit() {
     this.state.postFood(this.foodForm.value as Food);
-    this.closeDialog();
+    console.log(this.foodForm);
+
+    // this.closeDialog();
   }
 
   onUpdate() {
