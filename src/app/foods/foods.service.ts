@@ -17,6 +17,10 @@ export class FoodsService {
     return this.httpClient.get<Response>(this.API_FOODS);
   }
 
+  getFoodsById(id: string): Observable<Food> {
+    return this.httpClient.get<Food>(this.API_FOODS + id);
+  }
+
   deleteFoods(id: string): Observable<void> { // back-end nie intersuje jakiego typu dane zwracamy
     return this.httpClient.delete<void>(this.API_FOODS + id);
   }

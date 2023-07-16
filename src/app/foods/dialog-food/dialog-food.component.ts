@@ -17,9 +17,16 @@ export class DialogFoodComponent implements OnInit {
   private state = inject(FoodsState);
   public data: any = inject(MAT_DIALOG_DATA);
   postInLoading$ = this.state.postInLoading$;
+  responseFood$ = this.state.food$;
 
   ngOnInit(): void {
     this.inputData = this.data;
+    if (this.inputData.id) {
+      this.state.getFoodById(this.inputData.id);
+      this.responseFood$.subscribe((data) => {
+        this.foodForm.patchValue(data);
+      })
+    }
   }
 
   foodForm = this.fb.group({
@@ -44,11 +51,7 @@ export class DialogFoodComponent implements OnInit {
     this.closeDialog();
   }
 
-
-
   closeDialog() {
     this.ref.close();
   }
-
-
 }

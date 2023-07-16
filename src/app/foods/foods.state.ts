@@ -12,6 +12,9 @@ export class FoodsState {
     private foodsSource$ = new Subject<Response>; // można go updatować z zewnątrz (jest Subject)
     foods$ = this.foodsSource$.asObservable(); // nie da się go updatować z zewnątrz (jest Observable)
 
+    private foodSource$ = new Subject<Food>();
+    food$ = this.foodSource$.asObservable();
+
     private loadingSource$ = new BehaviorSubject<boolean>(false);
     get loading$(): Observable<boolean> {
         return this.loadingSource$.asObservable();
@@ -91,6 +94,10 @@ export class FoodsState {
             })
     }
 
-
+    getFoodById(id: string): void {
+        this.foodService.getFoodsById(id).subscribe((data) => {
+            this.foodSource$.next(data);
+        })
+    }
 }
 type Error = any | null; 
