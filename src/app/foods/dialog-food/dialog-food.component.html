@@ -4,7 +4,11 @@
     </button>
     <h2>{{inputData.title}}</h2>
 </div>
+
 <mat-dialog-content>
+    <!-- <pre>
+        {{ tags$ | async | json }}
+        </pre> -->
     <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
@@ -14,11 +18,6 @@
             <mat-label>Nazwa</mat-label>
             <input matInput placeholder="np. jabłko" formControlName="name" [readonly]="inputData.readonly">
             <mat-error *ngIf="foodForm.invalid">Min. 3 znaki.</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>ID</mat-label>
-            <input matInput placeholder="np. 123" formControlName="id" [readonly]="inputData.readonly">
-            <mat-error *ngIf="foodForm.invalid">Wyłącznie cyfry.</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Waga</mat-label>

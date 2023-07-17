@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Food } from '../foods.model';
 import { FoodsState } from '../foods.state';
+import { TagsState } from '../tags.state';
 
 @Component({
   selector: 'app-dialog-food',
@@ -16,8 +17,13 @@ export class DialogFoodComponent implements OnInit {
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
   public data: any = inject(MAT_DIALOG_DATA);
+  public tagsState = inject(TagsState);
+
   postInLoading$ = this.state.postInLoading$;
   responseFood$ = this.state.food$;
+  tags$ = this.tagsState.tags$;
+
+
 
   ngOnInit(): void {
     this.inputData = this.data;
@@ -27,11 +33,12 @@ export class DialogFoodComponent implements OnInit {
         this.foodForm.patchValue(data);
       })
     }
+    this.tagsState.getTags();
+
   }
 
   foodForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    id: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     weight: undefined,
     nutriScore: ['', [Validators.required, Validators.pattern('^[A-E]$'), Validators.minLength(1), Validators.maxLength(1)]],

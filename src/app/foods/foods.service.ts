@@ -12,7 +12,6 @@ export class FoodsService {
   private readonly API_FOODS = environment.apiUrl + 'foods/';
   httpClient = inject(HttpClient);
 
-  // ??? ==> Dlaczego getFoods jest 
   getFoods(): Observable<Response> {
     return this.httpClient.get<Response>(this.API_FOODS);
   }
