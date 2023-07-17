@@ -6,10 +6,6 @@
 </div>
 
 <mat-dialog-content>
-    <!-- <pre>
-        {{ tags$ | async | json }}
-        </pre> -->
-    <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
             <mat-spinner></mat-spinner>
@@ -30,6 +26,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nutri Score</mat-label>
+            <!-- wyrzucić readonly -->
             <input matInput placeholder="np. A" formControlName="nutriScore" [readonly]="inputData.readonly"
                 maxlength="1" oninput="this.value = this.value.toUpperCase()">
             <mat-error *ngIf="foodForm.invalid">Wyłącznie litery od A do E.</mat-error>
@@ -45,7 +42,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="inputData.showAccions">
-
     <div *ngIf="inputData.editMode; then updateFood else addFood"></div>
     <ng-template #addFood>
         <button mat-raised-button color="primary" (click)="onSubmit()">Zapisz</button>
