@@ -28,9 +28,11 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nutri Score</mat-label>
-            <input matInput placeholder="np. A" formControlName="nutriScore" maxlength="1"
-                oninput="this.value = this.value.toUpperCase()">
-            <mat-error *ngIf="foodForm.invalid">Wyłącznie litery od A do E.</mat-error>
+            <mat-select formControlName="nutriScore">
+                <mat-option *ngFor="let score of nutriScoreOptions" [value]="score">{{score}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="foodForm.invalid">Pole obowiązkowe.</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tagi</mat-label>

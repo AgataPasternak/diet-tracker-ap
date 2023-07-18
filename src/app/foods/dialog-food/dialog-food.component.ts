@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Food } from '../foods.model';
+import { Food, NutriScore } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
 import { Dialog } from './dialog.model';
@@ -21,6 +21,8 @@ export class DialogFoodComponent implements OnInit {
   responseFood$ = this.state.food$;
   tags$ = this.tagsState.tags$;
 
+  nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
+
 
   ngOnInit(): void {
     if (this.inputData.id) {
@@ -39,7 +41,7 @@ export class DialogFoodComponent implements OnInit {
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
-    nutriScore: ['', [Validators.required, Validators.pattern('^[A-E]$'), Validators.minLength(1), Validators.maxLength(1)]],
+    nutriScore: ['', [Validators.required]],
     tags: ['1', [Validators.required]],
     photo: ['', [Validators.required]]
   })
