@@ -17,7 +17,7 @@ import { FoodsState } from './foods.state';
 
 export class FoodsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort)
-  sort!: MatSort;
+  sort: MatSort; // przechwytuje referencję (MatSort) do sortowania, umieszczam ją w zmiennej sort
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
@@ -44,6 +44,8 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     this.response$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data.data);
       this.dataSource.sort = this.sort;
+      console.log(this.paginator);
+      this.dataSource.paginator = this.paginator;
     });
   }
 

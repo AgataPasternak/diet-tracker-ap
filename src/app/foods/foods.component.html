@@ -74,11 +74,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-
-
     </table>
-    <mat-paginator #paginator *ngIf="response$ | async as res" [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page">
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
     </mat-paginator>
-
 </div>
