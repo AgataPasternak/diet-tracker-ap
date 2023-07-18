@@ -1,6 +1,5 @@
 
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
-
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,7 +15,7 @@ import { FoodsState } from './foods.state';
   styleUrls: ['./foods.component.scss']
 })
 
-export class FoodsComponent implements OnInit {
+export class FoodsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort)
   sort!: MatSort;
   @ViewChild(MatPaginator)
@@ -39,41 +38,14 @@ export class FoodsComponent implements OnInit {
 
   ngOnInit(): void {
     this.state.getFoods();
-    this.response$.subscribe((data) => {
-      console.log(data);
-      // this.foods = data.data;
-      this.dataSource = new MatTableDataSource(data.data);
-      this.dataSource.sort = this.sort;
-
-    });
   }
 
-  // ngAfterViewInit() {
-  //   // w ngAfter bo nie mamy nagłówków zanim się nie załaduje
-  //   // this.dataSource = new MatTableDataSource(this.response$);
-  //   // this.dataSource.sort = this.sort;
-
-  //   // paginacja - jako dataSource podaje zasubskrybowany object data
-  //   this.response$.subscribe((data) => {
-
-  //     this.dataSource = new MatTableDataSource(data.data);
-  //     // this.dataSource.sort = this.sort;
-  //     this.dataSource.paginator = this.paginator;
-
-  //   });
-  // }
-
-  // ngAfterViewInit(): void {
-  //   this.tableDataSource.sort = this.sort;
-
-  //   if (!this.paginator) {
-  //     return;
-  //   }
-  //   this.matPaginator = this.paginator.matPaginator;
-  //   this.tableDataSource.paginator = this.matPaginator;
-  //   this.paginator.page.subscribe((page) => {
-  //     this.changePage.emit(page);
-  //   });
+  ngAfterViewInit(): void {
+    this.response$.subscribe((data) => {
+      this.dataSource = new MatTableDataSource(data.data);
+      this.dataSource.sort = this.sort;
+    });
+  }
 
   onDeleteFood(id: string) {
     this.state.deleteFoods(id);
