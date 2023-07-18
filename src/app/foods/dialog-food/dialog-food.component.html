@@ -4,7 +4,9 @@
     </button>
     <h2>{{inputData.title}}</h2>
 </div>
-
+<!-- <pre>
+    {{foodForm.value | json}}
+</pre> -->
 <mat-dialog-content>
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
@@ -26,22 +28,24 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nutri Score</mat-label>
-            <!-- wyrzucić readonly -->
-            <input matInput placeholder="np. A" formControlName="nutriScore" [readonly]="inputData.readonly"
-                maxlength="1" oninput="this.value = this.value.toUpperCase()">
+            <input matInput placeholder="np. A" formControlName="nutriScore" maxlength="1"
+                oninput="this.value = this.value.toUpperCase()">
             <mat-error *ngIf="foodForm.invalid">Wyłącznie litery od A do E.</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tagi</mat-label>
-            <input matInput placeholder="np. tag" formControlName="tags" [readonly]="inputData.readonly">
+            <mat-select formControlName="tags">
+                <mat-option *ngFor="let tag of tags$ | async" [value]="tag.id">{{tag.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Zdjęcie</mat-label>
-            <input matInput placeholder="np. http://link.jpg" formControlName="photo" [readonly]="inputData.readonly">
+            <input matInput placeholder="np. http://link.jpg" formControlName="photo">
         </mat-form-field>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions *ngIf="inputData.showAccions">
+<mat-dialog-actions *ngIf="inputData.showActions">
     <div *ngIf="inputData.editMode; then updateFood else addFood"></div>
     <ng-template #addFood>
         <button mat-raised-button color="primary" (click)="onSubmit()">Zapisz</button>

@@ -4,26 +4,25 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Food } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
+import { Dialog } from './dialog.model';
 
 @Component({
   templateUrl: './dialog-food.component.html',
   styleUrls: ['./dialog-food.component.scss']
 })
 export class DialogFoodComponent implements OnInit {
-  inputData: any; // zrobić interfejs; usunąć i używać samej data
-
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
-  public data: any = inject(MAT_DIALOG_DATA); // zrobić interfejs
-  public tagsState = inject(TagsState);
+  inputData: Dialog = inject(MAT_DIALOG_DATA);
+  tagsState = inject(TagsState);
 
   postInLoading$ = this.state.postInLoading$;
   responseFood$ = this.state.food$;
   tags$ = this.tagsState.tags$;
 
+
   ngOnInit(): void {
-    this.inputData = this.data;
     if (this.inputData.id) {
       this.state.getFoodById(this.inputData.id);
       this.responseFood$.subscribe((data) => {
@@ -41,7 +40,7 @@ export class DialogFoodComponent implements OnInit {
     caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     nutriScore: ['', [Validators.required, Validators.pattern('^[A-E]$'), Validators.minLength(1), Validators.maxLength(1)]],
-    tags: ['', [Validators.required]],
+    tags: ['1', [Validators.required]],
     photo: ['', [Validators.required]]
   })
 
@@ -49,8 +48,6 @@ export class DialogFoodComponent implements OnInit {
 
   onSubmit() {
     this.state.postFood(this.foodForm.value as Food);
-    console.log(this.foodForm);
-
     // this.closeDialog();
   }
 

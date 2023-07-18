@@ -11,7 +11,6 @@
 
 <div class="wrapp">
     <button mat-raised-button color="primary" (click)="addFoodDialog()">Dodaj produkt</button>
-
     <!-- dodać komunikatry o błędach w formularzu (Mat Error) -->
 
     <br><br>
@@ -56,8 +55,12 @@
                 </button>
             </td>
         </ng-container>
+        <ng-container matColumnDef="tags">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
+            <td mat-cell *matCellDef="let el"> {{el.tags}} </td>
+        </ng-container>
         <ng-container matColumnDef="nutriScore">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="nutriScore"> Nutri Score </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="nutriScore">Nutri Score</th>
             <td mat-cell *matCellDef="let el"> <app-nutri-score [nutriScore]="el.nutriScore"></app-nutri-score></td>
         </ng-container>
         <ng-container matColumnDef="caloriesPer100g">
