@@ -13,6 +13,7 @@ import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SharedModule } from './shared/shared.module';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
     DialogFoodComponent,
     HeaderComponent,
     DiaryComponent,
-    LoginComponent
+    LoginComponent,
+    SidenavListComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  onToggleSlidenav() {
+  // ?? dlaczego outpu jest tutaj a nie w navigation component (czy nie działa tylko w komponentach rodzicach?)
+  @Output() toggleSlidenav = new EventEmitter<void>();
 
+  onToggleSlidenav() {
+    this.toggleSlidenav.emit();
   }
 }
