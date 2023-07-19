@@ -1,21 +1,28 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FoodsComponent } from './foods/foods.component';
-import { SharedModule } from './shared/shared.module';
-import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
+import { DiaryComponent } from './diary/diary.component';
 import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
+import { FoodsComponent } from './foods/foods.component';
+import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
+import { LoginComponent } from './login/login.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     FoodsComponent,
     NutriScoreComponent,
-    DialogFoodComponent
+    DialogFoodComponent,
+    HeaderComponent,
+    DiaryComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,
@@ -23,7 +30,8 @@ import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FlexLayoutModule
   ],
   providers: [
   ],

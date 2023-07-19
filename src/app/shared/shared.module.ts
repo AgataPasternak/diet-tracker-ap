@@ -13,6 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 @NgModule({
   declarations: [],
@@ -31,6 +33,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSnackBarModule,
     MatSortModule,
     MatTableModule,
+    MatToolbarModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
