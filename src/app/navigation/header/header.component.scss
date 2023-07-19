@@ -1,13 +1,22 @@
-a {
-    text-decoration: none;
-    color: #fff;
-
-    &:hover,
-    &:focus,
-    &:active {
+.navigation-items {
+    li.active {
         text-decoration: underline;
     }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: underline;
+        }
+
+    }
 }
+
+
 
 .navigation-items {
     list-style-type: none;

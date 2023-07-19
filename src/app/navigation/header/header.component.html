@@ -6,13 +6,13 @@
     </div>
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-            <li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a routerLink="/foods">Food</a>
             </li>
-            <li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a routerLink="/diary">Diary</a>
             </li>
-            <li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a routerLink="/login">Login</a>
             </li>
         </ul>
