@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { DialogFoodComponent } from './dialog-food/dialog-food.component';
 import { Dialog } from './dialog-food/dialog.model';
 import { Food } from './foods.model';
@@ -24,11 +25,12 @@ export class FoodsComponent implements OnInit, AfterViewInit {
 
   @Input() public inputData!: Dialog;
 
-  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'actionsColumn'];
+  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'actionsColumn', 'photo'];
 
   private state = inject(FoodsState);
   dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
+  route = inject(ActivatedRoute);
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
@@ -36,11 +38,16 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   postInLoading$ = this.state.postInLoading$;
   errorMessage$ = this.state.errorMessage$;
   search = this.fb.control('');
+  pageTitle: string;
+  pageSubtitle: string;
+
 
   dataSource: MatTableDataSource<Food>;
 
   ngOnInit(): void {
     this.state.getFoods();
+    this.pageTitle = this.route.snapshot.params['page_title'];
+    this.pageSubtitle = this.route.snapshot.params['page_subtitle'];
   }
 
   ngAfterViewInit(): void {

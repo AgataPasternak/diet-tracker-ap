@@ -7,13 +7,13 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a routerLink="/foods">Food</a>
+                <a [routerLink]="['/foods', 'List of products', 'Here you can find details about food']">Food</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a routerLink="/diary">Diary</a>
+                <a [routerLink]="['/diary', 'Diary', 'Diary Subtitle']">Diary</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a routerLink="/login">Login</a>
+                <a [routerLink]="['/login', 'Login', 'Login to enjoy the App']">Login</a>
             </li>
         </ul>
     </div>
