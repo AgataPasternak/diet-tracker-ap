@@ -85,7 +85,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     showActions: false,
     // this.idFood jest undefined
     // id: 'this.idFood',
-    id: '1',
+    id: '2',
     readonly: true,
     editMode: false
   }

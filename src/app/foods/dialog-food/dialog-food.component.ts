@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Food, NutriScore } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
@@ -16,6 +17,7 @@ export class DialogFoodComponent implements OnInit {
   private state = inject(FoodsState);
   inputData: Dialog = inject(MAT_DIALOG_DATA);
   tagsState = inject(TagsState);
+  router = inject(Router);
 
   postInLoading$ = this.state.postInLoading$;
   responseFood$ = this.state.food$;
@@ -50,7 +52,12 @@ export class DialogFoodComponent implements OnInit {
 
   onSubmit() {
     this.state.postFood(this.foodForm.value as Food);
-    // this.closeDialog();
+    const name = this.foodForm.get('name')?.value;
+    this.closeDialog();
+    this.router.navigate(['/diary'],
+      {
+        fragment: "Dziękujemy za dodanie produktu!"
+      });
   }
 
   onUpdate() {
