@@ -52,7 +52,7 @@
     </div>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="actionsColumn">
-            <th mat-header-cell *matHeaderCellDef> Akcje </th>
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let el">
                 <button mat-icon-button color="warn" aria-label="Remove" title="Usuń" (click)="onDeleteFood(el.id)">
                     <mat-icon>delete</mat-icon>
@@ -80,7 +80,7 @@
             <td mat-cell *matCellDef="let el"> <app-nutri-score [nutriScore]="el.nutriScore"></app-nutri-score></td>
         </ng-container>
         <ng-container matColumnDef="caloriesPer100g">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header="caloriesPer100g">Kalorie na 100g</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="caloriesPer100g">Calories per 100g</th>
             <td mat-cell *matCellDef="let el"> {{el.caloriesPer100g}} </td>
         </ng-container>
         <ng-container matColumnDef="id">

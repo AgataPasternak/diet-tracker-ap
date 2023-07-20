@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DialogFoodComponent } from './dialog-food/dialog-food.component';
 import { Dialog } from './dialog-food/dialog.model';
 import { Food } from './foods.model';
@@ -30,6 +30,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   private state = inject(FoodsState);
   dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
+  router = inject(Router);
   route = inject(ActivatedRoute);
 
   response$ = this.state.foods$;
@@ -83,7 +84,8 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     title: 'Podgląd produktu',
     showActions: false,
     // this.idFood jest undefined
-    id: this.idFood,
+    // id: 'this.idFood',
+    id: '1',
     readonly: true,
     editMode: false
   }
@@ -93,10 +95,10 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     this.openDialog(this.addFoodDialogData);
   }
   onPreviewFood(id: string) {
+    // this.router.navigate(['/foods', id]);
+
     this.idFood = id;
-    console.log(this.idFood);
     this.openDialog(this.onPreviewFoodData);
-    console.log(this.onPreviewFoodData);
   }
   onEditFood(id: string) {
     //this.openDialog('Edytuj produkt', true, id, false, true);

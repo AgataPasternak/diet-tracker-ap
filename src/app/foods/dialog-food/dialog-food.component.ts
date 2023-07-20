@@ -54,6 +54,9 @@ export class DialogFoodComponent implements OnInit {
   }
 
   onUpdate() {
+    if (this.foodForm.invalid) {
+      return;
+    }
     this.state.updateFood(this.foodForm.value as Food);
     this.closeDialog();
   }
