@@ -44,6 +44,8 @@
         <mat-form-field>
             <mat-label>Zdjęcie</mat-label>
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">
+            <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" /> -->
+            <img src="{{imageSrc}}" width="100%" />
         </mat-form-field>
     </div>
 </mat-dialog-content>

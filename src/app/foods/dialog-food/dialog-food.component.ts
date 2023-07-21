@@ -24,12 +24,13 @@ export class DialogFoodComponent implements OnInit {
   tags$ = this.tagsState.tags$;
 
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
-
+  imageSrc: string;
 
   ngOnInit(): void {
     if (this.inputData.id) {
       this.state.getFoodById(this.inputData.id);
       this.responseFood$.subscribe((data) => {
+        this.imageSrc = data.photo;
         this.foodForm.patchValue(data);
       })
     }
