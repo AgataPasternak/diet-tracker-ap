@@ -29,6 +29,7 @@
 
         <div fxFlex="50%" fxLayoutAlign="end top">
             <button mat-fab extended color="primary" (click)="addFoodDialog()">
+                <!-- dodać metoda openDialog -->
                 <mat-icon>add_circle_outline</mat-icon>
                 Dodaj produkt
             </button>
@@ -62,6 +63,7 @@
                     <mat-icon>remove_red_eye</mat-icon>
                 </button>
                 <button mat-icon-button color="primary" aria-label="Edit" title="Edytuj" (click)="onEditFood(el.id)">
+                    <!-- wyowałać metode openDialog z konfigruacją w HTML -->
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>

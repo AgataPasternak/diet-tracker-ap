@@ -6,8 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FoodDialogData } from './dialog-food/dialog-food-data.model';
 import { DialogFoodComponent } from './dialog-food/dialog-food.component';
-import { Dialog } from './dialog-food/dialog.model';
 import { Food } from './foods.model';
 import { FoodsState } from './foods.state';
 
@@ -23,15 +23,15 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
-  @Input() public inputData!: Dialog;
+  @Input() public inputData!: FoodDialogData;
 
   columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'actionsColumn', 'photo'];
 
   private state = inject(FoodsState);
   dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute); // wszsytko czego nie używam w temaplte powinno być prywatne
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
@@ -46,6 +46,9 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Food>;
 
   ngOnInit(): void {
+    const routerData = this.route.data.subscribe((data) => {
+      this.pageTitle = data['title'];
+    });
     this.state.getFoods();
     this.pageTitle = this.route.snapshot.params['page_title'];
     this.pageSubtitle = this.route.snapshot.params['page_subtitle'];
@@ -70,52 +73,46 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       this.state.getFoods();
     }
   }
-  idFood!: string;
-
-  addFoodDialogData = {
-    title: 'Dodaj produkt',
-    showActions: true,
-    id: undefined,
-    readonly: false,
-    editMode: false
-  }
-
-  onPreviewFoodData = {
-    title: 'Podgląd produktu',
-    showActions: false,
-    // this.idFood jest undefined
-    // id: 'this.idFood',
-    id: '2',
-    readonly: true,
-    editMode: false
-  }
-
 
   addFoodDialog() {
-    this.openDialog(this.addFoodDialogData);
+    const addFoodDialogData: FoodDialogData = { // zmianić nazwę Dialog na FoodDialog
+      title: 'Dodaj produkt',
+      showActions: true,
+      id: undefined,
+      readonly: false,
+      editMode: false
+    }
+    this.openDialog(addFoodDialogData);
   }
+
   onPreviewFood(id: string) {
-    // this.router.navigate(['/foods', id]);
-
-    this.idFood = id;
-    this.openDialog(this.onPreviewFoodData);
+    const onPreviewFoodData: FoodDialogData = {
+      title: 'Podgląd produktu',
+      showActions: false,
+      id,
+      readonly: true,
+      editMode: false
+    }
+    this.openDialog(onPreviewFoodData);
   }
+
   onEditFood(id: string) {
-    //this.openDialog('Edytuj produkt', true, id, false, true);
+    const onEditFoodData: FoodDialogData = {
+      title: 'Edycja produktu',
+      showActions: true,
+      id,
+      readonly: false,
+      editMode: true
+    }
+    this.openDialog(onEditFoodData);
   }
 
-  openDialog(inputData: Dialog) {
-    const dialog = this.dialog.open(DialogFoodComponent, {
+  private openDialog(data: FoodDialogData) { // private: metoda nie będzie dostępna z HTML
+    this.dialog.open(DialogFoodComponent, {
       width: '40%',
       enterAnimationDuration: 300,
       exitAnimationDuration: 300,
-      data: {
-        title: inputData.title,
-        showActions: inputData.showActions,
-        id: inputData.id,
-        readonly: inputData.readonly,
-        editMode: inputData.editMode
-      }
+      data
     });
   }
 }

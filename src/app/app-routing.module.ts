@@ -7,13 +7,16 @@ import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/foods', pathMatch: 'full' },
+  { path: '', redirectTo: '/foods', pathMatch: 'full' },
   // { path: '', component: FoodsComponent },
-  { path: 'foods/:page_title/:page_subtitle', component: FoodsComponent },
-  { path: 'foods', component: FoodsComponent },
-  { path: 'diary/:page_title/:page_subtitle', component: DiaryComponent },
+  {
+    path: 'foods', component: FoodsComponent, data: { // dane do często używane do wyśtwietlenia nagłówków; queryParams, używane często do filtów
+      title: 'Foods'
+    }
+  },
   { path: 'diary', component: DiaryComponent },
-  { path: 'login/:page_title/:page_subtitle', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '/foods', pathMatch: 'full' }, // dodac komponent 404
 ];
 
 @NgModule({

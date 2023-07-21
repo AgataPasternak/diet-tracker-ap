@@ -1,4 +1,4 @@
-export interface Dialog {
+export interface FoodDialogData {
     title: string;
     showActions: boolean;
     id?: string;

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Food, NutriScore } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
-import { Dialog } from './dialog.model';
+import { FoodDialogData } from './dialog-food-data.model';
 
 @Component({
   templateUrl: './dialog-food.component.html',
@@ -15,7 +15,7 @@ export class DialogFoodComponent implements OnInit {
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
-  inputData: Dialog = inject(MAT_DIALOG_DATA);
+  inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
   tagsState = inject(TagsState);
   router = inject(Router);
 
@@ -61,11 +61,15 @@ export class DialogFoodComponent implements OnInit {
       });
   }
 
-  onUpdate() {
-    if (this.foodForm.invalid) {
-      return;
+  onUpdate() { // TODO: przerobić na jedną metodą onSave (onSubmit, onUpdate)
+    // if (this.foodForm.invalid) {
+    //   return;
+    // }
+    const food = {
+      ...this.foodForm.value, // spread operator
+      id: this.inputData.id
     }
-    this.state.updateFood(this.foodForm.value as Food);
+    this.state.updateFood(food as Food);
     this.closeDialog();
   }
 
