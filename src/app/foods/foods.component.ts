@@ -25,7 +25,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
 
   @Input() public inputData!: FoodDialogData;
 
-  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'actionsColumn', 'photo'];
+  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'photo', 'actionsColumn'];
 
   private state = inject(FoodsState);
   dialog = inject(MatDialog);
