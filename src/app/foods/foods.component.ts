@@ -50,8 +50,6 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       this.pageSubtitle = data['subtitle'];
     });
     this.state.getFoods();
-    this.pageTitle = this.route.snapshot.params['page_title'];
-    this.pageSubtitle = this.route.snapshot.params['page_subtitle'];
   }
 
   ngAfterViewInit(): void {
