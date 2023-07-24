@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SharedModule } from './shared/shared.module';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     HeaderComponent,
     DiaryComponent,
     LoginComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    PageNotFoundComponent
   ],
   imports: [
     AppRoutingModule,

@@ -4,19 +4,30 @@ import { RouterModule, Routes } from '@angular/router';
 import { DiaryComponent } from './diary/diary.component';
 import { FoodsComponent } from './foods/foods.component';
 import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/foods', pathMatch: 'full' },
-  // { path: '', component: FoodsComponent },
   {
     path: 'foods', component: FoodsComponent, data: { // dane do często używane do wyśtwietlenia nagłówków; queryParams, używane często do filtów
-      title: 'Foods'
+      title: 'Foods',
+      subtitle: 'List of foods'
     }
   },
-  { path: 'diary', component: DiaryComponent },
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/foods', pathMatch: 'full' }, // dodac komponent 404
+  {
+    path: 'diary', component: DiaryComponent, data: {
+      title: 'Diary',
+      subtitle: 'List of diary'
+    }
+  },
+  {
+    path: 'login', component: LoginComponent, data: {
+      title: 'Login',
+      subtitle: 'Login to your account'
+    }
+  },
+  { path: '**', component: PageNotFoundComponent }, // dodac komponent 404
 ];
 
 @NgModule({

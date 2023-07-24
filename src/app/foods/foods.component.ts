@@ -31,7 +31,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private route = inject(ActivatedRoute); // wszsytko czego nie używam w temaplte powinno być prywatne
+  private route = inject(ActivatedRoute); // wszystko czego nie używam w temaplte powinno być prywatne
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
@@ -42,12 +42,12 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   pageTitle: string;
   pageSubtitle: string;
 
-
   dataSource: MatTableDataSource<Food>;
 
   ngOnInit(): void {
     const routerData = this.route.data.subscribe((data) => {
       this.pageTitle = data['title'];
+      this.pageSubtitle = data['subtitle'];
     });
     this.state.getFoods();
     this.pageTitle = this.route.snapshot.params['page_title'];
