@@ -22,11 +22,16 @@ export class DialogFoodComponent implements OnInit {
   postInLoading$ = this.state.postInLoading$;
   responseFood$ = this.state.food$;
   tags$ = this.tagsState.tags$;
+  tagsArray: string[];
 
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
 
   ngOnInit(): void {
+    this.tags$.subscribe((data) => {
+      this.tagsArray = data.map((tag) => tag.name);
+    })
+
     if (this.inputData.id) {
       this.state.getFoodById(this.inputData.id);
       this.responseFood$.subscribe((data) => {
@@ -45,7 +50,7 @@ export class DialogFoodComponent implements OnInit {
     caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     nutriScore: ['', [Validators.required]],
-    tags: ['1', [Validators.required]],
+    tags: ['', [Validators.required]],
     photo: ['', [Validators.required]]
   })
 
