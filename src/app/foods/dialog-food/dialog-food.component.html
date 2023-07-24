@@ -36,7 +36,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tagi</mat-label>
-            <mat-select formControlName="tags">
+            <mat-select formControlName="tags" multiple>
                 <mat-option *ngFor="let tag of tags$ | async" [value]="tag.id.toString()">{{tag.name}}
                 </mat-option>
             </mat-select>
