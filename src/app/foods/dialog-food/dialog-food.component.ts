@@ -19,24 +19,26 @@ export class DialogFoodComponent implements OnInit {
   tagsState = inject(TagsState);
   router = inject(Router);
 
+  savedTags: string[] = [];
+
   postInLoading$ = this.state.postInLoading$;
   responseFood$ = this.state.food$;
   tags$ = this.tagsState.tags$;
-  tagsArray: string[];
+  tagsArray: any;
 
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
 
   ngOnInit(): void {
     this.tags$.subscribe((data) => {
-      this.tagsArray = data.map((tag) => tag.name);
+      this.tagsArray = data.map(tag => tag.name);
     })
-
     if (this.inputData.id) {
       this.state.getFoodById(this.inputData.id);
       this.responseFood$.subscribe((data) => {
         this.imageSrc = data.photo;
         this.foodForm.patchValue(data);
+        this.savedTags = data.tags.split(',');
       })
     }
     if (this.inputData.readonly) {
@@ -76,6 +78,15 @@ export class DialogFoodComponent implements OnInit {
     }
     this.state.updateFood(food as Food);
     this.closeDialog();
+  }
+
+
+  remove(tag: string): void {
+    const index = this.tagsArray.indexOf(tag);
+
+    if (index >= 0) {
+      this.tagsArray.splice(index, 1);
+    }
   }
 
   closeDialog() {

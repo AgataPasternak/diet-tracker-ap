@@ -34,13 +34,27 @@
             </mat-select>
             <mat-error *ngIf="foodForm.invalid">Pole obowiązkowe.</mat-error>
         </mat-form-field>
-        <mat-form-field>
+
+        <!-- <mat-form-field>
             <mat-label>Tagi</mat-label>
             <mat-select formControlName="tags" multiple>
                 <mat-option *ngFor="let tag of tagsArray" [value]="tag">{{tag}}
                 </mat-option>
             </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field>
+            <mat-label>Tags</mat-label>
+            <mat-chip-grid #chipGrid>
+                <mat-chip-row *ngFor="let tag of savedTags">
+                    {{tag | tagsToName }}
+                </mat-chip-row>
+            </mat-chip-grid>
+            <input placeholder="Tags..." [matChipInputFor]="chipGrid" />
         </mat-form-field>
+
+
+
         <mat-form-field>
             <mat-label>Zdjęcie</mat-label>
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">

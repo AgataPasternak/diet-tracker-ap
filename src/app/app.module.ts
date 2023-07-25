@@ -12,9 +12,10 @@ import { FoodsComponent } from './foods/foods.component';
 import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './navigation/header/header.component';
-import { SharedModule } from './shared/shared.module';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SharedModule } from './shared/shared.module';
+import { TagsToNamePipe } from './tags-to-name.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     DiaryComponent,
     LoginComponent,
     SidenavListComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TagsToNamePipe
   ],
   imports: [
     AppRoutingModule,
