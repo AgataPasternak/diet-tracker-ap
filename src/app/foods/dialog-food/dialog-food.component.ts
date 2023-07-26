@@ -40,7 +40,7 @@ export class DialogFoodComponent implements OnInit {
       this.responseFood$.subscribe((data) => {
         this.imageSrc = data.photo;
         this.foodForm.patchValue(data);
-        this.savedTags = data.tags.split(',');
+        this.savedTags = data.tags?.split(',');
       })
     }
     if (this.inputData.readonly) {
@@ -61,13 +61,12 @@ export class DialogFoodComponent implements OnInit {
   get name() { return this.foodForm.get('name'); }
 
   onSubmit() {
+    // if (this.foodForm.invalid) {
+    //   return;
+    // }
     this.state.postFood(this.foodForm.value as Food);
-    const name = this.foodForm.get('name')?.value;
+    // const name = this.foodForm.get('name')?.value;
     this.closeDialog();
-    this.router.navigate(['/diary'],
-      {
-        fragment: "Dziękujemy za dodanie produktu!"
-      });
   }
 
   onUpdate() { // TODO: przerobić na jedną metodą onSave (onSubmit, onUpdate)
@@ -82,13 +81,17 @@ export class DialogFoodComponent implements OnInit {
     this.closeDialog();
   }
 
-
   remove(tag: string): void {
     const index = this.savedTags.indexOf(tag);
-
     if (index >= 0) {
       this.savedTags.splice(index, 1);
     }
+    const food = {
+      ...this.foodForm.value, // spread operator
+      id: this.inputData.id,
+      tags: this.savedTags.join(',')
+    }
+    this.state.updateFood(food as Food);
   }
 
   closeDialog() {

@@ -16,6 +16,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { TagsToNamePipe } from './tags-to-name.pipe';
+import { TagsToArrayPipe } from './tags-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     LoginComponent,
     SidenavListComponent,
     PageNotFoundComponent,
-    TagsToNamePipe
+    TagsToNamePipe,
+    TagsToArrayPipe
   ],
   imports: [
     AppRoutingModule,

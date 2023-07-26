@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TagsState } from './foods/tags.state';
 
-
-
 @Pipe({
   name: 'tagsToName'
 })
@@ -11,13 +9,17 @@ export class TagsToNamePipe implements PipeTransform {
   tagsArray: string[];
   tags$ = this.tagsState.tags$;
 
-  tagsName = ['Fruit', 'Vegetable', 'Meat', 'Bread', 'Dairy', 'Egg', 'Gluten', 'Soy', 'Nuts', 'Peanuts', 'Lactose', 'Sugar', 'Salt', 'Alcohol', 'Tobacco', 'Other'];
+  tagsName = ['Fruit', 'Vegetable', 'Meat', 'Bread', 'Dairy', 'Egg', 'Gluten', 'Soy', 'Nuts', 'Peanuts', 'Lactose', 'Sugar', 'Salt', 'Alcohol', 'Tobacco', 'Others'];
 
-  transform(value: any) {
-    // this.tags$.subscribe((data) => {
-    //   this.tagsArray = data.map(tag => tag.name);
-    // })
-    return this.tagsName[value];
+  transform(value: []) {
+    if (value === undefined) {
+      return '-';
+    } else {
+      const valueReturn = value.map((element) => {
+        return this.tagsName[element - 1];
+      })
+      return valueReturn.join(', ');
+    }
   }
 }
 
