@@ -26,10 +26,12 @@ export class DialogFoodComponent implements OnInit {
   tags$ = this.tagsState.tags$;
   tagsArray: any;
 
+
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
 
   ngOnInit(): void {
+
     this.tags$.subscribe((data) => {
       this.tagsArray = data.map(tag => tag.name);
     })
@@ -82,10 +84,10 @@ export class DialogFoodComponent implements OnInit {
 
 
   remove(tag: string): void {
-    const index = this.tagsArray.indexOf(tag);
+    const index = this.savedTags.indexOf(tag);
 
     if (index >= 0) {
-      this.tagsArray.splice(index, 1);
+      this.savedTags.splice(index, 1);
     }
   }
 
