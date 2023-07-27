@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { DiaryResponse } from './diary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,4 +10,8 @@ import { environment } from 'src/environments/environment';
 export class DiaryService {
   private readonly API_DIARY = environment.apiUrl + 'diary/';
   httpClient = inject(HttpClient);
+
+  getDiaryEntries(): Observable<DiaryResponse> {
+    return this.httpClient.get<DiaryResponse>(this.API_DIARY);
+  }
 }
