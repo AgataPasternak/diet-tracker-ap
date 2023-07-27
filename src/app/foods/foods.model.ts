@@ -11,6 +11,7 @@ export interface Food extends Entity {
     nutriScore: NutriScore;
     tags: string;
     photo: string;
+    mealType?: string;
 }
 
 export interface Response {
