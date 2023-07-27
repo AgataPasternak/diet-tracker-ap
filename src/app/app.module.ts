@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToNamePipe } from './tags-to-name.pipe';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TagsToArrayPipe } from './tags-to-array.pipe';
     SidenavListComponent,
     PageNotFoundComponent,
     TagsToNamePipe,
-    TagsToArrayPipe
+    TagsToArrayPipe,
+    FooterComponent
   ],
   imports: [
     AppRoutingModule,
