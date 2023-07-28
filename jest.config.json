@@ -1,0 +1,75 @@
+{
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+        "<rootDir>/src/setup.jest.ts"
+    ],
+    "testPathIgnorePatterns": [
+        "<rootDir>/node_modules/",
+        "<rootDir>/dist/",
+        "<rootDir>/src/environments/",
+        "<rootDir>/src/main.ts",
+        "<rootDir>/src/polyfills.ts"
+    ],
+    "collectCoverageFrom": [
+        "src/**/*.ts",
+        "!<rootDir>/node_modules/",
+        "!src/app/api/**",
+        "!<rootDir>/**/*.module.ts",
+        "!<rootDir>/**/*.mock.ts",
+        "!<rootDir>/**/*.const.ts",
+        "!<rootDir>/**/*.enum.ts",
+        "!<rootDir>/**/*.dict.ts",
+        "!<rootDir>/src/main.ts",
+        "!<rootDir>/src/polyfills.ts",
+        "!<rootDir>/src/environments/**"
+    ],
+    "globalSetup": "jest-preset-angular/global-setup",
+    "transformIgnorePatterns": [],
+    "moduleNameMapper": {
+        "@env/(.*)": [
+            "<rootDir>/src/environments/$1"
+        ],
+        "@views/(.*)": [
+            "<rootDir>/src/app/views/$1"
+        ],
+        "@models/(.*)": [
+            "<rootDir>/src/app/_models/$1"
+        ],
+        "@states/(.*)": [
+            "<rootDir>/src/app/_states/$1"
+        ],
+        "@core/(.*)": [
+            "<rootDir>/src/app/_core/$1"
+        ],
+        "@api/(.*)": [
+            "<rootDir>/src/app/api/$1"
+        ],
+        "@common/(.*)": [
+            "<rootDir>/src/app/_common/$1"
+        ],
+        "@services/(.*)": [
+            "<rootDir>/src/app/_services/$1"
+        ],
+        "@repositories/(.*)": [
+            "<rootDir>/src/app/repositories/$1"
+        ],
+        "@authentication/(.*)": [
+            "<rootDir>/src/app/_authentication/$1"
+        ],
+        "@interceptors/(.*)": [
+            "<rootDir>/src/app/_interceptors/$1"
+        ],
+        "@components/(.*)": [
+            "<rootDir>/src/app/_components/$1"
+        ],
+        "@utility/(.*)": [
+            "<rootDir>/src/app/_utility/$1"
+        ],
+        "@oauth2/(.*)": [
+            "<rootDir>/src/app/_services/oauth2/$1"
+        ],
+        "@nets/test-suite/(.*)": [
+            "<rootDir>/test-suite/$1"
+        ]
+    }
+}
