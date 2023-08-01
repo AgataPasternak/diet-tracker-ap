@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { MatLineModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, MatIconModule, MatSidenavModule, MatLineModule, MatPaginatorModule],
     declarations: [AppComponent]
   }));
 

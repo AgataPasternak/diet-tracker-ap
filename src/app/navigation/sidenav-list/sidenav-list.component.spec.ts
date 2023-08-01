@@ -8,7 +8,7 @@ describe('SidenavListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SidenavListComponent]
+      declarations: [SidenavListComponent],
     });
     fixture = TestBed.createComponent(SidenavListComponent);
     component = fixture.componentInstance;

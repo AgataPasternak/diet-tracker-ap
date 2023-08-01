@@ -10,14 +10,14 @@ import { DiaryComponent } from './diary/diary.component';
 import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
 import { FoodsComponent } from './foods/foods.component';
 import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
+import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
-import { TagsToNamePipe } from './tags-to-name.pipe';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
-import { FooterComponent } from './footer/footer.component';
+import { TagsToNamePipe } from './tags-to-name.pipe';
 
 @NgModule({
   declarations: [
