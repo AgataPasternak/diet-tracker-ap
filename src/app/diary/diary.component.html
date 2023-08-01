@@ -1,8 +1,10 @@
-<div class="header">
-    <h1>{{pageTitle}}</h1>
-    <h3>{{pageSubtitle}}</h3>
-    <mat-divider></mat-divider>
-</div>
-<pre>
+<div class="wrap">
+    <div class="header">
+        <h1>{{pageTitle}}</h1>
+        <h3>{{pageSubtitle}}</h3>
+        <mat-divider></mat-divider>
+    </div>
+    <pre>
     {{diary$ | async | json }}
-</pre>
+    </pre>
+</div>
