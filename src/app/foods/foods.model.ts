@@ -1,6 +1,5 @@
-interface Entity {
-    id: string;
-}
+import { Entity } from "../shared/models/entity.models";
+
 export type NutriScore = "A" | "B" | "C" | "D" | "E";
 
 export interface Food extends Entity {
@@ -11,10 +10,4 @@ export interface Food extends Entity {
     nutriScore: NutriScore;
     tags: string;
     photo: string;
-    mealType?: string;
-}
-
-export interface Response {
-    data: Food[];
-    length: number;
 }

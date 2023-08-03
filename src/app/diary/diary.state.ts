@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DiaryResponse } from './diary.model';
+import { ApiResponse } from '../shared/models/api-response.model';
+import { DiaryEntry } from './diary.model';
 import { DiaryService } from './diary.service';
 
 
@@ -9,7 +10,7 @@ import { DiaryService } from './diary.service';
 })
 
 export class DiaryState {
-    private diarySource$ = new Subject<DiaryResponse>;
+    private diarySource$ = new Subject<ApiResponse<DiaryEntry>>;
     diary$ = this.diarySource$.asObservable();
 
     private diaryService = inject(DiaryService);

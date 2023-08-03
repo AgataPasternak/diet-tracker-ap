@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, Subject, delay, take } from 'rxjs';
-import { Food, Response } from './foods.model';
+import { ApiResponse } from '../shared/models/api-response.model';
+import { Food } from './foods.model';
 import { FoodsService } from './foods.service';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { FoodsService } from './foods.service';
 })
 
 export class FoodsState {
-    private foodsSource$ = new Subject<Response>; // można go updatować z zewnątrz (jest Subject)
+    private foodsSource$ = new Subject<ApiResponse<Food>>; // można go updatować z zewnątrz (jest Subject)
     foods$ = this.foodsSource$.asObservable(); // nie da się go updatować z zewnątrz (jest Observable)
 
     private foodSource$ = new Subject<Food>();

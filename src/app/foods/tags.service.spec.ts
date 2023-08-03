@@ -43,7 +43,6 @@ describe('TagsService', () => {
     });
 
     const req = httpMock.expectOne(service.API_TAGS);
-    // console.log('req', req);
     expect(req.request.method).toBe('GET');
     req.flush(dummyTags);
   }

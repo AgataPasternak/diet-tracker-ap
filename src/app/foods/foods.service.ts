@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Food, Response } from './foods.model';
+import { ApiResponse } from '../shared/models/api-response.model';
+import { Food } from './foods.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class FoodsService {
   private readonly API_FOODS = environment.apiUrl + 'foods/';
   httpClient = inject(HttpClient);
 
-  getFoods(): Observable<Response> {
-    return this.httpClient.get<Response>(this.API_FOODS);
+  getFoods(): Observable<ApiResponse<Food>> {
+    return this.httpClient.get<ApiResponse<Food>>(this.API_FOODS);
   }
 
   getFoodsById(id: string): Observable<Food> {
@@ -28,8 +29,8 @@ export class FoodsService {
     return this.httpClient.post<Food>(this.API_FOODS, food);
   }
 
-  searchFood(filterValue: string): Observable<Response> {
-    return this.httpClient.get<Response>(this.API_FOODS + 'search/?name=' + filterValue);
+  searchFood(filterValue: string): Observable<ApiResponse<Food>> {
+    return this.httpClient.get<ApiResponse<Food>>(this.API_FOODS + 'search/?name=' + filterValue);
   }
 
   updateFood(food: Food): Observable<Food> {

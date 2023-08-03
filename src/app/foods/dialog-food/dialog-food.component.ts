@@ -1,7 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable, map, startWith } from 'rxjs';
 import { Food, NutriScore } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
@@ -12,6 +16,7 @@ import { FoodDialogData } from './dialog-food-data.model';
   styleUrls: ['./dialog-food.component.scss']
 })
 export class DialogFoodComponent implements OnInit {
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
@@ -26,6 +31,12 @@ export class DialogFoodComponent implements OnInit {
   tags$ = this.tagsState.tags$;
   tagsArray: any;
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl('');
+  // filteredFruits: string[];
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  filteredFruits$: Observable<string[]>;
 
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
@@ -47,6 +58,36 @@ export class DialogFoodComponent implements OnInit {
       this.foodForm.disable();
     }
     this.tagsState.getTags();
+
+    this.filteredFruits$ = this.fruitCtrl.valueChanges.pipe(
+      startWith(null),
+      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+    );
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    console.log(event);
+    // Add our fruit
+    if (value) {
+      this.fruits.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.fruitCtrl.setValue(null);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
   }
 
   foodForm = this.fb.group({
