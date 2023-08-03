@@ -1,6 +1,5 @@
-import { Foods } from './foods.model';
 
-describe('Foods', () => {
+describe('Food', () => {
   it('should create an instance', () => {
     // ??? --> błąd
     // expect(new Foods()).toBeTruthy();

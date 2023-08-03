@@ -8,7 +8,7 @@ import { TagsResponse } from './tags.model';
   providedIn: 'root'
 })
 export class TagsService {
-  private readonly API_TAGS = environment.apiUrl + 'dicts/tags/';
+  readonly API_TAGS = environment.apiUrl + 'dicts/tags/';
   httpClient = inject(HttpClient);
 
   getTags(): Observable<TagsResponse> {
