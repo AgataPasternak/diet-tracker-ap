@@ -24,6 +24,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   paginator: MatPaginator;
 
   @Input() public inputData!: FoodDialogData;
+  @Input() public isReadOnly = false;
 
   columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'photo', 'actionsColumn'];
 

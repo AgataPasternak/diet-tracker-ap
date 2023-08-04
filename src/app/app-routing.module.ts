@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'diary', component: DiaryComponent, data: {
       title: 'Diary',
-      subtitle: 'List of diary'
+      subtitle: 'Your diet diary'
     }
   },
   {
