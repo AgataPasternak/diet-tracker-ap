@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -20,7 +20,8 @@ export class DialogFoodComponent implements OnInit {
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
-  inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
+  // dodany @Input, żeby było widoczne w mockach testowych
+  @Input() public inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
   tagsState = inject(TagsState);
   router = inject(Router);
 
