@@ -8,15 +8,16 @@ describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
   let fixture: ComponentFixture<PageNotFoundComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [MatIconModule, MatProgressBarModule],
-      declarations: [PageNotFoundComponent]
+  beforeEach(
+    async () => {
+      TestBed.configureTestingModule({
+        imports: [MatIconModule, MatProgressBarModule],
+        declarations: [PageNotFoundComponent]
+      }).compileComponents();
+      fixture = TestBed.createComponent(PageNotFoundComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(PageNotFoundComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

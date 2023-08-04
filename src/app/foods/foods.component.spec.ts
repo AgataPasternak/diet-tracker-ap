@@ -44,7 +44,6 @@ describe('FoodsComponent', () => {
 
     const isReadOnlyEl = ngMocks.find('.isReadOnly');
     expect(isReadOnlyEl.nativeElement.textContent).toBe('false');
-    console.log(isReadOnlyEl.nativeElement.textContent);
     // dlaczego toBeTruthy() nie zawraca błędu?
     expect(isReadOnlyEl).toBeTruthy();
   });
