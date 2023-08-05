@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +21,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/mater
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 
 @NgModule({
   declarations: [],
@@ -43,10 +44,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatListModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }
   ],
 })
 export class SharedModule { }

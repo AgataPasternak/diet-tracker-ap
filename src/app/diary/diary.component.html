@@ -1,10 +1,35 @@
 <div class="wrap">
     <div class="header">
         <h1>{{pageTitle}}</h1>
-        <h3>{{pageSubtitle}}</h3>
+        <h2>{{pageSubtitle}}</h2>
         <mat-divider></mat-divider>
     </div>
+    <h3>Uzupełnij swój dziennik diety</h3>
+    <div [formGroup]="diaryForm" class="form">
+        <h4>Wybierdz dzień z kalendarza</h4>
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <h4>Wybierz posiłek</h4>
+        <mat-form-field>
+            <mat-label>Posiłek</mat-label>
+            <mat-select formControlName="mealTypes">
+                <mat-option *ngFor="let meal of mealTypes" [value]="meal">{{meal}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="diaryForm.invalid">Pole obowiązkowe.</mat-error>
+        </mat-form-field>
+        <div>
+            <button>Dodaj produkty</button>
+        </div>
+
+
+    </div>
     <pre>
-    {{diary$ | async | json }}
+        {{diaryForm.value | json}}
     </pre>
 </div>

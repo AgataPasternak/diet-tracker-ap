@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MealType } from './diary.model';
 import { DiaryState } from './diary.state';
 
 @Component({
@@ -14,7 +16,11 @@ export class DiaryComponent implements OnInit {
   fragment: string | null = '';
   pageTitle: string;
   pageSubtitle: string;
+
+  mealTypes: MealType[] = ['breakfast', 'secondBreakfast', 'lunch', 'afternoonTea', 'dinner'];
+
   private state = inject(DiaryState);
+  private fb = inject(FormBuilder);
 
   diary$ = this.state.diary$;
 
@@ -25,5 +31,14 @@ export class DiaryComponent implements OnInit {
       this.pageSubtitle = data['subtitle'];
     });
     this.fragment = this.route.snapshot.fragment;
+
   }
+
+  diaryForm = this.fb.group({
+    date: ['', [Validators.required]],
+    mealTypes: ['', [Validators.required]],
+  });
+
+
+
 }

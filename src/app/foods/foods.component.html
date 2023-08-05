@@ -76,7 +76,9 @@
         </ng-container>
         <ng-container matColumnDef="photo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Photo</th>
-            <td mat-cell *matCellDef="let el"><img fxLayoutAlign="left center" class="photo" src="{{el.photo}}" alt="">
+            <td mat-cell *matCellDef="let el">
+                <img fxLayoutAlign="left center" class="photo" src="{{el.photo}}" alt=""
+                    onError="this.id='no-photo';this.onError=null;this.src='../../assets/no-image-icon.png'">
             </td>
         </ng-container>
         <ng-container matColumnDef="nutriScore">

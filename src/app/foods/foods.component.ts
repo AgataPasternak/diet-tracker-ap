@@ -74,7 +74,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   }
 
   addFoodDialog() {
-    const addFoodDialogData: FoodDialogData = { // zmianić nazwę Dialog na FoodDialog
+    const addFoodDialogData: FoodDialogData = {
       title: 'Dodaj produkt',
       showActions: true,
       id: undefined,

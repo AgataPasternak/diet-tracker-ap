@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
+import { DialogDiaryComponent } from './diary/dialog-diary/dialog-diary.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     PageNotFoundComponent,
     TagsToNamePipe,
     TagsToArrayPipe,
-    FooterComponent
+    FooterComponent,
+    DialogDiaryComponent
   ],
   imports: [
     AppRoutingModule,

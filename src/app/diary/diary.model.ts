@@ -1,6 +1,8 @@
 import { Food } from "../foods/foods.model";
 import { ApiResponse } from "../shared/models/api-response.model";
 
+export type MealType = 'breakfast' | 'secondBreakfast' | 'lunch' | 'afternoonTea' | 'dinner';
+
 export interface DiaryEntry {
     id: string;
     date: string;
@@ -10,7 +12,7 @@ export interface DiaryEntry {
 export interface FoodInDiary {
     id: Food['id'];
     weight: number;
-    mealType: string
+    mealType: MealType;
 }
 
 const DiaryResponse: ApiResponse<DiaryEntry> = {
