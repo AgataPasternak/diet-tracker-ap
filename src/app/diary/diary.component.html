@@ -23,9 +23,26 @@
             </mat-select>
             <mat-error *ngIf="diaryForm.invalid">Pole obowiązkowe.</mat-error>
         </mat-form-field>
-        <div>
-            <button>Dodaj produkty</button>
-        </div>
+        <h4>Wybierz produkt</h4>
+        <mat-form-field *ngIf="responseFoods$ | async as res">
+            <mat-label>Dostępne produkty</mat-label>
+            <mat-select formControlName="foodInDiary">
+                <mat-option *ngFor="let food of res.data" [value]="food.id">{{food.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="">Pole obowiązkowe.</mat-error>
+        </mat-form-field>
+        <h4>Podaj jego wagę w gramach</h4>
+        <mat-form-field>
+            <mat-label>Waga w gramach (g)</mat-label>
+            <input matInput formControlName="weight">
+        </mat-form-field>
+        <!-- <div>
+            <button mat-fab extended color="primary" (click)="openDialog()">
+                <mat-icon>add_circle_outline</mat-icon>
+                Dodaj produkty
+            </button>
+        </div> -->
 
 
     </div>
