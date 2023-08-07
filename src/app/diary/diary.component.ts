@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { FoodsState } from '../foods/foods.state';
 import { DialogDiaryComponent } from './dialog-diary/dialog-diary.component';
 import { MealType } from './diary.model';
 import { DiaryState } from './diary.state';
@@ -25,12 +24,7 @@ export class DiaryComponent implements OnInit {
   private state = inject(DiaryState);
   private fb = inject(FormBuilder);
   dialog = inject(MatDialog);
-  stateFood = inject(FoodsState);
-
   diary$ = this.state.diary$;
-
-  responseFoods$ = this.stateFood.foods$;
-  // responseFoods$: Observable<any>;
 
   ngOnInit(): void {
     this.state.getDiaryEntries();
@@ -39,18 +33,17 @@ export class DiaryComponent implements OnInit {
       this.pageSubtitle = data['subtitle'];
     });
     this.fragment = this.route.snapshot.fragment;
-
-    this.stateFood.getFoods();
-    // this.responseFoods$ = this.stateFood.foods$;
-
   }
 
   diaryForm = this.fb.group({
-    date: ['', [Validators.required]],
-    mealTypes: ['', [Validators.required]],
-    foodInDiary: ['', [Validators.required]],
-    weight: ['', [Validators.required]],
-
+    dairyInfo: this.fb.group({
+      date: ['', [Validators.required]],
+      mealTypes: ['', [Validators.required]],
+    }),
+    foodInDiary: this.fb.group({
+      food: ['', [Validators.required]],
+      weight: ['', [Validators.required]],
+    }),
   });
 
   openDialog() {
@@ -60,6 +53,4 @@ export class DiaryComponent implements OnInit {
       exitAnimationDuration: 300
     });
   }
-
-
 }
