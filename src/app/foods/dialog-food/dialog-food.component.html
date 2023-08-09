@@ -42,12 +42,11 @@
                 </mat-option>
             </mat-select>
         </mat-form-field> -->
-
         <mat-form-field>
             <mat-label>Tags</mat-label>
             <mat-chip-grid #chipGrid>
                 <mat-chip-row *ngFor="let tag of savedTags" (removed)="remove(tag)">
-                    <!-- {{tag | tagsToArray | tagsToName }} -->
+                    {{(tag | tagsToName) | async }}
                     <button matChipRemove [attr.aria-label]="'remove ' + tag" title="'remove ' + tag">
                         <mat-icon>cancel</mat-icon>
                     </button>
