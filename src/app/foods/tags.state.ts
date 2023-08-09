@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Tag } from './tags.model';
 import { TagsService } from './tags.service';
 
@@ -7,7 +7,7 @@ import { TagsService } from './tags.service';
     providedIn: 'root'
 })
 export class TagsState {
-    private tagsSource$ = new Subject<Tag[]>();
+    private tagsSource$ = new BehaviorSubject<Tag[]>([]);
     tags$ = this.tagsSource$.asObservable();
 
     tagsService = inject(TagsService);
@@ -19,5 +19,4 @@ export class TagsState {
             }
         });
     }
-
 }
