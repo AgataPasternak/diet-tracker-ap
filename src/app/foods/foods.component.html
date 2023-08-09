@@ -72,7 +72,11 @@
         </ng-container>
         <ng-container matColumnDef="tags">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
-            <td mat-cell *matCellDef="let el"> {{(el.tags | tagsToArray | tagsToName) | async}} </td>
+            <td mat-cell *matCellDef="let el">
+                <ul *ngIf="el.tags | tagsToArray as tagList">
+                    <li *ngFor="let tag of tagList">{{(tag | tagsToName) | async | json}}</li>
+                </ul>
+            </td>
         </ng-container>
         <ng-container matColumnDef="photo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Photo</th>

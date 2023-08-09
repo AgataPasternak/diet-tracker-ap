@@ -10,6 +10,7 @@ import { FoodDialogData } from './dialog-food/dialog-food-data.model';
 import { DialogFoodComponent } from './dialog-food/dialog-food.component';
 import { Food } from './foods.model';
 import { FoodsState } from './foods.state';
+import { TagsState } from './tags.state';
 
 @Component({
   selector: 'app-foods',
@@ -32,10 +33,12 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private tagsState = inject(TagsState);
   private route = inject(ActivatedRoute); // wszystko czego nie używam w temaplte powinno być prywatne
 
   response$ = this.state.foods$;
   loading$ = this.state.loading$;
+  tags$ = this.tagsState.tags$;
   deleteInProgress$ = this.state.deleteInProgress$;
   postInLoading$ = this.state.postInLoading$;
   errorMessage$ = this.state.errorMessage$;
@@ -51,6 +54,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       this.pageSubtitle = data['subtitle'];
     });
     this.state.getFoods();
+    this.tagsState.getTags();
   }
 
   ngAfterViewInit(): void {
