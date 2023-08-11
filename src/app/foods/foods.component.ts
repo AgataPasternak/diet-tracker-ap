@@ -110,7 +110,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     this.openDialog(onEditFoodData);
   }
 
-  private openDialog(data: FoodDialogData) { // private: metoda nie będzie dostępna z HTML
+  private openDialog(data: FoodDialogData) {
     this.dialog.open(DialogFoodComponent, {
       width: '40%',
       enterAnimationDuration: 300,

@@ -1,7 +1,7 @@
 import { Food } from "../foods/foods.model";
 import { ApiResponse } from "../shared/models/api-response.model";
 
-export type MealType = 'breakfast' | 'secondBreakfast' | 'lunch' | 'afternoonTea' | 'dinner';
+export type MealType = 'breakfast' | 'lunch' | 'dinner';
 
 export interface DiaryEntry {
     id: string;

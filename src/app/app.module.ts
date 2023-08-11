@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DialogDiaryComponent } from './diary/dialog-diary/dialog-diary.component';
 import { DiaryComponent } from './diary/diary.component';
 import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
 import { FoodsComponent } from './foods/foods.component';
@@ -33,8 +32,7 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     PageNotFoundComponent,
     TagsToNamePipe,
     TagsToArrayPipe,
-    FooterComponent,
-    DialogDiaryComponent
+    FooterComponent
   ],
   imports: [
     AppRoutingModule,

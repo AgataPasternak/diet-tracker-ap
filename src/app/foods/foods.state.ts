@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, Observable, Subject, delay, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, delay, map, take } from 'rxjs';
 import { ApiResponse } from '../shared/models/api-response.model';
 import { Food } from './foods.model';
 import { FoodsService } from './foods.service';
@@ -19,6 +19,12 @@ export class FoodsState {
     private loadingSource$ = new BehaviorSubject<boolean>(false);
     get loading$(): Observable<boolean> {
         return this.loadingSource$.asObservable();
+    }
+
+    get loadingReverse$(): Observable<boolean> {
+        return this.loadingSource$.pipe(
+            map((loading) => !loading)
+        );
     }
 
     private deleteProgress$ = new BehaviorSubject<boolean>(false);
