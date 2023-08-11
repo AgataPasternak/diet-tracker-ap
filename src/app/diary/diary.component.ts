@@ -1,5 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { DiaryState } from './diary.state';
@@ -13,6 +15,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   startDate = new Date();
   pageTitle: string;
   pageSubtitle: string;
+  events: string[] = [];
 
   dataSource: MatTableDataSource<any>;
   columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'actions'];
@@ -20,6 +23,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   route = inject(ActivatedRoute);
   private state = inject(DiaryState);
   private fb = inject(FormBuilder);
+  private datePipe = inject(DatePipe);
 
   diary$ = this.state.diary$;
 
@@ -47,6 +51,11 @@ export class DiaryComponent implements OnInit, AfterViewInit {
       }
       this.dataSource = new MatTableDataSource(flattenedData);
     });
+  }
+
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.events.push(`${type}: ${event.value}`);
+    const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
   }
 
   formDiaryEntry = this.fb.group({

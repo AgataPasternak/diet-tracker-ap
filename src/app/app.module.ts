@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -44,6 +45,7 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     FlexLayoutModule
   ],
   providers: [
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
