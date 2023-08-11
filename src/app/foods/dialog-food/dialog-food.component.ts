@@ -68,7 +68,6 @@ export class DialogFoodComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    console.log(event);
     // Add our fruit
     if (value) {
       this.fruits.push(value);

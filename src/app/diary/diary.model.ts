@@ -4,7 +4,7 @@ import { ApiResponse } from "../shared/models/api-response.model";
 export type MealType = 'breakfast' | 'lunch' | 'dinner';
 
 export interface DiaryEntry {
-    id: string;
+    id?: string;
     date: string;
     foods: FoodInDiary[];
 }

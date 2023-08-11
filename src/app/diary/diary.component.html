@@ -14,6 +14,34 @@
         </mat-form-field>
     </div>
 </div>
+<table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let el"> {{el.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="meal">
+        <th mat-header-cell *matHeaderCellDef>Meal</th>
+        <td mat-cell *matCellDef="let el"> {{el.mealType}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let el"> {{el.date}} </td>
+    </ng-container>
+    <ng-container matColumnDef="food">
+        <th mat-header-cell *matHeaderCellDef>Food</th>
+        <td mat-cell *matCellDef="let el"> {{el.foodId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Weight</th>
+        <td mat-cell *matCellDef="let el"> {{el.weight}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let el"> Actions </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+</table>
 
 <pre>
     {{diary$ | async | json}}

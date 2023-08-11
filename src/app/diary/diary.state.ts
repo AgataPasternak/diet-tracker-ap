@@ -21,7 +21,6 @@ export class DiaryState {
             .subscribe({
                 next: (data) => {
                     this.diarySource$.next(data);
-                    console.log(data);
                 },
                 error: (error) => {
                     console.log(error);
