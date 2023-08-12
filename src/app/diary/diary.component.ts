@@ -4,7 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { FlattenDiaryEntry } from './diary.model';
 import { DiaryState } from './diary.state';
+
+
 
 @Component({
   selector: 'app-diary',
@@ -17,7 +20,8 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   pageSubtitle: string;
   events: string[] = [];
 
-  dataSource: MatTableDataSource<any>;
+  noDataTable: string;
+  dataSource = new MatTableDataSource<FlattenDiaryEntry>([]);
   columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'actions'];
 
   route = inject(ActivatedRoute);
@@ -34,6 +38,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
       this.pageTitle = data['title'];
       this.pageSubtitle = data['subtitle'];
     });
+    this.noDataTable = 'Choose date';
   }
 
   ngAfterViewInit(): void {
@@ -50,7 +55,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
           });
         }
       }
-      this.dataSource = new MatTableDataSource(flattenedData);
+      this.dataSource = new MatTableDataSource<FlattenDiaryEntry>(flattenedData);
     });
   }
 
@@ -59,6 +64,9 @@ export class DiaryComponent implements OnInit, AfterViewInit {
     const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
     if (chosenDate !== null) {
       this.state.getDiaryByDate(chosenDate);
+    }
+    if (this.dataSource.data.length === 0) {
+      this.noDataTable = 'No data for this date';
     }
   }
 

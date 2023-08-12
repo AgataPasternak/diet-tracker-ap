@@ -15,6 +15,14 @@ export interface FoodInDiary {
     mealType: MealType;
 }
 
+export interface FlattenDiaryEntry {
+    id: string | undefined,
+    date: string,
+    foodId: string,
+    weight: number,
+    mealType: MealType,
+}
+
 const DiaryResponse: ApiResponse<DiaryEntry> = {
     data: [
         { id: '1', date: '2021-01-01', foods: [{ id: '1', weight: 100, mealType: 'breakfast' }] },
