@@ -10,7 +10,10 @@ import { FoodsService } from './foods.service';
 })
 
 export class FoodsState {
-    private foodsSource$ = new Subject<ApiResponse<Food>>; // można go updatować z zewnątrz (jest Subject)
+    private foodsSource$ = new BehaviorSubject<ApiResponse<Food>>({
+        data: [],
+        length: 0
+    }); // można go updatować z zewnątrz (jest Subject)
     foods$ = this.foodsSource$.asObservable(); // nie da się go updatować z zewnątrz (jest Observable)
 
     private foodSource$ = new Subject<Food>();

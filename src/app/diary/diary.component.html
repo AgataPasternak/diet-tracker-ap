@@ -31,7 +31,7 @@
         </ng-container>
         <ng-container matColumnDef="food">
             <th mat-header-cell *matHeaderCellDef>Food</th>
-            <td mat-cell *matCellDef="let el"> {{el.foodId}} </td>
+            <td mat-cell *matCellDef="let el"> {{(el.foodId | foodIdToName) | async}} </td>
         </ng-container>
         <ng-container matColumnDef="weight">
             <th mat-header-cell *matHeaderCellDef>Weight</th>

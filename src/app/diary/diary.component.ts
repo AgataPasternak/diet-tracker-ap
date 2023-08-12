@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { FoodsState } from '../foods/foods.state';
 import { FlattenDiaryEntry } from './diary.model';
 import { DiaryState } from './diary.state';
 
@@ -26,6 +27,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
 
   route = inject(ActivatedRoute);
   private state = inject(DiaryState);
+  private foodsState = inject(FoodsState);
   private fb = inject(FormBuilder);
   private datePipe = inject(DatePipe);
 
@@ -39,6 +41,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
       this.pageSubtitle = data['subtitle'];
     });
     this.noDataTable = 'Choose date';
+    this.foodsState.getFoods();
   }
 
   ngAfterViewInit(): void {

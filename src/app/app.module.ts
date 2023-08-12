@@ -19,6 +19,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
+import { FoodIdToNamePipe } from './food-id-to-name.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     PageNotFoundComponent,
     TagsToNamePipe,
     TagsToArrayPipe,
-    FooterComponent
+    FooterComponent,
+    FoodIdToNamePipe
   ],
   imports: [
     AppRoutingModule,
