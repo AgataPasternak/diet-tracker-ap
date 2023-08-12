@@ -15,4 +15,9 @@ export class DiaryService {
   getDiaryEntries(): Observable<ApiResponse<DiaryEntry>> {
     return this.httpClient.get<ApiResponse<DiaryEntry>>(this.API_DIARY);
   }
+
+  getDiaryByDate(date: string): Observable<ApiResponse<DiaryEntry>> {
+    return this.httpClient.get<ApiResponse<DiaryEntry>>(this.API_DIARY + '?date=' + date);
+  }
+
 }

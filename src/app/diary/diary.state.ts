@@ -13,6 +13,9 @@ export class DiaryState {
     private diarySource$ = new Subject<ApiResponse<DiaryEntry>>;
     diary$ = this.diarySource$.asObservable();
 
+    private diaryByDateSource$ = new Subject<ApiResponse<DiaryEntry>>;
+    diaryByDate$ = this.diaryByDateSource$.asObservable();
+
     private diaryService = inject(DiaryService);
 
     getDiaryEntries(): void {
@@ -29,5 +32,11 @@ export class DiaryState {
 
                 }
             });
+    }
+
+    getDiaryByDate(date: string): void {
+        this.diaryService.getDiaryByDate(date).subscribe((data) => {
+            this.diaryByDateSource$.next(data);
+        })
     }
 }

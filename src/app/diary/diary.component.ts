@@ -26,6 +26,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   private datePipe = inject(DatePipe);
 
   diary$ = this.state.diary$;
+  diaryByDate$ = this.state.diaryByDate$;
 
   ngOnInit(): void {
     this.state.getDiaryEntries();
@@ -36,7 +37,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.diary$.subscribe((data) => {
+    this.diaryByDate$.subscribe((data) => {
       const flattenedData = [];
       for (const entry of data.data) {
         for (const food of entry.foods) {
@@ -56,6 +57,9 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
     const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
+    if (chosenDate !== null) {
+      this.state.getDiaryByDate(chosenDate);
+    }
   }
 
   formDiaryEntry = this.fb.group({
