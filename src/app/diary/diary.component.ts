@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,7 +16,7 @@ import { DiaryState } from './diary.state';
   templateUrl: './diary.component.html',
   styleUrls: ['./diary.component.scss'],
 })
-export class DiaryComponent implements OnInit, AfterViewInit {
+export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pageTitle: string;
   pageSubtitle: string;
@@ -107,6 +107,9 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   });
 
   onSubmit() {
+    if (this.formDiaryEntry.invalid) {
+      return;
+    }
     const formattedDate = this.datePipe.transform(this.formDiaryEntry.value.date, "yyyy-MM-dd");
     const formattedId = this.formDiaryEntry.value.food?.id;
     const formattedIdString = String(formattedId);
@@ -117,6 +120,13 @@ export class DiaryComponent implements OnInit, AfterViewInit {
       }
     });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
+    this.formDiaryEntry.get('food')?.reset();
+    // nie pobiera danych z dziennika po dodaniu nowego wpisu, bo nie widzi jeszcze nowego wpisu
+    this.state.getDiaryByDate(formattedDate as string);
+  }
+
+  ngOnDestroy(): void {
+
   }
 }
 
