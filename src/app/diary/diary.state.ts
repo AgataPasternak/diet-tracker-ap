@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, delay, take } from 'rxjs';
 import { ApiResponse } from '../shared/models/api-response.model';
 import { DiaryEntry } from './diary.model';
 import { DiaryService } from './diary.service';
@@ -38,5 +38,16 @@ export class DiaryState {
         this.diaryService.getDiaryByDate(date).subscribe((data) => {
             this.diaryByDateSource$.next(data);
         })
+    }
+
+    postDiaryItem(diary: DiaryEntry): void {
+        //  this.postLoading$.next(true);
+        this.diaryService
+            .postDiary(diary)
+            .pipe(take(1), delay(1000))
+            .subscribe(() => {
+                this.getDiaryEntries();
+                //this.postLoading$.next(false);
+            });
     }
 }

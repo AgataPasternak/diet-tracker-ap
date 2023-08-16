@@ -8,7 +8,7 @@ import { map } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
 import { ApiResponse } from '../shared/models/api-response.model';
-import { FlattenDiaryEntry } from './diary.model';
+import { DiaryEntry, FlattenDiaryEntry, MealType } from './diary.model';
 import { DiaryState } from './diary.state';
 
 @Component({
@@ -25,6 +25,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
 
   noDataTable: string;
   dataSource = new MatTableDataSource<FlattenDiaryEntry>([]);
+  mealType: MealType[] = ['breakfast', 'lunch', 'dinner'];
   columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'calories', 'actions'];
 
   route = inject(ActivatedRoute);
@@ -52,8 +53,6 @@ export class DiaryComponent implements OnInit, AfterViewInit {
       this.state.getDiaryByDate(today);
     }
   }
-
-
 
   ngAfterViewInit(): void {
     this.diaryByDate$.subscribe((data) => {
@@ -99,8 +98,17 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   }
 
   formDiaryEntry = this.fb.group({
-    date: ['', [Validators.required]]
-  })
+    date: ['', [Validators.required]],
+    food: this.fb.group({
+      foodId: ['', [Validators.required]],
+      weight: ['', [Validators.required]],
+      mealType: ['', [Validators.required]]
+    })
+  });
+
+  onSubmit() {
+    this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
+  }
 }
 
 
