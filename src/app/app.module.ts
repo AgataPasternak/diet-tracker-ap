@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DiaryComponent } from './diary/diary.component';
+import { FoodIdToNamePipe } from './food-id-to-name.pipe';
 import { DialogFoodComponent } from './foods/dialog-food/dialog-food.component';
 import { FoodsComponent } from './foods/foods.component';
 import { NutriScoreComponent } from './foods/nutri-score/nutri-score.component';
@@ -19,7 +20,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
-import { FoodIdToNamePipe } from './food-id-to-name.pipe';
 
 @NgModule({
   declarations: [

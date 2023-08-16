@@ -21,6 +21,7 @@ export interface FlattenDiaryEntry {
     foodId: string,
     weight: number,
     mealType: MealType,
+    calories: string
 }
 
 const DiaryResponse: ApiResponse<DiaryEntry> = {
