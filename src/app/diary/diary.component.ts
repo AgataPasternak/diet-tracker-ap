@@ -100,13 +100,22 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   formDiaryEntry = this.fb.group({
     date: ['', [Validators.required]],
     food: this.fb.group({
-      foodId: ['', [Validators.required]],
+      id: ['', [Validators.required]],
       weight: ['', [Validators.required]],
       mealType: ['', [Validators.required]]
     })
   });
 
   onSubmit() {
+    const formattedDate = this.datePipe.transform(this.formDiaryEntry.value.date, "yyyy-MM-dd");
+    const formattedId = this.formDiaryEntry.value.food?.id;
+    const formattedIdString = String(formattedId);
+    this.formDiaryEntry.patchValue({
+      date: formattedDate,
+      food: {
+        id: formattedIdString
+      }
+    });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
   }
 }

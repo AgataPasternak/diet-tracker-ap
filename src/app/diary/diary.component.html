@@ -17,7 +17,7 @@
         <ng-container formGroupName="food">
             <mat-form-field *ngIf="foods$ | async as res">
                 <mat-label>Dostępne produkty</mat-label>
-                <mat-select formControlName="foodId">
+                <mat-select formControlName="id">
                     <mat-option *ngFor="let food of res.data" [value]="food.id">{{food.name}}
                     </mat-option>
                 </mat-select>
@@ -41,8 +41,6 @@
             <mat-icon>add_circle_outline</mat-icon>
             Dodaj produkty
         </button>
-
-
     </div>
 </div>
 
