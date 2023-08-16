@@ -17,7 +17,6 @@ import { DiaryState } from './diary.state';
   styleUrls: ['./diary.component.scss'],
 })
 export class DiaryComponent implements OnInit, AfterViewInit {
-  startDate = new Date();
 
   pageTitle: string;
   pageSubtitle: string;
@@ -38,6 +37,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   diaryByDate$ = this.state.diaryByDate$;
   foods$ = this.foodsState.foods$;
 
+  startDate = new Date();
   startDateTransformed = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
 
   ngOnInit(): void {
@@ -98,7 +98,7 @@ export class DiaryComponent implements OnInit, AfterViewInit {
   }
 
   formDiaryEntry = this.fb.group({
-    date: ['', [Validators.required]],
+    date: [this.startDateTransformed, [Validators.required]],
     food: this.fb.group({
       id: ['', [Validators.required]],
       weight: ['', [Validators.required]],
