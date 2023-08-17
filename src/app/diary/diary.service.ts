@@ -32,4 +32,8 @@ export class DiaryService {
     return this.httpClient.delete<void>(this.API_DIARY + id);
   }
 
+  deleteFoodInDiary(id: string, foodId: string): Observable<void> {
+    return this.httpClient.delete<void>(this.API_DIARY + id + '/foods/' + foodId);
+  }
+
 }

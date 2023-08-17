@@ -124,6 +124,11 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     // nie pobiera danych z dziennika po dodaniu nowego wpisu, bo nie widzi jeszcze nowego wpisu
     this.state.getDiaryByDate(formattedDate as string);
   }
+
+  onDeleteFoodinDairy(id: string, foodId: string): void {
+    this.state.deleteFoodInDiary(id, foodId);
+  }
+
   onDeleteDiaryEntry(id: string | undefined): void {
     if (id !== undefined) {
       this.state.deleteDiaryEntry(id);

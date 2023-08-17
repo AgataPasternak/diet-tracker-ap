@@ -21,6 +21,7 @@ export class DiaryState {
     getDiaryEntries(): void {
         this.diaryService
             .getDiaryEntries()
+            .pipe(take(1))
             .subscribe({
                 next: (data) => {
                     this.diarySource$.next(data);
@@ -49,22 +50,24 @@ export class DiaryState {
     }
 
     getDiaryById(id: string): void {
-        this.diaryService.getDiaryById(id).subscribe({
-            next: (data) => {
-                this.diaryByDateSource$.next(data);
-            },
-            error: (error) => {
-                console.log("Error fetching diary by ID:", error);
-            },
-            complete: () => {
-            }
-        });
+        this.diaryService.getDiaryById(id)
+            .pipe(take(1))
+            .subscribe({
+                next: (data) => {
+                    this.diaryByDateSource$.next(data);
+                },
+                error: (error) => {
+                    console.log("Error fetching diary by ID:", error);
+                },
+                complete: () => {
+                }
+            });
     }
 
     deleteDiaryEntry(id: string): void {
         this.diaryService
             .deleteDiaryEntry(id)
-            .pipe(delay(100))
+            .pipe(take(1))
             .subscribe({
                 next: () => {
                     this.getDiaryById(id);
@@ -77,4 +80,22 @@ export class DiaryState {
                 }
             });
     }
+
+    deleteFoodInDiary(id: string, foodId: string): void {
+        this.diaryService
+            .deleteFoodInDiary(id, foodId)
+            .pipe(take(1))
+            .subscribe({
+                next: () => {
+                    // this.getDiaryById(id);
+                },
+                error: (error) => {
+                    console.log("Error delating food in diary:", error);
+                },
+                complete: () => {
+
+                }
+            });
+    }
 }
+
