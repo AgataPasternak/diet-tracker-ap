@@ -20,7 +20,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
-import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { AuthComponent } from './auth/auth.component';
     TagsToNamePipe,
     TagsToArrayPipe,
     FooterComponent,
-    FoodIdToNamePipe,
-    AuthComponent
+    FoodIdToNamePipe
   ],
   imports: [
     AppRoutingModule,
