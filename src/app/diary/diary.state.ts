@@ -29,8 +29,16 @@ export class DiaryState {
                     console.log(error);
                 },
                 complete: () => {
-
                 }
+            });
+    }
+
+    postDiaryItem(diary: DiaryEntry): void {
+        this.diaryService
+            .postDiary(diary)
+            .pipe(take(1), delay(1000))
+            .subscribe(() => {
+                this.getDiaryEntries();
             });
     }
 
@@ -40,36 +48,33 @@ export class DiaryState {
         })
     }
 
-    postDiaryItem(diary: DiaryEntry): void {
-        //  this.postLoading$.next(true);
-        this.diaryService
-            .postDiary(diary)
-            .pipe(take(1), delay(1000))
-            .subscribe(() => {
-                this.getDiaryEntries();
-                //this.postLoading$.next(false);
-            });
+    getDiaryById(id: string): void {
+        this.diaryService.getDiaryById(id).subscribe({
+            next: (data) => {
+                this.diaryByDateSource$.next(data);
+            },
+            error: (error) => {
+                console.log("Error fetching diary by ID:", error);
+            },
+            complete: () => {
+            }
+        });
     }
 
-    deleteDiaryEntry(id: string): void { // dodac obsługe błędów (any albo null)
-        // this.deleteProgress$.next(true);
+    deleteDiaryEntry(id: string): void {
         this.diaryService
             .deleteDiaryEntry(id)
             .pipe(delay(100))
             .subscribe({
                 next: () => {
-                    this.getDiaryByDate('2023-08-18');
-                    //this.deleteProgress$.next(false);
+                    this.getDiaryById(id);
                 },
                 error: (error) => {
-                    console.log(error);
+                    console.log("Error delating diary entry:", error);
                 },
                 complete: () => {
 
                 }
             });
-
     }
-
-
 }

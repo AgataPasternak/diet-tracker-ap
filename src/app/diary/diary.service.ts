@@ -20,6 +20,10 @@ export class DiaryService {
     return this.httpClient.get<ApiResponse<DiaryEntry>>(this.API_DIARY + '?date=' + date);
   }
 
+  getDiaryById(id: string): Observable<ApiResponse<DiaryEntry>> {
+    return this.httpClient.get<ApiResponse<DiaryEntry>>(this.API_DIARY + id);
+  }
+
   postDiary(diary: DiaryEntry): Observable<DiaryEntry> {
     return this.httpClient.post<DiaryEntry>(this.API_DIARY, diary);
   }
