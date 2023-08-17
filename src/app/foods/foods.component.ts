@@ -90,7 +90,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
 
   onPreviewFood(id: string) {
     const onPreviewFoodData: FoodDialogData = {
-      title: 'Podgląd produktu',
+      title: 'Food preview',
       showActions: false,
       id,
       readonly: true,
@@ -101,7 +101,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
 
   onEditFood(id: string) {
     const onEditFoodData: FoodDialogData = {
-      title: 'Edycja produktu',
+      title: 'Edit food',
       showActions: true,
       id,
       readonly: false,

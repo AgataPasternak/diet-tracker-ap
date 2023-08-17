@@ -16,7 +16,7 @@
         </mat-form-field>
         <ng-container formGroupName="food">
             <mat-form-field *ngIf="foods$ | async as res">
-                <mat-label>Dostępne produkty</mat-label>
+                <mat-label>Food</mat-label>
                 <mat-select formControlName="id">
                     <mat-option *ngFor="let food of res.data" [value]="food.id">{{food.name}}
                     </mat-option>
@@ -24,12 +24,12 @@
                 <mat-error *ngIf="formDiaryEntry.invalid">Pole obowiązkowe.</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Waga w gramach (g)</mat-label>
+                <mat-label>Weight (g)</mat-label>
                 <input matInput formControlName="weight">
                 <mat-error *ngIf="formDiaryEntry.invalid">Pole obowiązkowe.</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Posiłek</mat-label>
+                <mat-label>Meal type</mat-label>
                 <mat-select formControlName="mealType">
                     <mat-option *ngFor="let meal of mealType" [value]="meal">{{meal}}
                     </mat-option>
@@ -39,7 +39,7 @@
         </ng-container>
         <button mat-fab extended color="primary" (click)="onSubmit()">
             <mat-icon>add_circle_outline</mat-icon>
-            Dodaj produkty
+            ADD ITEM
         </button>
     </div>
 </div>
@@ -83,3 +83,15 @@
         <p>{{noDataTable}}</p>
     </div>
 </ng-template>
+<mat-divider></mat-divider>
+<br>
+
+
+<div *ngIf="dataSource.data[0] as item">
+    <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">
+        <button mat-fab extended color="warn" (click)="onDeleteDiaryEntry(item.id)">
+            <mat-icon>delete</mat-icon>
+            DELETE ENTRY
+        </button>
+    </div>
+</div>

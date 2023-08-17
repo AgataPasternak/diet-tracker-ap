@@ -12,3 +12,14 @@
         padding-right: 1rem;
     }
 }
+
+.no-data-box,
+mat-divider {
+    margin: 16px;
+}
+
+.delete-entry-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+}

@@ -22,7 +22,7 @@
         <div fxFlex="50%">
             <div class="form searchForm" fxLayoutAlign="start top">
                 <mat-form-field>
-                    <mat-label>Szukaj produktu</mat-label>
+                    <mat-label>Search food...</mat-label>
                     <input matInput #input placeholder="Wpisz wyraz lub jego fragment" [formControl]="search"
                         (keyup)="searchValue($event)">
                 </mat-form-field>
@@ -33,7 +33,7 @@
             <button mat-fab extended color="primary" (click)="addFoodDialog()">
                 <!-- dodać metoda openDialog -->
                 <mat-icon>add_circle_outline</mat-icon>
-                Dodaj produkt
+                ADD FOOD
             </button>
         </div>
     </div>

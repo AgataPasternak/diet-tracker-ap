@@ -50,4 +50,26 @@ export class DiaryState {
                 //this.postLoading$.next(false);
             });
     }
+
+    deleteDiaryEntry(id: string): void { // dodac obsługe błędów (any albo null)
+        // this.deleteProgress$.next(true);
+        this.diaryService
+            .deleteDiaryEntry(id)
+            .pipe(delay(100))
+            .subscribe({
+                next: () => {
+                    this.getDiaryByDate('2023-08-18');
+                    //this.deleteProgress$.next(false);
+                },
+                error: (error) => {
+                    console.log(error);
+                },
+                complete: () => {
+
+                }
+            });
+
+    }
+
+
 }

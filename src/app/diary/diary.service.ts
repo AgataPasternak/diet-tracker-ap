@@ -24,4 +24,8 @@ export class DiaryService {
     return this.httpClient.post<DiaryEntry>(this.API_DIARY, diary);
   }
 
+  deleteDiaryEntry(id: string): Observable<void> {
+    return this.httpClient.delete<void>(this.API_DIARY + id);
+  }
+
 }

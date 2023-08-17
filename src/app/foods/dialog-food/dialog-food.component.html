@@ -13,18 +13,18 @@
             <mat-spinner></mat-spinner>
         </div>
         <mat-form-field>
-            <mat-label>Nazwa</mat-label>
+            <mat-label>Name</mat-label>
             <input matInput placeholder="np. jabłko" formControlName="name" [readonly]="inputData.readonly">
             <mat-error *ngIf="foodForm.invalid">Min. 3 znaki.</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Waga</mat-label>
+            <mat-label>Weight</mat-label>
             <input matInput placeholder="np. 100" formControlName="weight" [readonly]="inputData.readonly">
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Kalorie na 100g</mat-label>
+            <mat-label>Calories per 100g</mat-label>
             <input matInput placeholder="np. 32" formControlName="caloriesPer100g" [readonly]="inputData.readonly">
-            <mat-error *ngIf="foodForm.invalid">Wyłącznie cyfry.</mat-error>
+            <mat-error *ngIf="foodForm.invalid">Only digits.</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nutri Score</mat-label>
@@ -32,7 +32,7 @@
                 <mat-option *ngFor="let score of nutriScoreOptions" [value]="score">{{score}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="foodForm.invalid">Pole obowiązkowe.</mat-error>
+            <mat-error *ngIf="foodForm.invalid">Required.</mat-error>
         </mat-form-field>
 
         <!-- <mat-form-field>
@@ -63,7 +63,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <mat-label>Zdjęcie</mat-label>
+            <mat-label>Photo</mat-label>
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">
             <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" /> -->
             <img src="{{imageSrc}}" width="100%" />
@@ -73,9 +73,9 @@
 <mat-dialog-actions *ngIf="inputData.showActions">
     <div *ngIf="inputData.editMode; then updateFood else addFood"></div>
     <ng-template #addFood>
-        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="foodForm.invalid">Zapisz</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="foodForm.invalid">SAVE</button>
     </ng-template>
     <ng-template #updateFood>
-        <button mat-raised-button color="primary" (click)="onUpdate()">Zapisz zmiany</button>
+        <button mat-raised-button color="primary" (click)="onUpdate()">SAVE CHANGES</button>
     </ng-template>
 </mat-dialog-actions>
