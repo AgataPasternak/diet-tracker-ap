@@ -37,7 +37,7 @@
                 <mat-error *ngIf="formDiaryEntry.invalid">Pole obowiązkowe.</mat-error>
             </mat-form-field>
         </ng-container>
-        <button mat-fab extended color="primary" (click)="onSubmit()">
+        <button mat-fab extended color="primary" [disabled]="formDiaryEntry.invalid" (click)="onSubmit()">
             <mat-icon>add_circle_outline</mat-icon>
             ADD ITEM
         </button>
