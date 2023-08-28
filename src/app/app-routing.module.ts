@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'login', component: LoginComponent, data: {
-      title: 'Login',
+      title: '  ',
       subtitle: 'Login to your account'
     }
   },

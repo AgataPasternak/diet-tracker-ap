@@ -36,6 +36,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   diary$ = this.state.diary$;
   diaryByDate$ = this.state.diaryByDate$;
   foods$ = this.foodsState.foods$;
+  readonly diaryLength$ = this.state.diaryLength$;
 
   startDate = new Date();
   startDateTransformed = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
@@ -80,20 +81,18 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
       }
-      this.dataSource = new MatTableDataSource<FlattenDiaryEntry>(flattenedData);
+      this.dataSource.data = flattenedData;
     });
   }
 
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.events.push(`${type}: ${event.value}`);
-    const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
+  getTotalCalories() {
+    return this.dataSource.data.map(data => + data.calories).reduce((acc, value) => acc + value, 0);
+  }
 
-    if (chosenDate !== null) {
+  onDateChanged(event: MatDatepickerInputEvent<Date>) {
+    const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
+    if (chosenDate != null) {
       this.state.getDiaryByDate(chosenDate);
-    }
-    // błąd logiczny związany z tym, że przy pierwszej zmianie daty przekazuje stary obiekt (today's diary), pod warunkiem, że nie było tego dnia wpisów w dzienniku
-    if (this.dataSource.data.length === 0) {
-      this.noDataTable = 'No data for this date';
     }
   }
 

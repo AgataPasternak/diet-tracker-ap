@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { LoginState } from './login.state';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 export class LoginComponent {
   route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private state = inject(LoginState);
 
   pageTitle: string;
   pageSubtitle: string;
-
-  isLoginMode = true;
-
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
-  }
 
   ngOnInit(): void {
     const routerData = this.route.data.subscribe((data) => {
@@ -29,7 +25,13 @@ export class LoginComponent {
 
   loginForm = this.fb.group({
     userName: ['', Validators.required],
-    email: ['', Validators.required],
     password: ['', Validators.required]
   });
+
+  onSubmit() {
+
+
+    this.loginForm.reset();
+  }
+
 }

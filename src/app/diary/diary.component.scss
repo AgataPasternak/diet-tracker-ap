@@ -7,6 +7,11 @@
     ;
 }
 
+tr.mat-mdc-footer-row td {
+    font-weight: bold;
+    border-top: 1px solid #9a9999;
+}
+
 .foodForm {
     mat-form-field {
         padding-right: 1rem;

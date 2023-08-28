@@ -4,11 +4,15 @@
         <h2>{{pageSubtitle}}</h2>
         <mat-divider></mat-divider>
     </div>
+
+    <pre>
+        {{dataSource.data | json}}
+    </pre>
     <div [formGroup]="formDiaryEntry" class="form foodForm">
         <mat-form-field>
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" (dateInput)="addEvent('input', $event)"
-                (dateChange)="addEvent('change', $event)" formControlName="date">
+            <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged( $event)"
+                (dateChange)="onDateChanged($event)" formControlName="date">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker startView="month" [startAt]="startDate"></mat-datepicker>
@@ -44,53 +48,52 @@
     </div>
 </div>
 
-<ng-container *ngIf="dataSource.data.length > 0; else noData">
-    <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let el">{{el.id}}</td>
-        </ng-container>
-        <ng-container matColumnDef="meal">
-            <th mat-header-cell *matHeaderCellDef>Meal</th>
-            <td mat-cell *matCellDef="let el">{{el.mealType}}</td>
-        </ng-container>
-        <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let el">{{el.date}}</td>
-        </ng-container>
-        <ng-container matColumnDef="food">
-            <th mat-header-cell *matHeaderCellDef>Food</th>
-            <td mat-cell *matCellDef="let el">{{(el.foodId | foodIdToName) | async}}</td>
-        </ng-container>
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef>Weight (g)</th>
-            <td mat-cell *matCellDef="let el">{{el.weight}}</td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-            <th mat-header-cell *matHeaderCellDef>Calories</th>
-            <td mat-cell *matCellDef="let el">{{el.calories}}</td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let el">
-                <button mat-icon-button color="warn" aria-label="Remove" title="Remove"
-                    (click)="onDeleteFoodinDairy(el.id, el.foodId)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-    </table>
-</ng-container>
-<ng-template #noData>
-    <div class="no-data-box">
-        <p>{{noDataTable}}</p>
-    </div>
-</ng-template>
-<mat-divider></mat-divider>
-<br>
 
+<table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let el">{{el.id}}</td>
+        <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
+    <ng-container matColumnDef="meal">
+        <th mat-header-cell *matHeaderCellDef>Meal</th>
+        <td mat-cell *matCellDef="let el">{{el.mealType}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let el">{{el.date}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="food">
+        <th mat-header-cell *matHeaderCellDef>Food</th>
+        <td mat-cell *matCellDef="let el">{{(el.foodId | foodIdToName) | async}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Weight (g)</th>
+        <td mat-cell *matCellDef="let el">{{el.weight}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="calories">
+        <th mat-header-cell *matHeaderCellDef>Calories</th>
+        <td mat-cell *matCellDef="let el">{{el.calories}}</td>
+        <td mat-footer-cell *matFooterCellDef> {{getTotalCalories()}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let el">
+            <button mat-icon-button color="warn" aria-label="Remove" title="Remove"
+                (click)="onDeleteFoodinDairy(el.id, el.foodId)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
+</table>
 
 <div *ngIf="dataSource.data[0] as item">
     <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">

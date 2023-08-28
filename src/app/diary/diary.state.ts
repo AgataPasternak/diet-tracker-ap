@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject, delay, take } from 'rxjs';
+import { BehaviorSubject, Subject, delay, map, take } from 'rxjs';
 import { ApiResponse } from '../shared/models/api-response.model';
 import { DiaryEntry } from './diary.model';
 import { DiaryService } from './diary.service';
@@ -13,8 +13,13 @@ export class DiaryState {
     private diarySource$ = new Subject<ApiResponse<DiaryEntry>>;
     diary$ = this.diarySource$.asObservable();
 
-    private diaryByDateSource$ = new Subject<ApiResponse<DiaryEntry>>;
+    private diaryByDateSource$ = new BehaviorSubject<ApiResponse<DiaryEntry>>({
+        data: [],
+        length: 0
+    });
     diaryByDate$ = this.diaryByDateSource$.asObservable();
+
+    diaryLength$ = this.diaryByDateSource$.pipe(map((data) => data.length));
 
     private diaryService = inject(DiaryService);
 
