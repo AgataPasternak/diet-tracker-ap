@@ -36,7 +36,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   diary$ = this.state.diary$;
   diaryByDate$ = this.state.diaryByDate$;
   foods$ = this.foodsState.foods$;
-  readonly diaryLength$ = this.state.diaryLength$;
+  diaryLength$ = this.state.diaryLength$;
 
   startDate = new Date();
   startDateTransformed = this.datePipe.transform(this.startDate, "yyyy-MM-dd");

@@ -48,8 +48,7 @@
     </div>
 </div>
 
-
-<table mat-table [dataSource]="dataSource">
+<table *ngIf="diaryLength$ | async" mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let el">{{el.id}}</td>
@@ -94,6 +93,9 @@
     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
 </table>
+<div *ngIf="(diaryLength$ | async) === 0">
+    <h2>There are no entries for this day.</h2>
+</div>
 
 <div *ngIf="dataSource.data[0] as item">
     <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">
