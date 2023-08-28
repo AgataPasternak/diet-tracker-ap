@@ -1,3 +1,8 @@
+.no-margin-padding {
+    margin: 0;
+    padding: 0;
+}
+
 .wrap {
     padding: 16px;
 }
@@ -25,6 +30,5 @@ mat-divider {
 
 .delete-entry-wrapper {
     display: flex;
-    justify-content: flex-end;
-    padding: 16px;
+    padding: 16px 0;
 }
