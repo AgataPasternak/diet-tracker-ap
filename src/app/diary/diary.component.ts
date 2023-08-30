@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/co
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map, of } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
@@ -49,10 +49,23 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageSubtitle = data['subtitle'];
     });
     this.foodsState.getFoods();
-    const today = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
-    if (today !== null) {
-      this.state.getDiaryByDate(today);
-    }
+
+
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      const date = params['date'];
+      console.log(date);
+      if (date !== undefined) {
+        this.state.getDiaryByDate(date);
+        this.formDiaryEntry.patchValue({
+          date: date
+        });
+      } else {
+        const today = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
+        if (today !== null) {
+          this.state.getDiaryByDate(today);
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -94,9 +107,14 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
+
     if (chosenDate != null) {
       this.state.getDiaryByDate(chosenDate);
-      this.router.navigate(['date', chosenDate], { relativeTo: this.activatedRoute });
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        queryParams: { date: chosenDate },
+        queryParamsHandling: 'merge',
+      });
     }
   }
 

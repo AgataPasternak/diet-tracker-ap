@@ -21,10 +21,7 @@ const routes: Routes = [
       subtitle: 'Your diet diary'
     },
     children: [
-      {
-        path: 'date/:selectedDate',
-        component: DiaryComponent
-      }
+      { path: 'date/:date', component: DiaryComponent }
     ]
   },
   {
