@@ -49,19 +49,21 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.foodsState.getFoods();
     const today = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
-    // ??  nie działa jak powinno - pierwsza próba zmiany daty przekazuje w evencie stary obiekt (today's diary)
     if (today !== null) {
       this.state.getDiaryByDate(today);
     }
+
+
   }
 
   ngAfterViewInit(): void {
+
     this.diaryByDate$.subscribe((data) => {
       const flattenedData: FlattenDiaryEntry[] = [];
-      for (const entry of data.data) {
-        for (const food of entry.foods) {
+      data.data.forEach(entry => {
+        entry.foods.forEach(food => {
           const foodInfo = this.foodsState.foods$.pipe(
-            map((response: ApiResponse<Food>) => response.data.find((f) => f.id === food.id))
+            map((response: ApiResponse<Food>) => response.data.find(f => f.id === food.id))
           );
 
           foodInfo.subscribe((foodDetails) => {
@@ -80,7 +82,9 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           });
         }
-      }
+        );
+      });
+
       this.dataSource.data = flattenedData;
     });
   }
