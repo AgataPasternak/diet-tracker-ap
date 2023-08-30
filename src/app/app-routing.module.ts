@@ -19,7 +19,13 @@ const routes: Routes = [
     path: 'diary', component: DiaryComponent, data: {
       title: 'Diary',
       subtitle: 'Your diet diary'
-    }
+    },
+    children: [
+      {
+        path: 'date/:selectedDate',
+        component: DiaryComponent
+      }
+    ]
   },
   {
     path: 'login', component: LoginComponent, data: {

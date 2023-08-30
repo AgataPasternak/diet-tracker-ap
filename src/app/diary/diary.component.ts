@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/co
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, of } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
@@ -27,7 +27,8 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   mealType: MealType[] = ['breakfast', 'lunch', 'dinner'];
   columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'calories', 'actions'];
 
-  route = inject(ActivatedRoute);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
   private state = inject(DiaryState);
   private foodsState = inject(FoodsState);
   private fb = inject(FormBuilder);
@@ -43,7 +44,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.state.getDiaryEntries();
-    const routerData = this.route.data.subscribe((data) => {
+    const routerData = this.activatedRoute.data.subscribe((data) => {
       this.pageTitle = data['title'];
       this.pageSubtitle = data['subtitle'];
     });
@@ -52,8 +53,6 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     if (today !== null) {
       this.state.getDiaryByDate(today);
     }
-
-
   }
 
   ngAfterViewInit(): void {
@@ -97,6 +96,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
     if (chosenDate != null) {
       this.state.getDiaryByDate(chosenDate);
+      this.router.navigate(['date', chosenDate], { relativeTo: this.activatedRoute });
     }
   }
 
@@ -124,7 +124,6 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
     this.formDiaryEntry.get('food')?.reset();
-    // nie pobiera danych z dziennika po dodaniu nowego wpisu, bo nie widzi jeszcze nowego wpisu
     this.state.getDiaryByDate(formattedDate as string);
   }
 
