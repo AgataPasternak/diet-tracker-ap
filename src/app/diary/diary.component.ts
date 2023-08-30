@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, of } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
 import { ApiResponse } from '../shared/models/api-response.model';
@@ -135,6 +135,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   onDeleteDiaryEntry(id: string | undefined): void {
     if (id !== undefined) {
       this.state.deleteDiaryEntry(id);
+      this.diaryLength$ = of(0);
     } else {
       console.error("Invalid ID: Cannot delete entry with undefined ID.");
     }

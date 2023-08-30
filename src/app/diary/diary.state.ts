@@ -75,7 +75,7 @@ export class DiaryState {
             .pipe(take(1))
             .subscribe({
                 next: () => {
-                    this.getDiaryById(id);
+                    // this.getDiaryById(id);
                 },
                 error: (error) => {
                     console.log("Error delating diary entry:", error);
