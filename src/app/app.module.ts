@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
+import { DialogDiaryFoodComponent } from './diary/dialog-diary-food/dialog-diary-food.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TagsToNamePipe } from './tags-to-name.pipe';
     TagsToNamePipe,
     TagsToArrayPipe,
     FooterComponent,
-    FoodIdToNamePipe
+    FoodIdToNamePipe,
+    DialogDiaryFoodComponent
   ],
   imports: [
     AppRoutingModule,

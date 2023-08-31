@@ -148,6 +148,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   onDeleteFoodinDairy(id: string, foodId: string): void {
     this.state.deleteFoodInDiary(id, foodId);
   }
+  onEditFoodinDairy() { }
 
   onDeleteDiaryEntry(id: string | undefined): void {
     if (id !== undefined) {
