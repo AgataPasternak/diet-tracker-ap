@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
 import { ApiResponse } from '../shared/models/api-response.model';
@@ -16,7 +16,7 @@ import { DiaryState } from './diary.state';
   templateUrl: './diary.component.html',
   styleUrls: ['./diary.component.scss'],
 })
-export class DiaryComponent implements OnInit, AfterViewInit {
+export class DiaryComponent implements OnInit {
   pageTitle: string;
   pageSubtitle: string;
   events: string[] = [];
@@ -58,6 +58,34 @@ export class DiaryComponent implements OnInit, AfterViewInit {
     this.getTitles();
     this.foodsState.getFoods();
     this.getDateFromQueryParams();
+    this.calculateCalories();   
+  }
+
+  private calculateCalories() {
+    this.foods$.pipe(
+      switchMap((dataFoods: ApiResponse<Food>) => this.diaryByDate$.pipe(
+        map((response: ApiResponse<DiaryEntry>) => {
+          const flattenedData: FlattenDiaryEntry[] = [];
+          response.data.map((entry) => {
+            entry.foods.map((food) => {
+              const foodInfo = dataFoods.data.find(f => f.id === food.id);
+              if (foodInfo) {
+                const caloriesConsumed = (food.weight / 100) * +foodInfo.caloriesPer100g;
+                flattenedData.push({
+                  id: entry.id,
+                  date: entry.date,
+                  foodId: food.id,
+                  weight: food.weight,
+                  mealType: food.mealType,
+                  calories: caloriesConsumed.toFixed(2),
+                });
+              }
+            });
+          });
+          this.dataSource.data = flattenedData;
+        })
+      ))
+    ).subscribe();
   }
 
   private getDateFromQueryParams() {
@@ -85,39 +113,6 @@ export class DiaryComponent implements OnInit, AfterViewInit {
     this.activatedRoute.data.subscribe((data) => {
       this.pageTitle = data['title'];
       this.pageSubtitle = data['subtitle'];
-    });
-  }
-
-  ngAfterViewInit(): void {
-
-    this.diaryByDate$.subscribe((data) => {
-      const flattenedData: FlattenDiaryEntry[] = [];
-      data.data.forEach(entry => {
-        entry.foods.forEach(food => {
-          const foodInfo = this.foods$.pipe(
-            map((response: ApiResponse<Food>) => response.data.find(f => f.id === food.id))
-          );
-
-          foodInfo.subscribe((foodDetails) => {
-            if (foodDetails) {
-              const caloriesPer100g = foodDetails.caloriesPer100g;
-              const caloriesConsumed = (food.weight / 100) * +caloriesPer100g;
-
-              flattenedData.push({
-                id: entry.id,
-                date: entry.date,
-                foodId: food.id,
-                weight: food.weight,
-                mealType: food.mealType,
-                calories: caloriesConsumed.toFixed(2),
-              });
-            }
-          });
-        }
-        );
-      });
-
-      this.dataSource.data = flattenedData;
     });
   }
 
