@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map, of } from 'rxjs';
+import { map } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
 import { ApiResponse } from '../shared/models/api-response.model';
@@ -16,55 +16,75 @@ import { DiaryState } from './diary.state';
   templateUrl: './diary.component.html',
   styleUrls: ['./diary.component.scss'],
 })
-export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class DiaryComponent implements OnInit, AfterViewInit {
   pageTitle: string;
   pageSubtitle: string;
   events: string[] = [];
-
   noDataTable: string;
   dataSource = new MatTableDataSource<FlattenDiaryEntry>([]);
   mealType: MealType[] = ['breakfast', 'lunch', 'dinner'];
   columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'calories', 'actions'];
 
-  router = inject(Router);
-  activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private state = inject(DiaryState);
   private foodsState = inject(FoodsState);
   private fb = inject(FormBuilder);
   private datePipe = inject(DatePipe);
+  readonly DATE_FORMAT = 'yyyy-MM-dd';
 
-  diary$ = this.state.diary$;
-  diaryByDate$ = this.state.diaryByDate$;
-  foods$ = this.foodsState.foods$;
-  diaryLength$ = this.state.diaryLength$;
+  readonly diary$ = this.state.diary$;
+  readonly diaryByDate$ = this.state.diaryByDate$;
+  readonly foods$ = this.foodsState.foods$;
+  readonly diaryLength$ = this.state.diaryLength$;
 
   startDate = new Date();
-  startDateTransformed = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
+  startDateTransformed = this.datePipe.transform(
+      this.startDate, 
+      this.DATE_FORMAT
+  );
+
+  formDiaryEntry = this.fb.group({
+    date: [this.startDateTransformed, [Validators.required]],
+    food: this.fb.group({
+      id: ['', [Validators.required]],
+      weight: ['', [Validators.required]],
+      mealType: ['', [Validators.required]]
+    })
+  });
 
   ngOnInit(): void {
     this.state.getDiaryEntries();
-    const routerData = this.activatedRoute.data.subscribe((data) => {
-      this.pageTitle = data['title'];
-      this.pageSubtitle = data['subtitle'];
-    });
+    this.getTitles();
     this.foodsState.getFoods();
+    this.getDateFromQueryParams();
+  }
 
-
+  private getDateFromQueryParams() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       const date = params['date'];
-      console.log(date);
-      if (date !== undefined) {
+      if (date != undefined) {
         this.state.getDiaryByDate(date);
         this.formDiaryEntry.patchValue({
           date: date
         });
       } else {
-        const today = this.datePipe.transform(this.startDate, "yyyy-MM-dd");
+        const today = this.datePipe.transform(this.startDate, this.DATE_FORMAT);
         if (today !== null) {
           this.state.getDiaryByDate(today);
         }
       }
+    });
+  }
+
+  get food(): FormControl {
+    return this.formDiaryEntry.get('food') as FormControl;
+  }
+  
+  private getTitles() {
+    this.activatedRoute.data.subscribe((data) => {
+      this.pageTitle = data['title'];
+      this.pageSubtitle = data['subtitle'];
     });
   }
 
@@ -74,7 +94,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
       const flattenedData: FlattenDiaryEntry[] = [];
       data.data.forEach(entry => {
         entry.foods.forEach(food => {
-          const foodInfo = this.foodsState.foods$.pipe(
+          const foodInfo = this.foods$.pipe(
             map((response: ApiResponse<Food>) => response.data.find(f => f.id === food.id))
           );
 
@@ -108,7 +128,7 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
     const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
 
-    if (chosenDate != null) {
+    if (chosenDate != undefined) {
       this.state.getDiaryByDate(chosenDate);
       this.router.navigate([], {
         relativeTo: this.activatedRoute,
@@ -118,21 +138,12 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  formDiaryEntry = this.fb.group({
-    date: [this.startDateTransformed, [Validators.required]],
-    food: this.fb.group({
-      id: ['', [Validators.required]],
-      weight: ['', [Validators.required]],
-      mealType: ['', [Validators.required]]
-    })
-  });
-
   onSubmit() {
     if (this.formDiaryEntry.invalid) {
       return;
     }
-    const formattedDate = this.datePipe.transform(this.formDiaryEntry.value.date, "yyyy-MM-dd");
-    const formattedId = this.formDiaryEntry.value.food?.id;
+    const formattedDate = this.datePipe.transform(this.formDiaryEntry.value.date, this.DATE_FORMAT);
+    const formattedId = this.food.value.id;
     const formattedIdString = String(formattedId);
     this.formDiaryEntry.patchValue({
       date: formattedDate,
@@ -141,26 +152,19 @@ export class DiaryComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
-    this.formDiaryEntry.get('food')?.reset();
+    this.food.reset();
     this.state.getDiaryByDate(formattedDate as string);
   }
 
-  onDeleteFoodinDairy(id: string, foodId: string): void {
+  onDeleteFoodInDairy(id: string, foodId: string): void {
     this.state.deleteFoodInDiary(id, foodId);
   }
-  onEditFoodinDairy() { }
+  onEditFoodInDairy() { }
 
   onDeleteDiaryEntry(id: string | undefined): void {
-    if (id !== undefined) {
+    if (id != undefined) {
       this.state.deleteDiaryEntry(id);
-      this.diaryLength$ = of(0);
-    } else {
-      console.error("Invalid ID: Cannot delete entry with undefined ID.");
-    }
-  }
-
-  ngOnDestroy(): void {
-
+    } 
   }
 }
 

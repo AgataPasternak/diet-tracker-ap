@@ -29,10 +29,10 @@
         </div>
 
         <div fxFlex="50%" fxLayoutAlign="end top">
-            <button mat-fab extended color="primary" (click)="addFoodDialog()">
+            <button mat-fab extended class="uppercase-button" color="primary" (click)="addFoodDialog()">
                 <!-- dodać metoda openDialog -->
                 <mat-icon>add_circle_outline</mat-icon>
-                ADD FOOD
+                add food
             </button>
         </div>
     </div>
@@ -73,7 +73,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
             <td mat-cell *matCellDef="let el">
                 <ul class="tags" *ngIf="el.tags | tagsToArray as tagList">
-                    <li *ngFor="let tag of tagList">{{(tag | tagsToName) | async}}</li>
+                    <li *ngFor="let tag of tagList">{{(tag.toString() | tagsToName) | async}}</li>
                 </ul>
             </td>
         </ng-container>

@@ -13,11 +13,15 @@ export class FoodsState {
     private foodsSource$ = new BehaviorSubject<ApiResponse<Food>>({
         data: [],
         length: 0
-    }); // można go updatować z zewnątrz (jest Subject)
-    foods$ = this.foodsSource$.asObservable(); // nie da się go updatować z zewnątrz (jest Observable)
+    }); 
+    get foods$() {
+        return this.foodsSource$.asObservable();
+    }
 
     private foodSource$ = new Subject<Food>();
-    food$ = this.foodSource$.asObservable();
+    get food$() {
+        return this.foodSource$.asObservable();
+    }
 
     private loadingSource$ = new BehaviorSubject<boolean>(false);
     get loading$(): Observable<boolean> {

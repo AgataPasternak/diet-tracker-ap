@@ -73,9 +73,9 @@
 <mat-dialog-actions *ngIf="inputData.showActions">
     <div *ngIf="inputData.editMode; then updateFood else addFood"></div>
     <ng-template #addFood>
-        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="foodForm.invalid">SAVE</button>
+        <button mat-raised-button class="uppercase-button" color="primary" (click)="onSubmit()" [disabled]="foodForm.invalid">save</button>
     </ng-template>
     <ng-template #updateFood>
-        <button mat-raised-button color="primary" (click)="onUpdate()">SAVE CHANGES</button>
+        <button mat-raised-button class="uppercase-button" color="primary" (click)="onUpdate()">save changes</button>
     </ng-template>
 </mat-dialog-actions>

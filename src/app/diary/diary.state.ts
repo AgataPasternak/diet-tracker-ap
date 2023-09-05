@@ -11,13 +11,17 @@ import { DiaryService } from './diary.service';
 
 export class DiaryState {
     private diarySource$ = new Subject<ApiResponse<DiaryEntry>>;
-    diary$ = this.diarySource$.asObservable();
+    get diary$() {
+       return this.diarySource$.asObservable();
+    }
 
     private diaryByDateSource$ = new BehaviorSubject<ApiResponse<DiaryEntry>>({
         data: [],
         length: 0
     });
-    diaryByDate$ = this.diaryByDateSource$.asObservable();
+    get diaryByDate$() {
+        return this.diaryByDateSource$.asObservable();
+    }
 
     diaryLength$ = this.diaryByDateSource$.pipe(map((data) => data.length));
 
@@ -75,13 +79,16 @@ export class DiaryState {
             .pipe(take(1))
             .subscribe({
                 next: () => {
-                    // this.getDiaryById(id);
+                    this.diaryByDateSource$.next({
+                        data: [],
+                        length: 0
+                      });
                 },
                 error: (error) => {
                     console.log("Error delating diary entry:", error);
                 },
                 complete: () => {
-
+                   
                 }
             });
     }

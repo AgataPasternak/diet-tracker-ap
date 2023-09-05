@@ -17,24 +17,22 @@ import { FoodDialogData } from './dialog-food-data.model';
 })
 export class DialogFoodComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @Input() public inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
+
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);
   private state = inject(FoodsState);
-  // dodany @Input, żeby było widoczne w mockach testowych
-  @Input() public inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
-  tagsState = inject(TagsState);
-  router = inject(Router);
+  private tagsState = inject(TagsState);
+  private router = inject(Router);
 
-  savedTags: string[] = [];
-
-  postInLoading$ = this.state.postInLoading$;
-  responseFood$ = this.state.food$;
-  tags$ = this.tagsState.tags$;
+  readonly postInLoading$ = this.state.postInLoading$;
+  private readonly responseFood$ = this.state.food$;
+  private readonly tags$ = this.tagsState.tags$;
   tagsArray: any;
 
+  savedTags: string[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl('');
-  // filteredFruits: string[];
   fruits: string[] = ['Lemon'];
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
   filteredFruits$: Observable<string[]>;
@@ -42,6 +40,20 @@ export class DialogFoodComponent implements OnInit {
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  }
+
+  foodForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+    caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    nutriScore: ['', [Validators.required]],
+    tags: ['', [Validators.required]],
+    photo: ['', [Validators.required]]
+  });
+  
   ngOnInit(): void {
 
     this.tags$.subscribe((data) => {
@@ -85,19 +97,7 @@ export class DialogFoodComponent implements OnInit {
     this.fruitCtrl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  }
-
-  foodForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    caloriesPer100g: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-    weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
-    nutriScore: ['', [Validators.required]],
-    tags: ['', [Validators.required]],
-    photo: ['', [Validators.required]]
-  })
+  
 
   get name() { return this.foodForm.get('name'); }
 
@@ -106,14 +106,10 @@ export class DialogFoodComponent implements OnInit {
     //   return;
     // }
     this.state.postFood(this.foodForm.value as Food);
-    // const name = this.foodForm.get('name')?.value;
     this.closeDialog();
   }
 
   onUpdate() { // TODO: przerobić na jedną metodą onSave (onSubmit, onUpdate)
-    // if (this.foodForm.invalid) {
-    //   return;
-    // }
     const food = {
       ...this.foodForm.value, // spread operator
       id: this.inputData.id

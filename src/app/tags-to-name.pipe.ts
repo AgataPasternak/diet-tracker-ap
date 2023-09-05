@@ -12,11 +12,10 @@ export class TagsToNamePipe implements PipeTransform {
   tags$ = this.tagsState.tags$;
 
   transform(tagId: string): Observable<String | undefined> {
-    // this.tags$.subscribe(console.log);
     return this.tags$.pipe(
       map((tags) => {
         return tags.find((tag: Tag) => {
-          return tag?.id === +tagId;
+          return String(tag?.id) === tagId;
         })?.name;
       })
     );

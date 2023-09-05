@@ -39,9 +39,9 @@
                 <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
             </mat-form-field>
         </ng-container>
-        <button mat-fab extended color="primary" [disabled]="formDiaryEntry.invalid" (click)="onSubmit()">
+        <button mat-fab extended class="uppercase-button" color="primary" [disabled]="formDiaryEntry.invalid" (click)="onSubmit()">
             <mat-icon>add_circle_outline</mat-icon>
-            ADD ITEM
+            add item
         </button>
     </div>
     <table *ngIf="diaryLength$ | async" mat-table [dataSource]="dataSource">
@@ -79,10 +79,10 @@
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let el">
                 <button mat-icon-button color="warn" aria-label="Remove" title="Remove"
-                    (click)="onDeleteFoodinDairy(el.id, el.foodId)">
+                    (click)="onDeleteFoodInDairy(el.id, el.foodId)">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" aria-label="Edit" title="Edit" (click)="onEditFoodinDairy()">
+                <button mat-icon-button color="primary" aria-label="Edit" title="Edit" (click)="onEditFoodInDairy()">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -98,9 +98,9 @@
 
     <div *ngIf="dataSource.data[0] as item">
         <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">
-            <button mat-fab extended color="warn" (click)="onDeleteDiaryEntry(item.id)">
+            <button mat-fab extended class="uppercase-button" color="warn" (click)="onDeleteDiaryEntry(item.id)">
                 <mat-icon>delete</mat-icon>
-                DELETE ENTRY
+                delete entry
             </button>
         </div>
     </div>

@@ -30,18 +30,18 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'photo', 'actionsColumn'];
 
   private state = inject(FoodsState);
-  dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private tagsState = inject(TagsState);
   private route = inject(ActivatedRoute); // wszystko czego nie używam w temaplte powinno być prywatne
 
-  response$ = this.state.foods$;
-  loading$ = this.state.loading$;
-  tags$ = this.tagsState.tags$;
-  deleteInProgress$ = this.state.deleteInProgress$;
-  postInLoading$ = this.state.postInLoading$;
-  errorMessage$ = this.state.errorMessage$;
+  private readonly response$ = this.state.foods$;
+  readonly loading$ = this.state.loading$;
+  readonly tags$ = this.tagsState.tags$;
+  readonly deleteInProgress$ = this.state.deleteInProgress$;
+  readonly postInLoading$ = this.state.postInLoading$;
+  readonly errorMessage$ = this.state.errorMessage$;
   search = this.fb.control('');
   pageTitle: string;
   pageSubtitle: string;
@@ -49,12 +49,16 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Food>;
 
   ngOnInit(): void {
-    const routerData = this.route.data.subscribe((data) => {
+    this.getTitles();
+    this.state.getFoods();
+    this.tagsState.getTags();
+  }
+
+  private getTitles() {
+    this.route.data.subscribe((data) => {
       this.pageTitle = data['title'];
       this.pageSubtitle = data['subtitle'];
     });
-    this.state.getFoods();
-    this.tagsState.getTags();
   }
 
   ngAfterViewInit(): void {

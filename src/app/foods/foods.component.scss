@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .wrapp {
     margin: 16px;
 }
@@ -45,7 +47,7 @@
     height: auto;
     object-fit: cover;
     border-radius: 10px;
-    border: 2px solid #3f51b5;
+    border: 2px solid $c-blue;
     margin: 10px 0;
 }
 
