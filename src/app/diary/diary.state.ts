@@ -48,7 +48,7 @@ export class DiaryState {
             .postDiary(diary)
             .pipe(take(1), delay(1000))
             .subscribe(() => {
-                this.getDiaryEntries();
+                this.getDiaryByDate(diary.date);
             });
     }
 

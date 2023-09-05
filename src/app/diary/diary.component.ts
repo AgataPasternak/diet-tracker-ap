@@ -33,7 +33,6 @@ export class DiaryComponent implements OnInit {
   private datePipe = inject(DatePipe);
   readonly DATE_FORMAT = 'yyyy-MM-dd';
 
-  readonly diary$ = this.state.diary$;
   readonly diaryByDate$ = this.state.diaryByDate$;
   readonly foods$ = this.foodsState.foods$;
   readonly diaryLength$ = this.state.diaryLength$;
@@ -148,7 +147,6 @@ export class DiaryComponent implements OnInit {
     });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
     this.food.reset();
-    this.state.getDiaryByDate(formattedDate as string);
   }
 
   onDeleteFoodInDairy(id: string, foodId: string): void {
