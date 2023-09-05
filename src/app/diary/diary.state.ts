@@ -93,13 +93,13 @@ export class DiaryState {
             });
     }
 
-    deleteFoodInDiary(id: string, foodId: string): void {
+    deleteFoodInDiary(id: string, foodId: string, date: string): void {
         this.diaryService
             .deleteFoodInDiary(id, foodId)
             .pipe(take(1))
             .subscribe({
                 next: () => {
-                    // this.getDiaryById(id);
+                   this.getDiaryByDate(date);
                 },
                 error: (error) => {
                     console.log("Error delating food in diary:", error);

@@ -149,8 +149,8 @@ export class DiaryComponent implements OnInit {
     this.food.reset();
   }
 
-  onDeleteFoodInDairy(id: string, foodId: string): void {
-    this.state.deleteFoodInDiary(id, foodId);
+  onDeleteFoodInDairy(id: string, foodId: string, date: string): void {
+    this.state.deleteFoodInDiary(id, foodId, date);
   }
   onEditFoodInDairy() { }
 

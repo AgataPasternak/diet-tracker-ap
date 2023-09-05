@@ -79,7 +79,7 @@
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let el">
                 <button mat-icon-button color="warn" aria-label="Remove" title="Remove"
-                    (click)="onDeleteFoodInDairy(el.id, el.foodId)">
+                    (click)="onDeleteFoodInDairy(el.id, el.foodId, el.date)">
                     <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button color="primary" aria-label="Edit" title="Edit" (click)="onEditFoodInDairy()">
