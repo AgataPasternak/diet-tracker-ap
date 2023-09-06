@@ -21,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
 import { TagsToArrayPipe } from './tags-to-array.pipe';
 import { TagsToNamePipe } from './tags-to-name.pipe';
 import { DialogDiaryFoodComponent } from './diary/dialog-diary-food/dialog-diary-food.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DialogDiaryFoodComponent } from './diary/dialog-diary-food/dialog-diary
     TagsToArrayPipe,
     FooterComponent,
     FoodIdToNamePipe,
-    DialogDiaryFoodComponent
+    DialogDiaryFoodComponent,
+    RegisterComponent
   ],
   imports: [
     AppRoutingModule,
