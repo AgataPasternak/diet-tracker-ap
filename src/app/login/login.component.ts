@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SignInUser } from '../services/auth/auth.model';
 import { AuthState } from '../services/auth/auth.state';
 
@@ -11,11 +11,14 @@ import { AuthState } from '../services/auth/auth.state';
 })
 export class LoginComponent {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private fb = inject(FormBuilder);
-  private auth = inject(AuthState);
+  private authState = inject(AuthState);
 
   pageTitle: string;
   pageSubtitle: string;
+
+  readonly isAuthenticated$ = this.authState.isAuthenticated$;
 
   loginForm = this.fb.group({
     userName: ['', Validators.required],
@@ -37,9 +40,9 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-
-    this.auth.signIn(this.loginForm.value as SignInUser);
+    this.authState.signIn(this.loginForm.value as SignInUser);
     this.loginForm.reset();
+    this.router.navigate(['/foods']);
   }
 
 }

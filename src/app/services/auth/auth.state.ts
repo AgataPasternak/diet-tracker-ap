@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SignInUser, User } from './auth.model';
 import { AuthService } from './auth.service';
 
@@ -12,8 +13,19 @@ export class AuthState {
     get user$() {
        return this.userSource$.asObservable();
     }
+    
+    private isAuthenticatedSource$ = new BehaviorSubject<boolean>(false);
+    get isAuthenticated$(): Observable<boolean> {
+        return this.isAuthenticatedSource$.asObservable();
+    }
+    
+    private isLoggedInSource$ = new BehaviorSubject<boolean>(false);
+    get isLoggedIn$(): Observable<boolean> {
+        return this.isLoggedInSource$.asObservable();
+    }
 
-  private authService = inject(AuthService);
+    private authService = inject(AuthService);
+    private router = inject(Router);
 
     signUp(user: User): void {
         this.authService.signUp(user)
@@ -24,11 +36,33 @@ export class AuthState {
 
     signIn(user: SignInUser): void {
         this.authService.singIn(user)
-            .subscribe(() => {
-                console.log('User logged in successfully');
-                //localStorage.setItem('token', user.token);
-                //this.userSource$.next(user);
-            });
+        .subscribe({
+            next: () => {
+              this.isAuthenticatedSource$.next(true);
+              this.isLoggedInSource$.next(true);
+              this.router.navigate(['/foods']);
+
+            },
+            error: () => {
+                this.isAuthenticatedSource$.next(false);
+                this.isLoggedInSource$.next(false);
+            }
+        })
     }
+
+    signOut(): void {
+        this.authService.signOut()
+        .subscribe({
+            next: () => {
+              this.isAuthenticatedSource$.next(false);
+              this.router.navigate(['/login']);
+
+            },
+            error: () => {
+                this.isAuthenticatedSource$.next(false);
+            }
+        })
+    }
+    
 }
 

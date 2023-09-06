@@ -7,15 +7,16 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="['/foods']">Food</a>
+                <a [routerLink]="['/foods']" *ngIf="isAuthenticated$ | async">Food</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="['/diary']">Diary</a>
+                <a [routerLink]="['/diary']" *ngIf="isAuthenticated$ | async">Diary</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a [routerLink]="['/login']">Login</a>
+                <a *ngIf="isLoggedIn$ | async" [routerLink]="['/login']">Logout</a>
+                <a *ngIf="!(isLoggedIn$ | async)" [routerLink]="['/login']">Login</a>
             </li> 
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a [routerLink]="['/register']">Register</a>
             </li>
         </ul>

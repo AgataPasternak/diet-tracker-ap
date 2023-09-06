@@ -9,19 +9,19 @@ import { SignInUser, User } from './auth.model';
 })
 
 export class AuthService {
-  private readonly API_FOODS = environment.apiUrl + 'auth/';
+  private readonly API_AUTH = environment.apiUrl + 'auth/';
   httpClient = inject(HttpClient);
 
   signUp(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.API_FOODS + 'signup', user);
+    return this.httpClient.post<User>(this.API_AUTH + 'signup', user);
   }
 
   singIn(user: SignInUser) {
-    return this.httpClient.post<SignInUser>(this.API_FOODS + 'signin', user);
+    return this.httpClient.post<SignInUser>(this.API_AUTH + 'signin', user);
   }
 
   signOut() {
-    localStorage.removeItem('token');
+    return this.httpClient.post<SignInUser>(this.API_AUTH + 'signin', null);
   }
   
 

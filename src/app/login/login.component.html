@@ -8,7 +8,7 @@
                 <mat-divider></mat-divider>
                 <br>
             </div>
-            <div [formGroup]="loginForm" class="form">
+            <div [formGroup]="loginForm" class="form" (keydown.enter)="onSubmit()">
                 <mat-form-field>
                     <mat-label>User name</mat-label>
                     <input matInput formControlName="userName">
