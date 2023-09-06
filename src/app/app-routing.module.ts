@@ -5,12 +5,13 @@ import { DiaryComponent } from './diary/diary.component';
 import { FoodsComponent } from './foods/foods.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/foods', pathMatch: 'full' },
   {
-    path: 'foods', component: FoodsComponent, data: { // dane do często używane do wyśtwietlenia nagłówków; queryParams, używane często do filtów
+    path: 'foods', component: FoodsComponent, data: {
       title: 'Foods',
       subtitle: 'List of foods'
     }
@@ -30,7 +31,13 @@ const routes: Routes = [
       subtitle: 'Login to your account'
     }
   },
-  { path: '**', component: PageNotFoundComponent }, // dodac komponent 404
+  {
+    path: 'register', component: RegisterComponent, data: {
+      title: '  ',
+      subtitle: 'Register to your account'
+    }
+  },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

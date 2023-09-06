@@ -1,1 +1,29 @@
-<p>register works!</p>
+<div class="wrapper">
+    <div class="center-container">
+        <div class="centered-content form-wrapper">
+            <div class="header">
+                <h1>{{pageTitle}}</h1>
+                <h3>{{pageSubtitle}}</h3>
+                <mat-divider></mat-divider>
+                <br>
+            </div>
+            <div [formGroup]="registerForm" class="form">
+                <mat-form-field>
+                    <mat-label>User name</mat-label>
+                    <input matInput formControlName="userName">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                </mat-form-field>
+                <button mat-fab extended color="primary" type="submit" (click)="onSubmit()"
+                    [disabled]="registerForm.invalid">Login</button>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+.wrapper {
+    padding: 0 16px;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-wrapper {
+    width: 20%;
+
+    .form {
+        mat-form-field {
+            display: block;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        mat-divider {
+            margin: 2rem 0;
+        }
+    }
+}
