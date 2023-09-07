@@ -12,11 +12,13 @@
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a [routerLink]="['/diary']" *ngIf="isAuthenticated$ | async">Diary</a>
             </li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a *ngIf="isLoggedIn$ | async" [routerLink]="['/login']">Logout</a>
-                <a *ngIf="!(isLoggedIn$ | async)" [routerLink]="['/login']">Login</a>
+            <li *ngIf="isAuthenticated$ | async" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onSignOut()">
+                <a>Logout</a>
             </li> 
-            <li *ngIf="!(isLoggedIn$ | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *ngIf="!(isAuthenticated$ | async)"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a [routerLink]="['/login']">Login</a>
+            </li> 
+            <li *ngIf="!(isAuthenticated$ | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a [routerLink]="['/register']">Register</a>
             </li>
         </ul>

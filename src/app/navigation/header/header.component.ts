@@ -11,9 +11,11 @@ export class HeaderComponent {
 
   private authState = inject(AuthState);
   readonly isAuthenticated$ = this.authState.isAuthenticated$;
-  readonly isLoggedIn$ = this.authState.isLoggedIn$;
 
   onToggleSlidenav() {
     this.toggleSlidenav.emit();
+  }
+  onSignOut() {
+    this.authState.signOut();
   }
 }

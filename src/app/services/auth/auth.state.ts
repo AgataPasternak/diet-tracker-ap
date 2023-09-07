@@ -18,11 +18,6 @@ export class AuthState {
     get isAuthenticated$(): Observable<boolean> {
         return this.isAuthenticatedSource$.asObservable();
     }
-    
-    private isLoggedInSource$ = new BehaviorSubject<boolean>(false);
-    get isLoggedIn$(): Observable<boolean> {
-        return this.isLoggedInSource$.asObservable();
-    }
 
     private authService = inject(AuthService);
     private router = inject(Router);
@@ -39,13 +34,11 @@ export class AuthState {
         .subscribe({
             next: () => {
               this.isAuthenticatedSource$.next(true);
-              this.isLoggedInSource$.next(true);
               this.router.navigate(['/foods']);
 
             },
             error: () => {
                 this.isAuthenticatedSource$.next(false);
-                this.isLoggedInSource$.next(false);
             }
         })
     }

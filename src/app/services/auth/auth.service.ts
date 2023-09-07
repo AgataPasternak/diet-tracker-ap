@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   signOut() {
-    return this.httpClient.post<SignInUser>(this.API_AUTH + 'signin', null);
+    return this.httpClient.post<SignInUser>(this.API_AUTH + 'signout', null);
   }
   
 

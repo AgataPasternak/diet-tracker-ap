@@ -6,18 +6,25 @@ import { FoodsComponent } from './foods/foods.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { isUserLoggedInGuard } from './services/auth/auth.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/foods', pathMatch: 'full' },
   {
-    path: 'foods', component: FoodsComponent, data: {
+    path: 'foods', 
+    component: FoodsComponent, 
+    canActivate: [isUserLoggedInGuard],
+    data: {
       title: 'Foods',
       subtitle: 'List of foods'
     }
   },
   {
-    path: 'diary', component: DiaryComponent, data: {
+    path: 'diary', 
+    component: DiaryComponent, 
+    canActivate: [isUserLoggedInGuard],
+    data: {
       title: 'Diary',
       subtitle: 'Your diet diary'
     },
