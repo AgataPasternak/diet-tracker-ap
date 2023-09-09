@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApiResponse } from '../shared/models/api-response.model';
-import { DiaryEntry } from './diary.model';
+import { DiaryEntry, FlattenDiaryEntry } from './diary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class DiaryService {
   }
 
   postDiary(diary: DiaryEntry): Observable<DiaryEntry> {
-    return this.httpClient.post<DiaryEntry>(this.API_DIARY, diary);
+    return this.httpClient.post<DiaryEntry>(this.API_DIARY, diary); 
   }
 
   deleteDiaryEntry(id: string): Observable<void> {
@@ -36,4 +36,7 @@ export class DiaryService {
     return this.httpClient.delete<void>(this.API_DIARY + id + '/foods/' + foodId);
   }
 
+  updateFoodInDiary(diaryEntry: FlattenDiaryEntry): Observable<void> {
+    return this.httpClient.put<void>(this.API_DIARY + '/foods/' + diaryEntry.uniqueFoodId, diaryEntry);
+  }
 }

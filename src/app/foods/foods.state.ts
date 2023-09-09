@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, Observable, Subject, delay, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, delay, map } from 'rxjs';
 import { ApiResponse } from '../shared/models/api-response.model';
 import { Food } from './foods.model';
 import { FoodsService } from './foods.service';
@@ -60,7 +60,7 @@ export class FoodsState {
         this.loadingSource$.next(true);
         this.foodService
             .getFoods()
-            .pipe(take(1), delay(100))
+            .pipe(delay(100))
             .subscribe({
                 next: (data) => {
                     this.foodsSource$.next(data);
@@ -93,7 +93,7 @@ export class FoodsState {
         this.postLoading$.next(true);
         this.foodService
             .postFood(food)
-            .pipe(take(1), delay(1000))
+            .pipe(delay(1000))
             .subscribe(() => {
                 this.getFoods();
                 this.postLoading$.next(false);
@@ -116,7 +116,6 @@ export class FoodsState {
 
     updateFood(food: Food): void {
         this.foodService.updateFood(food).subscribe(() => {
-            // ??? jak to działa
             this.getFoods();
         })
     }

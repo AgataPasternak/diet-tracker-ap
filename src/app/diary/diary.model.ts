@@ -22,5 +22,7 @@ export interface FlattenDiaryEntry {
     foodId: string,
     weight: number,
     mealType: MealType,
-    calories: string
+    calories: string,
+    uniqueFoodId: string;
+    food_id: string;
 }

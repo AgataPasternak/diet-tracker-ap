@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Subject, delay, map, take } from 'rxjs';
 import { ApiResponse } from '../shared/models/api-response.model';
-import { DiaryEntry } from './diary.model';
+import { DiaryEntry, FlattenDiaryEntry } from './diary.model';
 import { DiaryService } from './diary.service';
-
 
 @Injectable({
     providedIn: 'root'
@@ -103,6 +102,22 @@ export class DiaryState {
                 },
                 error: (error) => {
                     console.log("Error delating food in diary:", error);
+                },
+                complete: () => {
+
+                }
+            });
+    }
+
+    updateFoodInDiary(diaryEntry: FlattenDiaryEntry): void {
+        this.diaryService
+            .updateFoodInDiary(diaryEntry)
+            .subscribe({
+                next: () => {
+                    this.getDiaryByDate(diaryEntry.date);
+                },
+                error: (error) => {
+                    console.log("Error updating food in diary:", error);
                 },
                 complete: () => {
 

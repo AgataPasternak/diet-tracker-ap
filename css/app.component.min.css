@@ -1,1 +1,1 @@
-.mat-drawer-container{background-color:white}
+.mat-drawer-container{background-color:white}:host ::ng-deep app-header li a{color:white !important}

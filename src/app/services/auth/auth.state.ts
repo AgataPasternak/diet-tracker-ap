@@ -35,10 +35,11 @@ export class AuthState {
             next: () => {
               this.isAuthenticatedSource$.next(true);
               this.router.navigate(['/foods']);
-
             },
             error: () => {
                 this.isAuthenticatedSource$.next(false);
+                this.router.navigate(['/login']);
+
             }
         })
     }

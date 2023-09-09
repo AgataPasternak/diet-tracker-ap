@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Food } from '../foods/foods.model';
 import { ApiResponse } from '../shared/models/api-response.model';
 import { DiaryEntry, FlattenDiaryEntry } from './diary.model';
 
@@ -7,23 +7,26 @@ import { DiaryEntry, FlattenDiaryEntry } from './diary.model';
     providedIn: 'root'
 })
 export class DiaryFacadeService {
-    mapDiaryEntryToFlattenDiaryEntry(diary: Observable<ApiResponse<DiaryEntry>>): FlattenDiaryEntry[] {
-        return diary.pipe(
-            map((data) => {
-                const flattenDiary: FlattenDiaryEntry[] = [];
-
-
-                const flattenDiary: FlattenDiaryEntry[] = [{
-                    id: '122',
-                    date: '2023-09-09',
-                    foodId: '2',
-                    weight: 123,
-                    mealType: 'dinner',
-                    calories: '12'
-                }];
-                return flattenDiary;
+    flattenData(response: ApiResponse<DiaryEntry>, dataFoods: ApiResponse<Food>): FlattenDiaryEntry[] {
+        const flattenedData: FlattenDiaryEntry[] = [];
+        response.data.map((entry) => {
+          entry.foods.map((food) => {
+            const foodInfo = dataFoods.data.find(f => f.id === food.id);
+            if (foodInfo) {
+              const caloriesConsumed = (food.weight / 100) * +foodInfo.caloriesPer100g;
+              flattenedData.push({
+                id: entry.id,
+                date: entry.date,
+                foodId: food.id,
+                weight: food.weight,
+                mealType: food.mealType,
+                calories: caloriesConsumed.toFixed(2),
+                uniqueFoodId: food.uniqueFoodId,
+                food_id: food.food_id
+              });
             }
-
-
-
+          });
+        });
+        return flattenedData;
+      }
 }

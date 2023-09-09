@@ -4,10 +4,11 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { Food } from '../foods/foods.model';
 import { FoodsState } from '../foods/foods.state';
 import { ApiResponse } from '../shared/models/api-response.model';
+import { DiaryFacadeService } from './diary.facade';
 import { DiaryEntry, FlattenDiaryEntry, MealType } from './diary.model';
 import { DiaryState } from './diary.state';
 
@@ -31,6 +32,7 @@ export class DiaryComponent implements OnInit {
   private foodsState = inject(FoodsState);
   private fb = inject(FormBuilder);
   private datePipe = inject(DatePipe);
+  private diaryFacade = inject(DiaryFacadeService);
   readonly DATE_FORMAT = 'yyyy-MM-dd';
 
   readonly diaryByDate$ = this.state.diaryByDate$;
@@ -64,24 +66,10 @@ export class DiaryComponent implements OnInit {
     this.foods$.pipe(
       switchMap((dataFoods: ApiResponse<Food>) => this.diaryByDate$.pipe(
         map((response: ApiResponse<DiaryEntry>) => {
-          const flattenedData: FlattenDiaryEntry[] = [];
-          response.data.map((entry) => {
-            entry.foods.map((food) => {
-              const foodInfo = dataFoods.data.find(f => f.id === food.id);
-              if (foodInfo) {
-                const caloriesConsumed = (food.weight / 100) * +foodInfo.caloriesPer100g;
-                flattenedData.push({
-                  id: entry.id,
-                  date: entry.date,
-                  foodId: food.id,
-                  weight: food.weight,
-                  mealType: food.mealType,
-                  calories: caloriesConsumed.toFixed(2),
-                });
-              }
-            });
-          });
-          this.dataSource.data = flattenedData;
+          return this.diaryFacade.flattenData(response, dataFoods);
+        }),
+        tap((data: FlattenDiaryEntry[]) => {
+          this.dataSource.data = data;
         })
       ))
     ).subscribe();
