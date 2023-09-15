@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { AuthState } from 'src/app/services/auth/auth.state';
+import { AuthState } from 'src/app/auth/auth.state';
 
 @Component({
   selector: 'app-header',

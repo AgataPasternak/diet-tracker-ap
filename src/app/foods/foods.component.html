@@ -23,7 +23,7 @@
             <div class="form searchForm" fxLayoutAlign="start top">
                 <mat-form-field>
                     <mat-label>Search food...</mat-label>
-                    <input matInput #input [formControl]="search" (keyup)="searchValue($event)">
+                    <input matInput #input [formControl]="search" (input)="searchValue($event)">
                 </mat-form-field>
             </div>
         </div>

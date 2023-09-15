@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../services/auth/auth.model';
-import { AuthState } from '../services/auth/auth.state';
+import { User } from '../auth/auth.model';
+import { AuthState } from '../auth/auth.state';
 
 @Component({
   selector: 'app-login',
