@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../auth/auth.model';
 import { AuthState } from '../auth/auth.state';
+import { passwordMatchValidator } from './password-match.validator';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,11 @@ export class RegisterComponent {
   registerForm = this.fb.group({
     userName: ['', Validators.required],
     email: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    confirmPassword: ['']
+  },
+  {
+    validators: passwordMatchValidator
   });
   
   ngOnInit(): void {
