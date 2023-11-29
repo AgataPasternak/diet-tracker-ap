@@ -7,13 +7,15 @@ import { AuthState } from '../auth/auth.state';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private authState = inject(AuthState);
+
+  ifNewUser$ = this.authState.ifNewUser$;
 
   pageTitle: string;
   pageSubtitle: string;
@@ -22,7 +24,7 @@ export class LoginComponent {
 
   loginForm = this.fb.group({
     userName: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   ngOnInit(): void {
@@ -44,5 +46,4 @@ export class LoginComponent {
     this.loginForm.reset();
     this.router.navigate(['/foods']);
   }
-
 }

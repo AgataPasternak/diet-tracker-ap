@@ -4,7 +4,10 @@
         <div class="centered-content form-wrapper">
             <div class="header">
                 <h1>{{pageTitle}}</h1>
-                <h3>{{pageSubtitle}}</h3>
+                <h3 *ngIf="!(ifNewUser$ | async); else firstLogin">{{pageSubtitle}}</h3>
+                <ng-template #firstLogin>
+                    <h3>The account has been successfully created, log in.</h3>
+                  </ng-template>
                 <mat-divider></mat-divider>
                 <br>
             </div>

@@ -6,9 +6,8 @@ import { ApiResponse } from '../shared/models/api-response.model';
 import { Food } from './foods.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class FoodsService {
   private readonly API_FOODS = environment.apiUrl + 'foods/';
   httpClient = inject(HttpClient);
@@ -21,7 +20,8 @@ export class FoodsService {
     return this.httpClient.get<Food>(this.API_FOODS + id);
   }
 
-  deleteFoods(id: string): Observable<void> { // back-end nie intersuje jakiego typu dane zwracamy
+  deleteFoods(id: string): Observable<void> {
+    // back-end nie intersuje jakiego typu dane zwracamy
     return this.httpClient.delete<void>(this.API_FOODS + id);
   }
 
@@ -30,7 +30,9 @@ export class FoodsService {
   }
 
   searchFood(filterValue: string): Observable<ApiResponse<Food>> {
-    return this.httpClient.get<ApiResponse<Food>>(this.API_FOODS + 'search/?name=' + filterValue);
+    return this.httpClient.get<ApiResponse<Food>>(
+      this.API_FOODS + 'search/?name=' + filterValue
+    );
   }
 
   updateFood(food: Food): Observable<Food> {

@@ -4,9 +4,7 @@
     </button>
     <h2>{{inputData.title}}</h2>
 </div>
-<!-- <pre>
-    {{foodForm.value | json}}
-</pre> -->
+
 <mat-dialog-content>
     <div [formGroup]="foodForm" class="form foodForm">
         <div *ngIf="postInLoading$ | async" class="spinner">
@@ -34,39 +32,32 @@
             </mat-select>
             <mat-error *ngIf="foodForm.invalid">Required.</mat-error>
         </mat-form-field>
-
-        <!-- <mat-form-field>
-            <mat-label>Tagi</mat-label>
-            <mat-select formControlName="tags" multiple>
-                <mat-option *ngFor="let tag of tagsArray" [value]="tag">{{tag}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field> -->
-        <mat-form-field>
-            <mat-label>Tags</mat-label>
-            <mat-chip-grid #chipGrid>
-                <mat-chip-row *ngFor="let tag of savedTags" (removed)="remove(tag)">
-                    {{(tag | tagsToName) | async }}
-                    <button matChipRemove [attr.aria-label]="'remove ' + tag" title="'remove ' + tag">
+        <mat-form-field class="chip-list">
+            <mat-label>Foods</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Food selection">
+                <mat-chip-row *ngFor="let tag of choosenTags" (removed)="remove(tag)">
+                    {{tag}}
+                    <button matChipRemove [attr.aria-label]="'remove ' + tag">
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </mat-chip-row>
             </mat-chip-grid>
-            <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl" [matChipInputFor]="chipGrid"
-                [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)" />
+            <input #tagInput [formControl]="tagCtrl"
+              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             />
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option *ngFor="let fruit of filteredFruits$ | async" [value]="fruit">
-                    {{fruit}}
+                <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                    {{tag}}
                 </mat-option>
             </mat-autocomplete>
-        </mat-form-field>
-
+        </mat-form-field> 
+        
         <mat-form-field>
-            <mat-label>Photo</mat-label>
+                    <mat-label>Photo</mat-label> 
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">
             <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" /> -->
-            <img src="{{imageSrc}}" width="100%" />
+            <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" width="100%" /> -->
         </mat-form-field>
     </div>
 </mat-dialog-content>

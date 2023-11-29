@@ -8,7 +8,7 @@ import { passwordMatchValidator } from './password-match.validator';
 @Component({
   selector: 'app-login',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   private route = inject(ActivatedRoute);
@@ -18,16 +18,18 @@ export class RegisterComponent {
   pageTitle: string;
   pageSubtitle: string;
 
-  registerForm = this.fb.group({
-    userName: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required],
-    confirmPassword: ['']
-  },
-  {
-    validators: passwordMatchValidator
-  });
-  
+  registerForm = this.fb.group(
+    {
+      userName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: [''],
+    },
+    {
+      validators: passwordMatchValidator,
+    }
+  );
+
   ngOnInit(): void {
     this.getTitles();
   }
@@ -46,5 +48,4 @@ export class RegisterComponent {
     this.auth.signUp(this.registerForm.value as User);
     this.registerForm.reset();
   }
-
 }
