@@ -1,8 +1,8 @@
 export interface Tag {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 export interface TagsResponse {
-    data: Tag[];
-    length: number;
+  data: Tag[];
+  length: number;
 }

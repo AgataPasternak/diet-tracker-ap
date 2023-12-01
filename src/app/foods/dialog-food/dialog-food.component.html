@@ -32,26 +32,13 @@
             </mat-select>
             <mat-error *ngIf="foodForm.invalid">Required.</mat-error>
         </mat-form-field>
-        <mat-form-field class="chip-list">
-            <mat-label>Foods</mat-label>
-            <mat-chip-grid #chipGrid aria-label="Food selection">
-                <mat-chip-row *ngFor="let tag of choosenTags" (removed)="remove(tag)">
-                    {{tag}}
-                    <button matChipRemove [attr.aria-label]="'remove ' + tag">
-                        <mat-icon>cancel</mat-icon>
-                    </button>
-                </mat-chip-row>
-            </mat-chip-grid>
-            <input #tagInput [formControl]="tagCtrl"
-              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-             />
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-                    {{tag}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field> 
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select tag(s)</mat-label>
+            <mat-select multiple formControlName="tags">
+              <mat-option *ngFor="let tag of (tags$ | async)" [value]="tag.id">{{ tag.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
         
         <mat-form-field>
                     <mat-label>Photo</mat-label> 

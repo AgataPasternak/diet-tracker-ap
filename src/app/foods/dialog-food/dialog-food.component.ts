@@ -34,18 +34,7 @@ export class DialogFoodComponent implements OnInit {
 
   readonly postInLoading$ = this.state.postInLoading$;
   private readonly responseFood$ = this.state.food$;
-  private readonly tags$ = this.tagsState.tags$;
-  tagsArray: string[] = [];
-
-  savedTags: string[] = [];
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  tagCtrl = new FormControl('');
-  filteredTags: Observable<string[]>;
-  choosenTags: string[] = [];
-
-  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-
-  announcer = inject(LiveAnnouncer);
+  tags$ = this.tagsState.tags$;
 
   nutriScoreOptions: NutriScore[] = ['A', 'B', 'C', 'D', 'E'];
   imageSrc: string;
@@ -61,63 +50,11 @@ export class DialogFoodComponent implements OnInit {
     ],
     weight: [0, [Validators.required, Validators.pattern('^[0-9]*$')]],
     nutriScore: ['', [Validators.required]],
-    tags: [''],
+    tags: ['', [Validators.required]],
     photo: ['', [Validators.required]],
   });
 
-  // mat chip START
-  constructor() {
-    this.filteredTags = this.tagCtrl.valueChanges.pipe(
-      startWith(null),
-      map((tag: string | null) =>
-        tag ? this._filter(tag) : this.tagsArray.slice()
-      )
-    );
-  }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-    if (value) {
-      this.choosenTags.push(value);
-      this.foodForm.get('tags')?.setValue(this.choosenTags.join(','));
-    }
-
-    event.chipInput!.clear();
-    this.tagCtrl.setValue(null);
-  }
-
-  remove(tag: string): void {
-    const index = this.choosenTags.indexOf(tag);
-
-    if (index >= 0) {
-      this.choosenTags.splice(index, 1);
-
-      this.announcer.announce(`Removed ${tag}`);
-      this.foodForm.get('tags')?.setValue(this.choosenTags.join(','));
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.choosenTags.push(event.option.viewValue);
-    this.tagInput.nativeElement.value = '';
-    this.tagCtrl.setValue(null);
-    this.foodForm.get('tags')?.setValue(this.choosenTags.join(', '));
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.tagsArray.filter((fruit) =>
-      fruit.toLowerCase().includes(filterValue)
-    );
-  }
-
-  // mat chip END
-
   ngOnInit(): void {
-    this.tags$.subscribe((data) => {
-      this.tagsArray = data.map((tag) => tag.name);
-    });
     if (this.inputData.id) {
       this.state.getFoodById(this.inputData.id);
       this.responseFood$.subscribe((data) => {
@@ -135,18 +72,39 @@ export class DialogFoodComponent implements OnInit {
     return this.foodForm.get('name');
   }
 
+  // TODO: refactor, add types to 'tags'
+  private convertTagsToString(tags: any): string {
+    return Array.isArray(tags) ? tags.join(', ') : tags;
+  }
+
   onSubmit() {
-    // if (this.foodForm.invalid) {
-    //   return;
-    // }
-    this.state.postFood(this.foodForm.value as Food);
+    const formValues = this.foodForm.value;
+
+    const tagsAsString = this.convertTagsToString(formValues.tags);
+
+    // const tagsAsString = Array.isArray(formValues.tags)
+    //   ? formValues.tags.join(', ')
+    //   : formValues.tags;
+
+    const food = {
+      ...this.foodForm.value,
+      tags: tagsAsString,
+    };
+
+    this.state.postFood(food as Food);
     this.closeDialog();
   }
 
   onUpdate() {
-    // TODO: przerobić na jedną metodą onSave (onSubmit, onUpdate)
+    const formValues = this.foodForm.value;
+
+    const tagsAsString = Array.isArray(formValues.tags)
+      ? formValues.tags.join(', ')
+      : formValues.tags;
+
     const food = {
-      ...this.foodForm.value, // spread operator
+      ...this.foodForm.value,
+      tags: tagsAsString,
       id: this.inputData.id,
     };
     this.state.updateFood(food as Food);
