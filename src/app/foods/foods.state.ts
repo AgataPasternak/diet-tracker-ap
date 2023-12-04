@@ -99,8 +99,19 @@ export class FoodsState {
       });
   }
 
-  searchFood(filterValue: string): void {
-    this.foodService.searchFood(filterValue).subscribe((data) => {
+  searchFood(
+    filterValueName: string | null,
+    filterValueTag: string | null
+  ): void {
+    this.foodService
+      .searchFood(filterValueName, filterValueTag)
+      .subscribe((data) => {
+        this.foodsSource$.next(data);
+      });
+  }
+
+  searchTag(filterValue: string | null): void {
+    this.foodService.searchTag(filterValue).subscribe((data) => {
       this.foodsSource$.next(data);
     });
   }

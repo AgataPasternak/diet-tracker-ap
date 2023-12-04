@@ -1,17 +1,3 @@
-<!-- <pre>
-{{ response$ | async | json }}
-</pre> -->
-
-<!-- <div *ngIf="response$ | async as res">
-    <ul>
-        <li *ngFor="let food of res.data">{{food.name}}</li>
-    </ul>
-    {{res.length | json}}
-</div> -->
-<!-- For testing purposes: -->
-<div style="display: none;" class="isReadOnly">{{isReadOnly}}</div>
-<!-- For testing purposes: -->
-
 <div class="wrapp">
     <div class="header">
         <h1>{{pageTitle}}</h1>
@@ -19,16 +5,22 @@
         <mat-divider></mat-divider>
     </div>
     <div fxLayout="row" fxLayoutGap="16px">
-        <div fxFlex="50%">
-            <div class="form searchForm" fxLayoutAlign="start top">
-                <mat-form-field>
+        <div fxFlex="80%">
+            <div class="form searchWrapper" fxLayoutAlign="start top">
+                <mat-form-field class="search-food">
                     <mat-label>Search food...</mat-label>
                     <input matInput #input [formControl]="search" (input)="searchValue($event)">
+                </mat-form-field>
+                <mat-form-field class="search-tag">
+                    <mat-label>Select tag(s)</mat-label> 
+                    <mat-select [formControl]="searchTag" (selectionChange)="onTagsSelectionChange()">
+                      <mat-option *ngFor="let tag of (tags$ | async)" [value]="tag.id">{{ tag.name }}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
         </div>
 
-        <div fxFlex="50%" fxLayoutAlign="end top">
+        <div fxFlex="20%" fxLayoutAlign="end top">
             <button mat-fab extended class="uppercase-button" color="primary" (click)="addFoodDialog()">
                 <!-- dodać metoda openDialog -->
                 <mat-icon>add_circle_outline</mat-icon>

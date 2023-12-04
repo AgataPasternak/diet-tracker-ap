@@ -10,6 +10,7 @@ import { Food } from './foods.model';
 })
 export class FoodsService {
   private readonly API_FOODS = environment.apiUrl + 'foods/';
+  private readonly API_SEARCH_FOODS = environment.apiUrl + 'foods/search/';
   httpClient = inject(HttpClient);
 
   getFoods(): Observable<ApiResponse<Food>> {
@@ -29,10 +30,24 @@ export class FoodsService {
     return this.httpClient.post<Food>(this.API_FOODS, food);
   }
 
-  searchFood(filterValue: string): Observable<ApiResponse<Food>> {
-    return this.httpClient.get<ApiResponse<Food>>(
-      this.API_FOODS + 'search/?name=' + filterValue
-    );
+  searchFood(
+    filterValueName: string | null,
+    filterValueTag: string | null
+  ): Observable<ApiResponse<Food>> {
+    const apiUrl =
+      this.API_SEARCH_FOODS +
+      (filterValueName
+        ? `?name=${filterValueName}`
+        : filterValueTag
+        ? `?tag=${filterValueTag}`
+        : '');
+
+    return this.httpClient.get<ApiResponse<Food>>(apiUrl);
+  }
+
+  searchTag(filterValue: string | null): Observable<ApiResponse<Food>> {
+    const apiUrl = this.API_SEARCH_FOODS + `?tag=${filterValue}`;
+    return this.httpClient.get<ApiResponse<Food>>(apiUrl);
   }
 
   updateFood(food: Food): Observable<Food> {

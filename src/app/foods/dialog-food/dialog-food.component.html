@@ -33,7 +33,7 @@
             <mat-error *ngIf="foodForm.invalid">Required.</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>Select tag(s)</mat-label>
             <mat-select multiple formControlName="tags">
               <mat-option *ngFor="let tag of (tags$ | async)" [value]="tag.id">{{ tag.name }}</mat-option>
@@ -41,10 +41,9 @@
         </mat-form-field>
         
         <mat-form-field>
-                    <mat-label>Photo</mat-label> 
+            <mat-label>Photo</mat-label> 
             <input matInput placeholder="np. http://link.jpg" formControlName="photo">
-            <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" /> -->
-            <!-- <img *ngif="inputData.editMode" src="{{imageSrc}}" width="100%" /> -->
+            <img *ngIf="inputData.editMode" src="{{imageSrc}}" width="100%" />
         </mat-form-field>
     </div>
 </mat-dialog-content>

@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -12,7 +14,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, map, startWith, toArray } from 'rxjs';
+import { Observable, map, startWith, take, toArray } from 'rxjs';
 import { Food, NutriScore } from '../foods.model';
 import { FoodsState } from '../foods.state';
 import { TagsState } from '../tags.state';
@@ -82,10 +84,6 @@ export class DialogFoodComponent implements OnInit {
 
     const tagsAsString = this.convertTagsToString(formValues.tags);
 
-    // const tagsAsString = Array.isArray(formValues.tags)
-    //   ? formValues.tags.join(', ')
-    //   : formValues.tags;
-
     const food = {
       ...this.foodForm.value,
       tags: tagsAsString,
@@ -98,9 +96,7 @@ export class DialogFoodComponent implements OnInit {
   onUpdate() {
     const formValues = this.foodForm.value;
 
-    const tagsAsString = Array.isArray(formValues.tags)
-      ? formValues.tags.join(', ')
-      : formValues.tags;
+    const tagsAsString = this.convertTagsToString(formValues.tags);
 
     const food = {
       ...this.foodForm.value,

@@ -1,5 +1,11 @@
-
-import { AfterViewInit, Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,13 +17,13 @@ import { DialogFoodComponent } from './dialog-food/dialog-food.component';
 import { Food } from './foods.model';
 import { FoodsState } from './foods.state';
 import { TagsState } from './tags.state';
+import { debounceTime, take } from 'rxjs';
 
 @Component({
   selector: 'app-foods',
   templateUrl: './foods.component.html',
-  styleUrls: ['./foods.component.scss']
+  styleUrls: ['./foods.component.scss'],
 })
-
 export class FoodsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort)
   sort: MatSort; // przechwytuje referencję (MatSort) do sortowania, umieszczam ją w zmiennej sort
@@ -27,14 +33,22 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   @Input() public inputData!: FoodDialogData;
   @Input() public isReadOnly = false;
 
-  columnsToDisplay = ['id', 'name', 'caloriesPer100g', 'nutriScore', 'tags', 'photo', 'actionsColumn'];
+  columnsToDisplay = [
+    'id',
+    'name',
+    'caloriesPer100g',
+    'nutriScore',
+    'tags',
+    'photo',
+    'actionsColumn',
+  ];
 
   private state = inject(FoodsState);
   private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private tagsState = inject(TagsState);
-  private route = inject(ActivatedRoute); // wszystko czego nie używam w temaplte powinno być prywatne
+  private route = inject(ActivatedRoute);
 
   private readonly response$ = this.state.foods$;
   readonly loading$ = this.state.loading$;
@@ -43,6 +57,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   readonly postInLoading$ = this.state.postInLoading$;
   readonly errorMessage$ = this.state.errorMessage$;
   search = this.fb.control('');
+  searchTag = this.fb.control('');
   pageTitle: string;
   pageSubtitle: string;
 
@@ -74,8 +89,24 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   }
 
   searchValue(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.state.searchFood(filterValue);
+    // const filterValue = (event.target as HTMLInputElement).value;
+    const filterValue =
+      (event.target as HTMLInputElement).value.charAt(0).toUpperCase() +
+      (event.target as HTMLInputElement).value.slice(1);
+
+    //TODO: jak używać .pipe(debounceTime(300)) w tym miejscu?
+    this.tags$.pipe(take(1), debounceTime(300)).subscribe((data) => {
+      const tagId = data
+        .filter((data) => data.name === filterValue)
+        .map((tag) => tag.id)
+        .toString();
+      if (tagId) {
+        this.state.searchFood(null, tagId);
+      } else {
+        this.state.searchFood(filterValue, null);
+      }
+    });
+
     if (filterValue === '') {
       this.state.getFoods();
     }
@@ -87,8 +118,8 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       showActions: true,
       id: undefined,
       readonly: false,
-      editMode: false
-    }
+      editMode: false,
+    };
     this.openDialog(addFoodDialogData);
   }
 
@@ -98,8 +129,8 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       showActions: false,
       id,
       readonly: true,
-      editMode: false
-    }
+      editMode: false,
+    };
     this.openDialog(onPreviewFoodData);
   }
 
@@ -109,8 +140,8 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       showActions: true,
       id,
       readonly: false,
-      editMode: true
-    }
+      editMode: true,
+    };
     this.openDialog(onEditFoodData);
   }
 
@@ -119,7 +150,11 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       width: '40%',
       enterAnimationDuration: 300,
       exitAnimationDuration: 300,
-      data
+      data,
     });
+  }
+  onTagsSelectionChange() {
+    const selectedTags = this.searchTag.value;
+    this.state.searchTag(selectedTags);
   }
 }
