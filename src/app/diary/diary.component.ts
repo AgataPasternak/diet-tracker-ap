@@ -11,6 +11,8 @@ import { ApiResponse } from '../shared/models/api-response.model';
 import { DiaryFacadeService } from './diary.facade';
 import { DiaryEntry, FlattenDiaryEntry, MealType } from './diary.model';
 import { DiaryState } from './diary.state';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDiaryFoodComponent } from './dialog-diary-food/dialog-diary-food.component';
 
 @Component({
   selector: 'app-diary',
@@ -24,7 +26,15 @@ export class DiaryComponent implements OnInit {
   noDataTable: string;
   dataSource = new MatTableDataSource<FlattenDiaryEntry>([]);
   mealType: MealType[] = ['breakfast', 'lunch', 'dinner'];
-  columnsToDisplay = ['id', 'meal', 'date', 'food', 'weight', 'calories', 'actions'];
+  columnsToDisplay = [
+    'id',
+    'meal',
+    'date',
+    'food',
+    'weight',
+    'calories',
+    'actions',
+  ];
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -33,6 +43,7 @@ export class DiaryComponent implements OnInit {
   private fb = inject(FormBuilder);
   private datePipe = inject(DatePipe);
   private diaryFacade = inject(DiaryFacadeService);
+  private dialog = inject(MatDialog);
   readonly DATE_FORMAT = 'yyyy-MM-dd';
 
   readonly diaryByDate$ = this.state.diaryByDate$;
@@ -41,8 +52,8 @@ export class DiaryComponent implements OnInit {
 
   startDate = new Date();
   startDateTransformed = this.datePipe.transform(
-      this.startDate, 
-      this.DATE_FORMAT
+    this.startDate,
+    this.DATE_FORMAT
   );
 
   formDiaryEntry = this.fb.group({
@@ -50,8 +61,8 @@ export class DiaryComponent implements OnInit {
     food: this.fb.group({
       id: ['', [Validators.required]],
       weight: ['', [Validators.required]],
-      mealType: ['', [Validators.required]]
-    })
+      mealType: ['', [Validators.required]],
+    }),
   });
 
   ngOnInit(): void {
@@ -59,20 +70,24 @@ export class DiaryComponent implements OnInit {
     this.getTitles();
     this.foodsState.getFoods();
     this.getDateFromQueryParams();
-    this.calculateCalories();   
+    this.calculateCalories();
   }
 
   private calculateCalories() {
-    this.foods$.pipe(
-      switchMap((dataFoods: ApiResponse<Food>) => this.diaryByDate$.pipe(
-        map((response: ApiResponse<DiaryEntry>) => {
-          return this.diaryFacade.flattenData(response, dataFoods);
-        }),
-        tap((data: FlattenDiaryEntry[]) => {
-          this.dataSource.data = data;
-        })
-      ))
-    ).subscribe();
+    this.foods$
+      .pipe(
+        switchMap((dataFoods: ApiResponse<Food>) =>
+          this.diaryByDate$.pipe(
+            map((response: ApiResponse<DiaryEntry>) => {
+              return this.diaryFacade.flattenData(response, dataFoods);
+            }),
+            tap((data: FlattenDiaryEntry[]) => {
+              this.dataSource.data = data;
+            })
+          )
+        )
+      )
+      .subscribe();
   }
 
   private getDateFromQueryParams() {
@@ -81,7 +96,7 @@ export class DiaryComponent implements OnInit {
       if (date != undefined) {
         this.state.getDiaryByDate(date);
         this.formDiaryEntry.patchValue({
-          date: date
+          date: date,
         });
       } else {
         const today = this.datePipe.transform(this.startDate, this.DATE_FORMAT);
@@ -95,7 +110,7 @@ export class DiaryComponent implements OnInit {
   get food(): FormControl {
     return this.formDiaryEntry.get('food') as FormControl;
   }
-  
+
   private getTitles() {
     this.activatedRoute.data.subscribe((data) => {
       this.pageTitle = data['title'];
@@ -104,11 +119,13 @@ export class DiaryComponent implements OnInit {
   }
 
   getTotalCalories() {
-    return this.dataSource.data.map(data => + data.calories).reduce((acc, value) => acc + value, 0);
+    return this.dataSource.data
+      .map((data) => +data.calories)
+      .reduce((acc, value) => acc + value, 0);
   }
 
   onDateChanged(event: MatDatepickerInputEvent<Date>) {
-    const chosenDate = this.datePipe.transform(event.value, "yyyy-MM-dd");
+    const chosenDate = this.datePipe.transform(event.value, 'yyyy-MM-dd');
 
     if (chosenDate != undefined) {
       this.state.getDiaryByDate(chosenDate);
@@ -124,14 +141,17 @@ export class DiaryComponent implements OnInit {
     if (this.formDiaryEntry.invalid) {
       return;
     }
-    const formattedDate = this.datePipe.transform(this.formDiaryEntry.value.date, this.DATE_FORMAT);
+    const formattedDate = this.datePipe.transform(
+      this.formDiaryEntry.value.date,
+      this.DATE_FORMAT
+    );
     const formattedId = this.food.value.id;
     const formattedIdString = String(formattedId);
     this.formDiaryEntry.patchValue({
       date: formattedDate,
       food: {
-        id: formattedIdString
-      }
+        id: formattedIdString,
+      },
     });
     this.state.postDiaryItem(this.formDiaryEntry.value as DiaryEntry);
     this.food.reset();
@@ -140,13 +160,19 @@ export class DiaryComponent implements OnInit {
   onDeleteFoodInDairy(id: string, foodId: string, date: string): void {
     this.state.deleteFoodInDiary(id, foodId, date);
   }
-  onEditFoodInDairy() { }
 
   onDeleteDiaryEntry(id: string | undefined): void {
     if (id != undefined) {
       this.state.deleteDiaryEntry(id);
-    } 
+    }
+  }
+
+  onOpenDialog(data: FlattenDiaryEntry): void {
+    this.dialog.open(DialogDiaryFoodComponent, {
+      width: '40%',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
+      data,
+    });
   }
 }
-
-

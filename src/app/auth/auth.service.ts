@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { SignInUser, User } from './auth.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AuthService {
   private readonly API_AUTH = environment.apiUrl + 'auth/';
   httpClient = inject(HttpClient);
@@ -23,7 +22,4 @@ export class AuthService {
   signOut() {
     return this.httpClient.post<SignInUser>(this.API_AUTH + 'signout', null);
   }
-  
-
-
 }

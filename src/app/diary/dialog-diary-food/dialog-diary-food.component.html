@@ -1,1 +1,52 @@
-<p>dialog-diary-food works!</p>
+<div mat-dialog-title>
+  <button
+    mat-icon-button
+    class="button-close"
+    aria-label="close dialog"
+    (click)="closeDialog()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <h2>Edit diary entry</h2>
+</div>
+
+<mat-dialog-content>
+  <div [formGroup]="diaryForm" class="form">
+    <!-- <div *ngIf="postInLoading$ | async" class="spinner">
+            <mat-spinner></mat-spinner>
+        </div> -->
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" [readonly] />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Food</mat-label>
+
+      <!-- TODO - dodać select -->
+      <input matInput placeholder="e.g. apple" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Weight</mat-label>
+      <input matInput placeholder="e.g. 100" formControlName="weight" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Meal type</mat-label>
+      <mat-select formControlName="mealType">
+        <mat-option *ngFor="let meal of mealType" [value]="meal">{{
+          meal
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="wrapp">
+  <button
+    mat-raised-button
+    class="uppercase-button"
+    color="primary"
+    (click)="onEditDiary()"
+    [disabled]="diaryForm.invalid"
+  >
+    update
+  </button>
+</mat-dialog-actions>

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { SignInUser, User } from './auth.model';
 import { AuthService } from './auth.service';
 
@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthState {
+  // zmienić na BehaviorSubject
   private userSource$ = new Subject<User>();
   get user$() {
     return this.userSource$.asObservable();

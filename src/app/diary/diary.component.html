@@ -1,107 +1,147 @@
 <router-outlet></router-outlet>
 <div class="wrap">
-    <div class="header">
-        <h1>{{pageTitle}}</h1>
-        <h2>{{pageSubtitle}}</h2>
-        <mat-divider class="no-margin-padding"></mat-divider>
-    </div>
+  <div class="header">
+    <h1>{{ pageTitle }}</h1>
+    <h2>{{ pageSubtitle }}</h2>
+    <mat-divider class="no-margin-padding"></mat-divider>
+  </div>
 
-    <div [formGroup]="formDiaryEntry" class="form foodForm">
-        <mat-form-field>
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" (dateInput)="onDateChanged( $event)"
-                (dateChange)="onDateChanged($event)" formControlName="date">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker startView="month" [startAt]="startDate"></mat-datepicker>
-            <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
-        </mat-form-field>
-        <ng-container formGroupName="food">
-            <mat-form-field *ngIf="foods$ | async as res">
-                <mat-label>Food</mat-label>
-                <mat-select formControlName="id">
-                    <mat-option *ngFor="let food of res.data" [value]="food.id">{{food.name}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Weight (g)</mat-label>
-                <input matInput formControlName="weight">
-                <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Meal type</mat-label>
-                <mat-select formControlName="mealType">
-                    <mat-option *ngFor="let meal of mealType" [value]="meal">{{meal}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
-            </mat-form-field>
-        </ng-container>
-        <button mat-fab extended class="uppercase-button" color="primary" [disabled]="formDiaryEntry.invalid" (click)="onSubmit()">
-            <mat-icon>add_circle_outline</mat-icon>
-            add item
+  <div [formGroup]="formDiaryEntry" class="form foodForm">
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        (dateInput)="onDateChanged($event)"
+        (dateChange)="onDateChanged($event)"
+        formControlName="date"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker
+        #picker
+        startView="month"
+        [startAt]="startDate"
+      ></mat-datepicker>
+      <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
+    </mat-form-field>
+    <ng-container formGroupName="food">
+      <mat-form-field *ngIf="foods$ | async as res">
+        <mat-label>Food</mat-label>
+        <mat-select formControlName="id">
+          <mat-option *ngFor="let food of res.data" [value]="food.id"
+            >{{ food.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Weight (g)</mat-label>
+        <input matInput formControlName="weight" />
+        <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Meal type</mat-label>
+        <mat-select formControlName="mealType">
+          <mat-option *ngFor="let meal of mealType" [value]="meal"
+            >{{ meal }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formDiaryEntry.invalid">Required.</mat-error>
+      </mat-form-field>
+    </ng-container>
+    <button
+      mat-fab
+      extended
+      class="uppercase-button"
+      color="primary"
+      [disabled]="formDiaryEntry.invalid"
+      (click)="onSubmit()"
+    >
+      <mat-icon>add_circle_outline</mat-icon>
+      add item
+    </button>
+  </div>
+  <table *ngIf="diaryLength$ | async" mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let el">{{ el.id }}</td>
+      <td mat-footer-cell *matFooterCellDef>Total</td>
+    </ng-container>
+    <ng-container matColumnDef="meal">
+      <th mat-header-cell *matHeaderCellDef>Meal</th>
+      <td mat-cell *matCellDef="let el">{{ el.mealType }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let el">{{ el.date }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="food">
+      <th mat-header-cell *matHeaderCellDef>Food</th>
+      <td mat-cell *matCellDef="let el">
+        {{ el.foodId | foodIdToName | async }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight (g)</th>
+      <td mat-cell *matCellDef="let el">{{ el.weight }}</td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="calories">
+      <th mat-header-cell *matHeaderCellDef>Calories</th>
+      <td mat-cell *matCellDef="let el">{{ el.calories }}</td>
+      <td mat-footer-cell *matFooterCellDef>{{ getTotalCalories() }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let el">
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Remove"
+          title="Remove"
+          (click)="onDeleteFoodInDairy(el.id, el.foodId, el.date)"
+        >
+          <mat-icon>delete</mat-icon>
         </button>
-    </div>
-    <table *ngIf="diaryLength$ | async" mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let el">{{el.id}}</td>
-            <td mat-footer-cell *matFooterCellDef> Total </td>
-        </ng-container>
-        <ng-container matColumnDef="meal">
-            <th mat-header-cell *matHeaderCellDef>Meal</th>
-            <td mat-cell *matCellDef="let el">{{el.mealType}}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let el">{{el.date}}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="food">
-            <th mat-header-cell *matHeaderCellDef>Food</th>
-            <td mat-cell *matCellDef="let el">{{(el.foodId | foodIdToName) | async}}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef>Weight (g)</th>
-            <td mat-cell *matCellDef="let el">{{el.weight}}</td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-            <th mat-header-cell *matHeaderCellDef>Calories</th>
-            <td mat-cell *matCellDef="let el">{{el.calories}}</td>
-            <td mat-footer-cell *matFooterCellDef> {{getTotalCalories()}} </td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let el">
-                <button mat-icon-button color="warn" aria-label="Remove" title="Remove"
-                    (click)="onDeleteFoodInDairy(el.id, el.foodId, el.date)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" aria-label="Edit" title="Edit" (click)="onEditFoodInDairy()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-        <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
-    </table>
-    <div *ngIf="(diaryLength$ | async) === 0">
-        <h2>There are no entries for this day.</h2>
-    </div>
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Edit"
+          title="Edit"
+          (click)="onOpenDialog(el)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
+  </table>
+  <div *ngIf="(diaryLength$ | async) === 0">
+    <h2>There are no entries for this day.</h2>
+  </div>
 
-    <div *ngIf="dataSource.data[0] as item">
-        <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">
-            <button mat-fab extended class="uppercase-button" color="warn" (click)="onDeleteDiaryEntry(item.id)">
-                <mat-icon>delete</mat-icon>
-                delete entry
-            </button>
-        </div>
+  <div *ngIf="dataSource.data[0] as item">
+    <div *ngIf="dataSource.data.length > 0" class="delete-entry-wrapper">
+      <button
+        mat-fab
+        extended
+        class="uppercase-button"
+        color="warn"
+        (click)="onDeleteDiaryEntry(item.id)"
+      >
+        <mat-icon>delete</mat-icon>
+        delete entry
+      </button>
     </div>
+  </div>
 </div>

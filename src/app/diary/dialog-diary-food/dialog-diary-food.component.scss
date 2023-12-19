@@ -1,0 +1,24 @@
+.dialog-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.wrapp {
+  margin: 0 1rem 1rem 1rem;
+}
+.form {
+  margin-top: 1rem;
+  mat-form-field {
+    display: block;
+  }
+}
+button {
+  width: 100%;
+}

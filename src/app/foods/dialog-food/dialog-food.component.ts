@@ -26,7 +26,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
   styleUrls: ['./dialog-food.component.scss'],
 })
 export class DialogFoodComponent implements OnInit {
-  @Input() public inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
+  public inputData: FoodDialogData = inject(MAT_DIALOG_DATA);
 
   private ref = inject(MatDialogRef<DialogFoodComponent>);
   private fb = inject(FormBuilder);

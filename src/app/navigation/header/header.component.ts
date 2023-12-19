@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { AuthState } from 'src/app/auth/auth.state';
+import { AuthState } from '../../auth/auth.state';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
   @Output() toggleSlidenav = new EventEmitter<void>();

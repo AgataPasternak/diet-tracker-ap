@@ -35,7 +35,7 @@ export class RegisterComponent {
   }
 
   private getTitles() {
-    this.route.data.subscribe((data) => {
+    this.route.data?.subscribe((data) => {
       this.pageTitle = data['title'];
       this.pageSubtitle = data['subtitle'];
     });

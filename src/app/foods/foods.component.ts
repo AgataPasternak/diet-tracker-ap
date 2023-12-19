@@ -67,6 +67,11 @@ export class FoodsComponent implements OnInit, AfterViewInit {
     this.getTitles();
     this.state.getFoods();
     this.tagsState.getTags();
+    this.response$.subscribe((data) => {
+      this.dataSource = new MatTableDataSource(data.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   private getTitles() {
@@ -77,11 +82,11 @@ export class FoodsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.response$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data.data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    // this.response$.subscribe((data) => {
+    //   this.dataSource = new MatTableDataSource(data.data);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    // });
   }
 
   onDeleteFood(id: string) {
@@ -114,7 +119,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
 
   addFoodDialog() {
     const addFoodDialogData: FoodDialogData = {
-      title: 'Dodaj produkt',
+      title: 'Add new food',
       showActions: true,
       id: undefined,
       readonly: false,
@@ -153,6 +158,7 @@ export class FoodsComponent implements OnInit, AfterViewInit {
       data,
     });
   }
+
   onTagsSelectionChange() {
     const selectedTags = this.searchTag.value;
     this.state.searchTag(selectedTags);
