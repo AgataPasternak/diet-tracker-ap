@@ -1,29 +1,39 @@
 <div class="wrapper">
-
-    <div class="center-container">
-        <div class="centered-content form-wrapper">
-            <div class="header">
-                <h1>{{pageTitle}}</h1>
-                <h3 *ngIf="!(ifNewUser$ | async); else firstLogin">{{pageSubtitle}}</h3>
-                <ng-template #firstLogin>
-                    <h3>The account has been successfully created, log in.</h3>
-                  </ng-template>
-                <mat-divider></mat-divider>
-                <br>
-            </div>
-            <div [formGroup]="loginForm" class="form" (keydown.enter)="onSubmit()">
-                <mat-form-field>
-                    <mat-label>User name</mat-label>
-                    <input matInput formControlName="userName">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password">
-                </mat-form-field>
-                <button mat-fab extended color="primary" type="submit" (click)="onSubmit()"
-                    [disabled]="loginForm.invalid">Login</button>
-                <mat-divider></mat-divider>
-            </div>
-        </div>
+  <div class="center-container">
+    <div class="centered-content form-wrapper">
+      <div class="header">
+        <h1>{{ pageTitle }}</h1>
+        <h3 *ngIf="!(ifNewUser$ | async); else firstLogin">
+          {{ pageSubtitle }}
+        </h3>
+        <ng-template #firstLogin>
+          <h3>The account has been successfully created, log in.</h3>
+        </ng-template>
+        <mat-divider></mat-divider>
+        <br />
+      </div>
+      <div [formGroup]="loginForm" class="form" (keydown.enter)="onSubmit()">
+        <mat-form-field>
+          <mat-label>User name</mat-label>
+          <input matInput formControlName="userName" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+        <mat-error>{{ errorMessage$ | async }}</mat-error>
+        <button
+          mat-fab
+          extended
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+        <mat-divider></mat-divider>
+      </div>
     </div>
+  </div>
 </div>

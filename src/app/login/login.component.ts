@@ -16,6 +16,7 @@ export class LoginComponent {
   private authState = inject(AuthState);
 
   ifNewUser$ = this.authState.ifNewUser$;
+  errorMessage$ = this.authState.errorMessage$;
 
   pageTitle: string;
   pageSubtitle: string;

@@ -27,6 +27,11 @@ export class AuthState {
     return this.ifNewUserSource$.asObservable();
   }
 
+  private errorMessageSource$ = new BehaviorSubject<string>('');
+  get errorMessage$(): Observable<string> {
+    return this.errorMessageSource$.asObservable();
+  }
+
   signUp(user: User): void {
     this.authService.signUp(user).subscribe({
       next: () => {
@@ -41,9 +46,11 @@ export class AuthState {
     this.authService.singIn(user).subscribe({
       next: () => {
         this.isAuthenticatedSource$.next(true);
+        this.ifNewUserSource$.next(false);
         this.router.navigate(['/foods']);
       },
-      error: () => {
+      error: (err) => {
+        this.errorMessageSource$.next(err.error.message);
         this.isAuthenticatedSource$.next(false);
         this.router.navigate(['/login']);
       },
