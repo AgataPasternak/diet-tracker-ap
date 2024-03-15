@@ -18,6 +18,8 @@ export class RegisterComponent {
   pageTitle: string;
   pageSubtitle: string;
 
+  errorMessage$ = this.auth.errorMessage$;
+
   registerForm = this.fb.group(
     {
       userName: ['', Validators.required],

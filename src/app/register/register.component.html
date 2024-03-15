@@ -1,34 +1,49 @@
 <div class="wrapper">
-    <div class="center-container">
-        <div class="centered-content form-wrapper">
-            <div class="header">
-                <h1>{{pageTitle}}</h1>
-                <h3>{{pageSubtitle}}</h3>
-                <mat-divider></mat-divider>
-                <br>
-            </div>
-            <div [formGroup]="registerForm" class="form">
-                <mat-form-field>
-                    <mat-label>User name</mat-label>
-                    <input matInput formControlName="userName">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>E-mail</mat-label>
-                    <input matInput formControlName="email">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password">
-                </mat-form-field> 
-                <mat-form-field>
-                    <mat-label>Confirm password</mat-label>
-                    <input matInput type="text" formControlName="confirmPassword">  
-                </mat-form-field>
-                <mat-error *ngIf="registerForm.errors?.['passwordMismatch']">Password does not match.</mat-error>
-                <button mat-fab extended color="primary" type="submit" (click)="onSubmit()"
-                    [disabled]="registerForm.invalid">Register</button>
-                <mat-divider></mat-divider>
-            </div>
-        </div>
+  <div class="center-container">
+    <div class="centered-content form-wrapper">
+      <div class="header">
+        <h1>{{ pageTitle }}</h1>
+        <h3>{{ pageSubtitle }}</h3>
+        <mat-divider></mat-divider>
+        <br />
+      </div>
+      <div [formGroup]="registerForm" class="form">
+        <mat-form-field>
+          <mat-label>User name</mat-label>
+          <input matInput formControlName="userName" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirm password</mat-label>
+          <input matInput type="text" formControlName="confirmPassword" />
+        </mat-form-field>
+        <ng-container
+          *ngIf="registerForm.errors?.['passwordMismatch']; else otherErrors"
+        >
+          <mat-error>Password does not match.</mat-error>
+        </ng-container>
+        <ng-template #otherErrors>
+          <mat-error>{{ errorMessage$ | async }}</mat-error>
+        </ng-template>
+        <button
+          mat-fab
+          extended
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="registerForm.invalid"
+        >
+          Register
+        </button>
+        <mat-divider></mat-divider>
+      </div>
     </div>
+  </div>
 </div>

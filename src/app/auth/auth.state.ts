@@ -38,7 +38,9 @@ export class AuthState {
         this.ifNewUserSource$.next(true);
         this.router.navigate(['/login']);
       },
-      error: (err) => {},
+      error: (err) => {
+        this.errorMessageSource$.next(err.error.message);
+      },
     });
   }
 
